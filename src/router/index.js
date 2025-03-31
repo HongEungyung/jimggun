@@ -1,0 +1,23 @@
+import { createRouter , createWebHistory } from "vue-router";
+import A1_home from "@/views/A1_home.vue";
+import A2_information from "@/views/A2_information.vue";
+import A3_charge from "@/views/A3_charge.vue";
+import A4_reservation from "@/views/A4_reservation.vue";
+import A5_review from "@/views/A5_review.vue";
+import A6_cs from "@/views/A6_cs.vue";
+import A7_login from "@/views/A7_login.vue";
+
+const routes = [
+    {path : "/" , component : A1_home},
+    {path : "/information" , component : A2_information},
+    {path : "/charge" , component : A3_charge},
+    {path : "/reservation" , component : A4_reservation},
+    {path : "/review" , component : A5_review},
+    {path : "/cs" , component : A6_cs},
+    {path : "/login" , component : A7_login},
+]
+const router = createRouter({
+    history : createWebHistory(),
+    routes,
+})
+export default router
