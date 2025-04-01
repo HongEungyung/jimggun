@@ -1,6 +1,7 @@
 <script setup></script>
 
 <template>
+
   <div class="res_wrap">
     <div class="res_inner">
       <!-- 상단 -->
@@ -16,6 +17,7 @@
             alt="예약진행바" />
         </div>
         <div class="progress_text">
+
           <p>예약하기</p>
           <p>확인 및 결제</p>
           <p>예약완료</p>
