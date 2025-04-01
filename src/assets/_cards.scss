@@ -1,1 +1,22 @@
 @use "./variables" as *;
+// 비활성화 카드
+// .a4_row{
+//     padding: 1.8rem 2.5rem;
+//     background-color: #fff;
+//     border-radius: 10px;
+//     border: 1px solid $input-select;
+// }
+// 활성화 카드
+.a4_row_box{
+    padding: 1.8rem 2.5rem;
+    background-color: #fff;
+    border-radius: 10px;
+    border: 1px solid $input-select;
+    
+}
+// 배송정도 업데이트 카드
+.a4_updataCard{
+    padding: 1.5rem;
+    background-color: #fff;
+    border-radius: 10px;
+}
