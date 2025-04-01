@@ -7,7 +7,7 @@
       <section class="reservation-title">
         <p>3분 안에 예약하고</p>
         <h2>짐꾼을 부르세요!</h2>
-        <img src="/public/reservation-bar1.png" alt="예약진행바" />
+        <img src="/public/images/icon/reservation-bar1.png" alt="예약진행바" />
         <div class="reservationStatus">
           <p>예약하기</p>
           <p>확인 및 결제</p>
