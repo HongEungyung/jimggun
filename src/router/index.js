@@ -7,6 +7,7 @@ import A5_review from "@/views/A5_review.vue";
 import A6_cs from "@/views/A6_cs.vue";
 import A7_login from "@/views/A7_login.vue";
 import A7_signUp from "@/views/A7_signUp.vue";
+import A7_signUpFinish from "@/views/A7_signUpFinish.vue";
 
 const routes = [
     {path : "/" , component : A1_home},
@@ -17,6 +18,7 @@ const routes = [
     {path : "/cs" , component : A6_cs},
     {path : "/login" , component : A7_login},
     {path : "/signUp" , component : A7_signUp},
+    {path : "/signUpFinish" , component : A7_signUpFinish}
 ]
 const router = createRouter({
     history : createWebHistory(),
