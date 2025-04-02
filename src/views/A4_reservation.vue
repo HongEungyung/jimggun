@@ -63,13 +63,13 @@ const decrease = () => {
       <form>
         <!-- 배송정보 입력창 -->
         <div id="res_content">
-          <div class="res_line" role="tablist">
+          <div>
             <!-- 출발지 -->
             <div
               class="row_box item_line"
               :class="{ active: toggleStates.departure.isVisible }">
-              <div @click="toggleSection('departure')">
-                <div>
+              <div @click="toggleSection('departure')" >
+                <div >
                   <h3 v-if="toggleStates.departure.awesome">출발지</h3>
                   <h3 v-else>어디서 짐을 가져갈까요?</h3>
                   <span
@@ -102,11 +102,6 @@ const decrease = () => {
                       placeholder="출발장소" />
                   </div>
                 </div>
-                <!-- 기타 장소 입력 영역 뺴도될듯 -->
-                <!-- <div class="row row_etc">
-                <label>물품보관장소</label>
-                <input type="text">
-              </div> -->
                 <!-- 맡길 날짜 선택 -->
                 <div class="row">
                   <label>맡길 날짜</label>
@@ -133,8 +128,6 @@ const decrease = () => {
                       placeholder="맡길 시간" />
                   </div>
                 </div>
-                <!-- 항공편명 입력 빼도 될 듯 -->
-                <!-- <div class="row no_active"></div> -->
               </div>
             </div>
             <!-- 도착지 -->
@@ -166,7 +159,6 @@ const decrease = () => {
                   <label>도착지</label>
                   <div class="res_input">
                     <img src="/public/images/icon/lens_icon.png" alt="돋보기" />
-
                     <input
                       type="text"
                       value=""
@@ -175,7 +167,6 @@ const decrease = () => {
                       placeholder="도착장소" />
                   </div>
                 </div>
-
                 <!-- 찾을 날짜 선택 -->
                 <div class="row">
                   <label>찾을 날짜</label>
@@ -434,14 +425,14 @@ const decrease = () => {
     }
   }
 }
-// 배송정보 입력
+// 배송정보 타이틀
 .a4_title {
   font-size: 2.25rem;
   font-weight: bold;
   margin-bottom: 20px;
-}
-.a4_title span {
-  color: $primary-color;
+  span {
+    color: $primary-color;
+  }
 }
 // 배송정보 입력창
 #res_content {
@@ -452,97 +443,102 @@ const decrease = () => {
   margin: 0px auto 30px;
   min-height: 350px;
 }
-//row box
-.row_box {
-  background-color: #fff;
-  padding: 18px 25px;
-  margin: 0 1vh 3vh 0;
-  // border: 2px solid $input-select;
-  border-radius: 10px;
-}
-.row_box.active {
-  border: none;
-  box-shadow: $reservation-boxShadow;
-}
-.row_box h3 {
-  display: inline-block;
-  font-size: 18px;
-  font-weight: 600;
-}
-//row
-.row {
-  position: relative;
-  padding-top: 25px;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.row_line {
-  margin: 15px 0;
-  border-top: 2px dashed $input-select;
-}
-.row label {
-  font-weight: 600;
-}
-// 입력창
-.row input {
-  position: relative;
-  width: 466px;
-  height: 45px;
-  font-size: $text-font-M;
-  font-weight: bold;
-  border: 1px solid $input-select;
-  border-radius: 10px;
-  padding-left: 45px;
-}
-.res_input {
-  position: relative;
-}
-.res_input img {
-  position: absolute;
-  top: 25%;
-  left: 15px;
-  z-index: 10;
-}
 .row_box > div:first-child {
   cursor: pointer;
 }
-.row_box .accordion_icon {
-  float: right;
-  color: gray;
-  font-size: 1.5em;
-  padding: 0px 10px;
+.row_box {
+  height: 54px;
+  background-color: #fff;
+  padding: 18px 25px;
+  margin: 0 1vh 3vh 0;
+  border-radius: 10px;
+  transition: all 0.3s;
+  &.active {
+    border: none;
+    box-shadow: $reservation-boxShadow;
+    height: 298px;
+  }
+  h3 {
+    display: inline-block;
+    font-size: 18px;
+    font-weight: 600;
+  }
+  // 토글 아이콘
+  .accordion_icon {
+    float: right;
+    color: gray;
+    font-size: 1.5em;
+    padding: 0px 10px;
+  }
+  // 토글시 라인
+  .row_line {
+    margin: 15px 0;
+    border-top: 2px dashed $input-select;
+  }
+}
+.tr{
+  transition: all 0.3s;
+}
+.row {
+  position: relative;
+  padding-top: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  label {
+    font-weight: 600;
+  }
+  input {
+    position: relative;
+    width: 466px;
+    height: 45px;
+    font-size: $text-font-M;
+    font-weight: bold;
+    border: 1px solid $input-select;
+    border-radius: 10px;
+    padding-left: 45px;
+  }
+  // 아이콘
+  .res_input {
+    position: relative;
+    img {
+      position: absolute;
+      top: 25%;
+      left: 15px;
+      z-index: 10;
+    }
+  }
 }
 // 수하물
 .carrier_list {
   padding: 30px 0;
-}
-.carrier_list li {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 30px;
-}
-.cr_name {
-  font-size: 20px;
-  font-weight: bold;
-  white-space: nowrap;
-}
-.cr_txt {
-  font-size: 14px;
-  white-space: nowrap;
-}
-// 수하물 버튼
-.cr_btn {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background-color: rgba(255, 111, 0, 0.1);
-  border: 1px solid rgba(255, 111, 0, 0.5);
-  cursor: pointer;
-}
-.cr_btn i {
-  width: 100%;
+  li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+  }
+  .cr_name {
+    font-size: 20px;
+    font-weight: bold;
+    white-space: nowrap;
+  }
+  .cr_txt {
+    font-size: 14px;
+    white-space: nowrap;
+    margin-left: 20px;
+  }
+  // 수하물 버튼
+  .cr_btn {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: rgba(255, 111, 0, 0.1);
+    border: 1px solid rgba(255, 111, 0, 0.5);
+    cursor: pointer;
+    i {
+      width: 100%;
+    }
+  }
 }
 // 수하물 주의문
 .cr_warning {
