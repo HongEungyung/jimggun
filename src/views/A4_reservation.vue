@@ -1,7 +1,43 @@
-<script setup></script>
+<script setup>
+import { ref } from "vue";
+
+// 각 섹션별 토글 상태 관리
+const toggleStates = ref({
+  // 출발지
+  departure: {
+    isVisible: true,
+    awesome: false,
+  },
+  // 도착지
+  arrival: {
+    isVisible: false,
+    awesome: true,
+  },
+  // 수하물
+  luggage: {
+    isVisible: false,
+    awesome: true,
+  },
+});
+
+// 토글 함수
+const toggleSection = (section) => {
+  toggleStates.value[section].isVisible =
+    !toggleStates.value[section].isVisible;
+  toggleStates.value[section].awesome = !toggleStates.value[section].awesome;
+};
+
+// 수하물 버튼
+const count = ref(0);
+const inscrease = () => {
+  count.value++;
+};
+const decrease = () => {
+  count.value--;
+};
+</script>
 
 <template>
-
   <div class="res_wrap">
     <div class="res_inner">
       <!-- 상단 -->
@@ -17,7 +53,6 @@
             alt="예약진행바" />
         </div>
         <div class="progress_text">
-
           <p>예약하기</p>
           <p>확인 및 결제</p>
           <p>예약완료</p>
@@ -30,45 +65,42 @@
         <div id="res_content">
           <div class="res_line" role="tablist">
             <!-- 출발지 -->
-            <!-- 예약하기 시작할때 accordion 열림 active-->
-            <div class="res_box item_line active">
-              <div
-                class="ui_accordian"
-                role="tab"
-                id="ui-id-3"
-                aria-controls="ui-id-4"
-                aria-selected="false"
-                aria-expanded="false"
-                tabindex="0">
-                <h3>출발지</h3>
-                <h4>어디에서 짐을 맡길까요?</h4>
-                <span class="fa accordion_icon">
-                  <img
-                    src="/public/images/icon/toggleDown_icon.png"
-                    alt="아래아이콘" />
-                </span>
+            <div
+              class="row_box item_line"
+              :class="{ active: toggleStates.departure.isVisible }">
+              <div @click="toggleSection('departure')">
+                <div>
+                  <h3 v-if="toggleStates.departure.awesome">출발지</h3>
+                  <h3 v-else>어디서 짐을 가져갈까요?</h3>
+                  <span
+                    v-if="toggleStates.departure.awesome"
+                    class="fa accordion_icon">
+                    <img
+                      src="/public/images/icon/toggleDown_icon.png"
+                      alt="아래아이콘" />
+                  </span>
+                  <span v-else class="fa accordion_icon">
+                    <img
+                      src="/public/images/icon/toggleUp_icon.png"
+                      alt="아래아이콘" />
+                  </span>
+                </div>
               </div>
-              <!-- 아코디언 활성화 된 콘텐츠 영역 -->
-              <div
-                class="ui-accordion-content"
-                id="ui-id-4"
-                aria-labelledby="ui-id-3"
-                role="tabpanel"
-                aria-hidden="false"
-                style="display: block">
+              <!-- 토글 활성화 된 콘텐츠 영역 -->
+              <div v-if="toggleStates.departure.isVisible" class="row_line">
                 <!-- 출발지 입력 영역 -->
                 <div class="row">
                   <label>출발지</label>
-                  <i class="input_icon">
-                    <img src="/public/images/icon/lens_icon.png" alt="돋보기"
-                  /></i>
-                  <input
-                    type="text"
-                    value=""
-                    class="res-input"
-                    readonly=""
-                    autocomplete="off"
-                    placeholder="출발장소" />
+                  <div class="res_input">
+                    <img src="/public/images/icon/lens_icon.png" alt="돋보기" />
+
+                    <input
+                      type="text"
+                      value=""
+                      readonly=""
+                      autocomplete="off"
+                      placeholder="출발장소" />
+                  </div>
                 </div>
                 <!-- 기타 장소 입력 영역 뺴도될듯 -->
                 <!-- <div class="row row_etc">
@@ -78,138 +110,124 @@
                 <!-- 맡길 날짜 선택 -->
                 <div class="row">
                   <label>맡길 날짜</label>
-                  <i class="input_icon">
-                    <img src="/public/images/icon/data_icon.png" alt="달력"
-                  /></i>
-                  <input
-                    type="text"
-                    value=""
-                    class="res-input"
-                    readonly=""
-                    autocomplete="off"
-                    placeholder="맡길 날짜" />
+                  <div class="res_input">
+                    <img src="/public/images/icon/data_icon.png" alt="달력" />
+                    <input
+                      type="text"
+                      value=""
+                      readonly=""
+                      autocomplete="off"
+                      placeholder="맡길 날짜" />
+                  </div>
                 </div>
                 <!-- 맡길 시간 선택 -->
                 <div class="row">
                   <label>맡길 시간</label>
-                  <i class="input_icon">
-                    <img src="/public/images/icon/watch_icon.png" alt="시계"
-                  /></i>
-                  <input
-                    type="text"
-                    value=""
-                    class="res-input"
-                    readonly=""
-                    autocomplete="off"
-                    placeholder="맡길 시간" />
+                  <div class="res_input">
+                    <img src="/public/images/icon/watch_icon.png" alt="시계" />
+                    <input
+                      type="text"
+                      value=""
+                      readonly=""
+                      autocomplete="off"
+                      placeholder="맡길 시간" />
+                  </div>
                 </div>
                 <!-- 항공편명 입력 빼도 될 듯 -->
                 <!-- <div class="row no_active"></div> -->
               </div>
             </div>
             <!-- 도착지 -->
-            <div class="res_box item_line">
-              <div
-                class="ui_accordian"
-                role="tab"
-                id="ui-id-5"
-                aria-controls="ui-id-6"
-                aria-selected="false"
-                aria-expanded="false"
-                tabindex="-1">
-                <h3>도착지</h3>
-                <h4>어디에서 짐을 찾을까요?</h4>
-                <span class="fa accordion_icon">
-                  <img
-                    src="/public/images/icon/toggleDown_icon.png"
-                    alt="아래아이콘" />
-                </span>
+            <div
+              class="row_box item_line"
+              :class="{ active: toggleStates.arrival.isVisible }">
+              <div @click="toggleSection('arrival')">
+                <div>
+                  <h3 v-if="toggleStates.arrival.awesome">도착지</h3>
+                  <h3 v-else>어디에 짐을 놔둘까요?</h3>
+                  <span
+                    v-if="toggleStates.arrival.awesome"
+                    class="fa accordion_icon">
+                    <img
+                      src="/public/images/icon/toggleDown_icon.png"
+                      alt="아래아이콘" />
+                  </span>
+                  <span v-else class="fa accordion_icon">
+                    <img
+                      src="/public/images/icon/toggleUp_icon.png"
+                      alt="아래아이콘" />
+                  </span>
+                </div>
               </div>
-              <!-- 아코디언 활성화 된 콘텐츠 영역 -->
-              <div
-                class="ui-accordion-content"
-                id="ui-id-6"
-                aria-labelledby="ui-id-5"
-                role="tabpanel"
-                aria-hidden="false"
-                style="display: block">
-                <!-- 출발지 입력 영역 -->
+              <!-- 토글 활성화 된 콘텐츠 영역 -->
+              <div v-if="toggleStates.arrival.isVisible" class="row_line">
+                <!-- 도착지 입력 영역 -->
                 <div class="row">
                   <label>도착지</label>
-                  <i class="input_icon">
-                    <img src="/public/images/icon/lens_icon.png" alt="돋보기"
-                  /></i>
-                  <input
-                    type="text"
-                    value=""
-                    class="res-input"
-                    readonly=""
-                    autocomplete="off"
-                    placeholder="출발장소" />
+                  <div class="res_input">
+                    <img src="/public/images/icon/lens_icon.png" alt="돋보기" />
+
+                    <input
+                      type="text"
+                      value=""
+                      readonly=""
+                      autocomplete="off"
+                      placeholder="도착장소" />
+                  </div>
                 </div>
-                <!-- 기타 장소 입력 영역 뺴도될듯 -->
-                <!-- <div class="row row_etc">
-                <label>물품보관장소</label>
-                <input type="text">
-              </div> -->
-                <!-- 맡길 날짜 선택 -->
+
+                <!-- 찾을 날짜 선택 -->
                 <div class="row">
                   <label>찾을 날짜</label>
-                  <i class="input_icon">
-                    <img src="/public/images/icon/data_icon.png" alt="달력"
-                  /></i>
-                  <input
-                    type="text"
-                    value=""
-                    class="res-input"
-                    readonly=""
-                    autocomplete="off"
-                    placeholder="찾을 날짜" />
+                  <div class="res_input">
+                    <img src="/public/images/icon/data_icon.png" alt="달력" />
+                    <input
+                      type="text"
+                      value=""
+                      readonly=""
+                      autocomplete="off"
+                      placeholder="찾을 날짜" />
+                  </div>
                 </div>
-                <!-- 맡길 시간 선택 -->
+                <!-- 찾을 시간 선택 -->
                 <div class="row">
                   <label>찾을 시간</label>
-                  <i class="input_icon">
-                    <img src="/public/images/icon/watch_icon.png" alt="시계"
-                  /></i>
-                  <input
-                    type="text"
-                    value=""
-                    class="res-input"
-                    readonly=""
-                    autocomplete="off"
-                    placeholder="찾을 시간" />
+                  <div class="res_input">
+                    <img src="/public/images/icon/watch_icon.png" alt="시계" />
+                    <input
+                      type="text"
+                      value=""
+                      readonly=""
+                      autocomplete="off"
+                      placeholder="찾을 시간" />
+                  </div>
                 </div>
-                <!-- 항공편명 입력 빼도 될 듯 -->
-                <!-- <div class="row no_active"></div> -->
               </div>
             </div>
             <!-- 수하물 -->
-            <div class="res_box result_Y">
-              <div
-                class="ui_accordian"
-                role="tab"
-                id="ui-id-1"
-                aria-controls="ui-id-2"
-                aria-selected="false"
-                aria-expanded="false"
-                tabindex="-1">
-                <h3>수하물</h3>
-                <h4>보내는 짐의 크기와 갯수를 알려주세요</h4>
-                <span class="fa accordion_icon">
-                  <img
-                    src="/public/images/icon/toggleDown_icon.png"
-                    alt="아래아이콘" />
-                </span>
+            <div
+              class="row_box result_Y"
+              :class="{ active: toggleStates.luggage.isVisible }">
+              <div @click="toggleSection('luggage')">
+                <div>
+                  <h3 v-if="toggleStates.luggage.awesome">수하물</h3>
+                  <h3 v-else>보내는 짐의 크기와 갯수를 알려주세요</h3>
+                  <span
+                    v-if="toggleStates.luggage.awesome"
+                    class="fa accordion_icon">
+                    <img
+                      src="/public/images/icon/toggleDown_icon.png"
+                      alt="아래아이콘" />
+                  </span>
+                  <span v-else class="fa accordion_icon">
+                    <img
+                      src="/public/images/icon/toggleUp_icon.png"
+                      alt="아래아이콘" />
+                  </span>
+                </div>
               </div>
-              <!-- 아코디언 활성화 된 콘텐츠 영역 -->
-              <div
-                class="ui-accordion-content"
-                id="ui-id-2"
-                aria-labelledby="ui-id-1"
-                role="tabpanel"
-                aria-hidden="false"
-                style="display: block">
+              <!--토글 활성화 된 콘텐츠 영역 -->
+              <div v-if="toggleStates.luggage.isVisible" class="row_line">
                 <!-- 수하물 입력 영역 -->
                 <ul class="carrier_list">
                   <li>
@@ -220,20 +238,29 @@
                       </p>
                     </div>
                     <div class="cr_btn_area">
-                      <button type="button" class="cr_btn" txt="감소">
+                      <button
+                        @click="decrease"
+                        type="button"
+                        class="cr_btn"
+                        txt="감소">
                         <i
                           ><img src="/public/images/icon/minus_icon.png" alt=""
                         /></i>
                       </button>
-                      <input
+                      <!-- <input
                         type="text"
                         value="0"
                         class="cr_btn_center"
-                        maxlength="5" />
-                      <button type="button" class="cr_btn" txt="증가">
-                        <i
-                          ><img src="/public/images/icon/plus_icon.png" alt=""
-                        /></i>
+                        maxlength="5" /> -->
+                      <span>{{ count }}</span>
+                      <button
+                        @click="inscrease"
+                        type="button"
+                        class="cr_btn"
+                        txt="증가">
+                        <i>
+                          <img src="/public/images/icon/plus_icon.png" alt="" />
+                        </i>
                       </button>
                     </div>
                   </li>
@@ -313,7 +340,43 @@
           </div>
         </div>
         <!-- 입력 결과창 -->
-        <div id="res_result_box"></div>
+        <div id="res_result_box">
+          <!-- 모바일 -->
+          <div class="rrb_mb"></div>
+          <!-- 웹 -->
+          <ul class="rrb_detail">
+            <li class="rrb_fr">
+              <label>출발지</label>
+              <div>-</div>
+            </li>
+            <li class="rrb_fr_data">
+              <label>짐 맡길 일정</label>
+              <div>-</div>
+            </li>
+            <li class="rrb_to">
+              <label>도착지</label>
+              <div>-</div>
+            </li>
+            <li class="rrb_to_data">
+              <label>짐 찾을 일정</label>
+              <div>-</div>
+            </li>
+            <li class="rrb_cr">
+              <label>수하물</label>
+              <div>-</div>
+            </li>
+          </ul>
+          <!-- 총 금액 -->
+          <div class="rrb_default">
+            <div class="rrb_price">
+              <label>배송 예상 금액</label>
+              <div>0원</div>
+            </div>
+            <div class="rrb_sumbit_btn">
+              <input type="button" value="배송 예약하기" />
+            </div>
+          </div>
+        </div>
       </form>
     </div>
   </div>
@@ -325,24 +388,15 @@
 
 .res_wrap {
   width: 100%;
-
   background-color: $sub-color;
-  // margin: 2rem;      /* = 20px */
-  // padding: 1.5rem;   /* = 15px */
-}
-.res_inner {
-  max-width: 920px;
-  min-width: 320px;
-  margin: 0 auto;
+  .res_inner {
+    padding-top: 80px;
+    max-width: 920px;
+    min-width: 320px;
+    margin: auto;
+  }
 }
 // 상단
-.res_top {
-  text-align: center;
-  margin: 120px 0 50px 0;
-}
-.res_text_box{
-  margin-bottom: 70px;
-}
 #res_top_title {
   margin: 10px 0;
   display: inline-block;
@@ -350,32 +404,43 @@
   line-height: 1.4;
   background-color: $primary-color;
   color: #fff;
-  font-weight: bold;
   font-size: 1.25rem;
-  padding: 5px 20px;
+  padding: 2px 20px;
 }
-// 프로그래스 영역
-.progress_bar{
-  width: 100%;
-  margin-bottom: 25px;
-}
-.progress_text{
-  font-size: 1.875rem;
-  font-weight: 500;
-  display: flex;
-  justify-content: space-between;
-}
-.res_text_box h2 {
-  font-size: 2.25rem;
-  font-weight: bold;
-  
+.res_top {
+  text-align: center;
+  margin-bottom: 50px;
+  .res_text_box {
+    margin-bottom: 70px;
+    h2 {
+      font-size: 2.25rem;
+      font-weight: bold;
+    }
+  }
+  // 프로그래스 영역
+  .progress_bar {
+    width: 100%;
+    margin-bottom: 25px;
+  }
+  .progress_text {
+    font-size: 1.75rem;
+    display: flex;
+    justify-content: space-between;
+    color: $font-light-gray;
+    :first-child {
+      // font-size: 1.875rem;
+      font-weight: 500;
+      color: $primary-color;
+    }
+  }
 }
 // 배송정보 입력
-.a4_title{
+.a4_title {
   font-size: 2.25rem;
   font-weight: bold;
+  margin-bottom: 20px;
 }
-.a4_title span{
+.a4_title span {
   color: $primary-color;
 }
 // 배송정보 입력창
@@ -386,33 +451,60 @@
   min-width: 320px;
   margin: 0px auto 30px;
   min-height: 350px;
-  background-color: aliceblue;
 }
-#res_result_box {
-  width: 30%;
-  display: block;
-  float: right;
-  border: 1px solid #dfdfdf;
+//row box
+.row_box {
+  background-color: #fff;
+  padding: 18px 25px;
+  margin: 0 1vh 3vh 0;
+  // border: 2px solid $input-select;
   border-radius: 10px;
-  padding: 5px 15px 15px;
-  font-size: 13px;
-  background-color: rgb(246, 111, 111);
-  position: relative;
 }
-// 입력창 
+.row_box.active {
+  border: none;
+  box-shadow: $reservation-boxShadow;
+}
+.row_box h3 {
+  display: inline-block;
+  font-size: 18px;
+  font-weight: 600;
+}
+//row
+.row {
+  position: relative;
+  padding-top: 25px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.row_line {
+  margin: 15px 0;
+  border-top: 2px dashed $input-select;
+}
+.row label {
+  font-weight: 600;
+}
+// 입력창
 .row input {
+  position: relative;
   width: 466px;
   height: 45px;
   font-size: $text-font-M;
   font-weight: bold;
   border: 1px solid $input-select;
   border-radius: 10px;
+  padding-left: 45px;
 }
-.a4_row_box.active {
-  box-shadow: $reservation-boxShadow;
-  border: none;
+.res_input {
+  position: relative;
 }
-
+.res_input img {
+  position: absolute;
+  top: 25%;
+  left: 15px;
+  z-index: 10;
+}
 .row_box > div:first-child {
   cursor: pointer;
 }
@@ -422,26 +514,124 @@
   font-size: 1.5em;
   padding: 0px 10px;
 }
+// 수하물
+.carrier_list {
+  padding: 30px 0;
+}
+.carrier_list li {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+.cr_name {
+  font-size: 20px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+.cr_txt {
+  font-size: 14px;
+  white-space: nowrap;
+}
+// 수하물 버튼
+.cr_btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: rgba(255, 111, 0, 0.1);
+  border: 1px solid rgba(255, 111, 0, 0.5);
+  cursor: pointer;
+}
+.cr_btn i {
+  width: 100%;
+}
 // 수하물 주의문
-.cr_warning span {
-  color: $warning-color;
-}
-// 수하물 도움말
-
-.cr_help_text b {
-  color: $primary-color;
-}
-.cr_help_text ul li {
+.cr_warning {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 4px;
+  span {
+    color: $warning-color;
+  }
 }
-.cr_help_text ul li::before {
-  content: "";
+// 수하물 도움말
+.cr_help_text {
+  background-color: $bg-light;
+  padding: 15px;
+  border: 1px solid $bg-primary;
+  border-radius: 10px;
+  margin-top: 15px;
+  color: $font-light-gray;
+  font-size: 13px;
+  b {
+    color: $primary-color;
+    margin-bottom: 10px;
+  }
+  ul li {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    &::before {
+      content: "";
+      display: block;
+      width: 5px;
+      height: 5px;
+      background-color: $font-light-gray;
+      border-radius: 50%;
+    }
+  }
+}
+// 입력 결과창
+#res_result_box {
+  width: 30%;
   display: block;
-  width: 5px;
-  height: 5px;
-  background-color: $font-gray;
-  border-radius: 50%;
+  float: right;
+  border-radius: 10px;
+  padding: 5px 15px 15px;
+  font-size: 13px;
+  background-color: #fff;
+  position: relative;
+}
+// 입력 정보 값
+.rrb_detail li {
+  display: flex;
+  justify-content: space-between;
+  margin: 14px 0;
+  :first-child {
+    font-size: 14px;
+    color: $font-gray;
+  }
+}
+// 금액 값
+.rrb_default {
+  border-top: 1px solid $input-select;
+  .rrb_price {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0;
+    font-size: 14px;
+    font-weight: bold;
+    div {
+      color: $primary-color;
+      font-size: 15px;
+    }
+  }
+  .rrb_sumbit_btn {
+    input {
+      width: 100%;
+      height: 2.375rem;
+      background-color: $primary-color;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+      color: #fff;
+      padding: 6px 12px;
+      font-size: 14px;
+      &:hover {
+        background-color: $primary-hover;
+      }
+    }
+  }
 }
 </style>
