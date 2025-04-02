@@ -20,8 +20,9 @@
       <div class="headerSubnav">
         <router-link to="/login">로그인</router-link>
         <div class="headerSubLangs">
-        <a href="#">KOR</a> |
-        <a href="#">ENG</a>
+          <a href="#">KOR</a>
+          <span>|</span> 
+          <a href="#">ENG</a>
         </div>
       </div>
     </div>
@@ -37,12 +38,13 @@
 }
 // 이너
 .headerInner {
-  max-width: 1280px;
+  max-width: 1320px;
   margin: 0 auto;
+  padding: 0 20px;
   background-color: $white;
   justify-content: space-between;
 }
-// 상단
+// 헤더
 .header {
   position: relative;
   height: 70px;
@@ -50,6 +52,7 @@
 }
 // 로고
 .headerLogo {
+  display: block;
   width: 10%;
   max-width: 200px;
   padding: 10px 0;
@@ -68,9 +71,9 @@
     text-align: center;
     font-weight: bold;
     font-size: $text-font-M;
-    a{
-        color: $font-primary;
-        text-decoration: none;
+    a {
+      color: $font-primary;
+      text-decoration: none;
     }
   }
 }
@@ -81,9 +84,13 @@
   gap: 30px;
   font-size: $text-font-S;
   font-weight: 500;
-  a{
+  a {
     color: $font-gray;
     text-decoration: none;
+  }
+  span {
+    color: $font-gray;
+    padding: 0 5px;
   }
 }
 </style>
