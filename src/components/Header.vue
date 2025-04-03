@@ -47,7 +47,7 @@
 // 헤더
 .header {
   position: relative;
-  height: 100px;
+  height: 70px;
   display: flex;
 }
 // 로고
@@ -55,7 +55,7 @@
   display: block;
   width: 10%;
   max-width: 200px;
-  padding: 20px 0;
+  padding: 10px 0;
   box-sizing: border-box;
   img {
     height: 100%;
@@ -70,7 +70,7 @@
     width: calc(100% / 5);
     text-align: center;
     font-weight: bold;
-    font-size: $text-font-XL;
+    font-size: $text-font-M;
     a {
       color: $font-primary;
       text-decoration: none;
