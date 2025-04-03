@@ -182,7 +182,10 @@ const activeTap = ref("delivery");
               <div class="dc-icon">
                 <img src="/public/images/lee/jewel.png" alt="귀중품" />
               </div>
-              <p class="dc-text">현금 및 귀중품 등 <span>분실</span> 및 <span>도난</span> 우려가 있는 품목들 <br> (분실시 짐꾼은 책임지지 않습니다.)</p>
+              <p class="dc-text">
+                현금 및 귀중품 등 <span>분실</span> 및 <span>도난</span> 우려가 있는 품목들 <br />
+                (분실시 짐꾼은 책임지지 않습니다.)
+              </p>
             </li>
             <li class="diffcult-list4 diffcult-list">
               <div class="dc-icon">
@@ -221,13 +224,86 @@ const activeTap = ref("delivery");
           <li class="careful-list">
             여러개의 짐을 하나로 묶어서 예약한 경우 서비스 이용이 거절될 수 있으며, 거절 될 시 환불이 불가합니다.
           </li>
-          <li class="careful-list">정확한 가방배송을 위해 카카오톡 가방사진 링크에 가방과 보관장소를 첨부해주시고 업로드 하지 않을 시 발생한 문제는 책임지지 않습니다.</li>
+          <li class="careful-list">
+            정확한 가방배송을 위해 카카오톡 가방사진 링크에 가방과 보관장소를 첨부해주시고 업로드 하지 않을 시 발생한
+            문제는 책임지지 않습니다.
+          </li>
         </ul>
       </div>
     </section>
-    <!-- 짐 이동 영역 -->
+    <!-- 짐 보관 영역 -->
     <section v-if="activeTap === 'keep'" class="keep-inner">
-    
+      <!-- 1. 안전 보관 서비스 -->
+      <div class="safe-storage inner">
+        <h4 class="safe-title">짐꾼의 안전 <span>보관</span> 서비스</h4>
+        <ul class="safe-index">
+          <li>
+            <div class="safe-list safe-list1">
+              <div class="safe-text">
+                <h4>위치확인</h4>
+                <p>
+                  <span>희망하는 지역의 지점 <strong>미리 확인</strong>하기</span>
+                </p>
+              </div>
+              <div class="safe-line"></div>
+              <div class="safe-icon">
+                <span>01</span>
+                <img src="/public/images/lee/safe1.png" alt="안전보관아이콘1" />
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="safe-list safe-list2">
+              <div class="safe-text">
+                <h4>위치확인</h4>
+                <p>
+                  <span>보관할 짐과 함께 <strong>지점 방문</strong>하기</span>
+                </p>
+              </div>
+              <div class="safe-line"></div>
+              <div class="safe-icon">
+                <span>02</span>
+                <img src="/public/images/lee/safe2.png" alt="안전보관아이콘2" />
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="safe-list safe-list3">
+              <div class="safe-text">
+                <h4>위치확인</h4>
+                <p>
+                  <span>보관함 선택 및 암호 설정 후 <strong>결제</strong>하기</span>
+                </p>
+              </div>
+              <div class="safe-line"></div>
+              <div class="safe-icon">
+                <span>03</span>
+                <img src="/public/images/lee/safe3.png" alt="안전보관아이콘3" />
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="safe-list safe-list4">
+              <div class="safe-text">
+                <h4>위치확인</h4>
+                <p>
+                  <span>짐을 안전하게<strong>보관</strong>시작</span>
+                </p>
+              </div>
+              <div class="safe-line"></div>
+              <div class="safe-icon">
+                <span>04</span>
+                <img src="/public/images/lee/safe4.png" alt="안전보관아이콘4" />
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <!-- 2. 보관함 위치 맵 -->
+      <div class="storage-position inner">
+        <h4>짐꾼의 보관함 위치</h4>
+        <div id="kakaoMap"></div>
+      </div>
     </section>
   </div>
 </template>
@@ -304,19 +380,7 @@ const activeTap = ref("delivery");
       display: flex;
       align-items: center;
       justify-content: space-around;
-      &:first-child {
-        .a2-next-1 {
-          min-width: 20px;
-          height: 326px;
-        }
-      }
-      &:last-child {
-        .a2-next {
-          min-width: 20px;
-          height: 326px;
-          // padding: 0;
-        }
-      }
+
       .fast-list {
         width: 90%;
         max-width: 240px;
@@ -341,14 +405,7 @@ const activeTap = ref("delivery");
           background: url("/public/images/lee/nextstep.png");
         }
       }
-      .a2-next {
-        padding: 0 15px;
-        min-width: 20px;
-        img {
-          width: 100%;
-          min-width: 16px;
-        }
-      }
+
       .fast-list1 {
         p {
           display: flex;
@@ -609,7 +666,7 @@ const activeTap = ref("delivery");
     flex-direction: column;
     gap: 20px;
     .careful-list {
-      list-style :disc;
+      list-style: disc;
       font-size: $text-font-L;
       font-weight: 300;
       color: $font-primary;
@@ -628,6 +685,114 @@ const activeTap = ref("delivery");
   .iq-text span,
   .dc-text span {
     font-size: 18px !important;
+  }
+}
+//
+// 짐 보관 영역
+// 1. 안전 보관 서비스
+.safe-storage {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  .safe-title {
+    font-weight: 600;
+    font-size: $title-font-M;
+    margin: 0 auto;
+    margin-bottom: 70px;
+    span {
+      color: $primary-color;
+    }
+  }
+  .safe-index {
+    width: 100%;
+    display: flex;
+    margin-bottom: 100px;
+    align-items: center;
+    justify-content: center;
+    li {
+      position: relative;
+      width: calc(100% / 4);
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      .safe-list {
+        width: 90%;
+        max-width: 240px;
+        min-width: 175px;
+        max-height: 326px;
+        border: 1px solid rgba(229, 229, 236, 1);
+        border-radius: 10px;
+        box-shadow: $info-boxShadow;
+        padding: 0 25px;
+        .safe-text {
+          h4 {
+            font-size: $text-font-XL;
+            font-weight: bold;
+            margin-top: 40px;
+          }
+          p {
+            margin: 18px 0;
+            font-size: $text-font-M;
+            color: $font-gray;
+            line-height: 1.4;
+            min-height: 45px;
+            display: flex;
+            align-items: center;
+            span {
+              strong {
+                color: $font-primary;
+                font-weight: 600;
+              }
+            }
+          }
+        }
+        .safe-line {
+          width: 100%;
+          padding: 0 25px;
+          height: 2px;
+          background-color: $bg-light;
+          margin: 0;
+        }
+        .safe-icon {
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+          margin: 0;
+          margin-top: 25px;
+          padding: 0;
+          span {
+            font-weight: bold;
+            font-size: $text-font-XL;
+            color: $primary-color;
+          }
+          img {
+            margin-top: 25px;
+            margin-bottom: 30px;
+          }
+        }
+      }
+      .safe-list1,
+      .safe-list2,
+      .safe-list3 {
+        &::after {
+          content: "";
+          position: absolute;
+          top: 50%;
+          right: 0;
+          transform: translate(50%, -50%);
+          display: block;
+          width: 16px;
+          height: 24px;
+          background: url("/public/images/lee/nextstep.png");
+        }
+      }
+    }
+  }
+}
+// 반응형 레이아웃
+@media screen and (max-width: 1000px) {
+  .safe-list::after {
+    display: none !important;
   }
 }
 </style>
