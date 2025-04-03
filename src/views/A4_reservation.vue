@@ -1,6 +1,10 @@
 <script setup>
-import { ref } from "vue";
-
+import { computed, ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
+const route = useRoute();
+// useRouter() 라우트를 변경(이동)할때 사용 (push(), replace(), go())
+const router = useRouter();
+// console.log(route.params);
 // 각 섹션별 토글 상태 관리
 const toggleStates = ref({
   // 출발지
@@ -19,22 +23,68 @@ const toggleStates = ref({
     awesome: true,
   },
 });
-
 // 토글 함수
 const toggleSection = (section) => {
   toggleStates.value[section].isVisible =
     !toggleStates.value[section].isVisible;
   toggleStates.value[section].awesome = !toggleStates.value[section].awesome;
 };
+// 수하물별 금액 책정
+const products = ref([
+  {
+    id: 1,
+    name: "S",
+    price: 10000,
+    description: "최장변 길이 55cm이하",
+    quantity: 0,
+  },
+  {
+    id: 2,
+    name: "M",
+    price: 20000,
+    description: "최장변 길이 65cm미만",
+    quantity: 0,
+  },
+  {
+    id: 3,
+    name: "L",
+    price: 30000,
+    description: "최장변 길이 65cm이상",
+    quantity: 0,
+  },
+]);
+// 현재 선택된 상품 가져오기
+// const product = computed(() => {
+//   return products.value.find((p) => p.id === Number(route.params.id)) || {};
+// });
+const id = Number(route.params.id);
+const product = computed(() => {
+  return products.value.find((p) => p.id === id) || {};
+});
 
-// 수하물 버튼
-const count = ref(0);
-const inscrease = () => {
-  count.value++;
+// 가격 포맷 함수 ,
+const formatPrice = (price) => {
+  if (!price) return "0";
+  return `${price.toLocaleString()}`;
 };
-const decrease = () => {
-  count.value--;
+// 수량 상태 변수
+// const quantity = ref(0);
+const changeQuantity = (productId, amount) => {
+  const product = products.value.find((p) => p.id === productId);
+  if (product) {
+    const newQuantity = product.quantity + amount;
+    if (newQuantity >= 0 && newQuantity <= 5) {
+      product.quantity = newQuantity;
+    }
+  }
 };
+// 총금액 계산
+const totalPrice = computed(() => {
+  return products.value.reduce((total, product) => {
+    return total + product.price * product.quantity;
+  }, 0);
+});
+
 </script>
 
 <template>
@@ -68,8 +118,8 @@ const decrease = () => {
             <div
               class="row_box item_line"
               :class="{ active: toggleStates.departure.isVisible }">
-              <div @click="toggleSection('departure')" >
-                <div >
+              <div @click="toggleSection('departure')">
+                <div>
                   <h3 v-if="toggleStates.departure.awesome">출발지</h3>
                   <h3 v-else>어디서 짐을 가져갈까요?</h3>
                   <span
@@ -129,6 +179,7 @@ const decrease = () => {
                   </div>
                 </div>
               </div>
+              <!-- 도착지 -->
             </div>
             <!-- 도착지 -->
             <div
@@ -197,7 +248,7 @@ const decrease = () => {
             </div>
             <!-- 수하물 -->
             <div
-              class="row_box result_Y"
+              class="luggage_box"
               :class="{ active: toggleStates.luggage.isVisible }">
               <div @click="toggleSection('luggage')">
                 <div>
@@ -221,84 +272,27 @@ const decrease = () => {
               <div v-if="toggleStates.luggage.isVisible" class="row_line">
                 <!-- 수하물 입력 영역 -->
                 <ul class="carrier_list">
-                  <li>
+                  <li v-for="product in products" :key="product.id">
                     <div class="cr_name_area">
                       <p>
-                        <span class="cr_name">S 사이즈</span>
-                        <span class="cr_txt">최장변 길이 55cm이하</span>
+                        <span class="product cr_name"
+                          >{{ product.name }}사이즈</span
+                        >
+                        <span class="cr_txt">{{ product.description }}</span>
                       </p>
                     </div>
                     <div class="cr_btn_area">
                       <button
-                        @click="decrease"
                         type="button"
-                        class="cr_btn"
-                        txt="감소">
+                        @click="changeQuantity(product.id, -1)">
                         <i
                           ><img src="/public/images/icon/minus_icon.png" alt=""
                         /></i>
                       </button>
-                      <!-- <input
-                        type="text"
-                        value="0"
-                        class="cr_btn_center"
-                        maxlength="5" /> -->
-                      <span>{{ count }}</span>
+                      <input v-model="product.quantity" min="0" max="5" />
                       <button
-                        @click="inscrease"
                         type="button"
-                        class="cr_btn"
-                        txt="증가">
-                        <i>
-                          <img src="/public/images/icon/plus_icon.png" alt="" />
-                        </i>
-                      </button>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="cr_name_area">
-                      <p>
-                        <span class="cr_name">M 사이즈</span>
-                        <span class="cr_txt">최장변 길이 65cm미만</span>
-                      </p>
-                    </div>
-                    <div class="cr_btn_area">
-                      <button type="button" class="cr_btn" txt="감소">
-                        <i
-                          ><img src="/public/images/icon/minus_icon.png" alt=""
-                        /></i>
-                      </button>
-                      <input
-                        type="text"
-                        value="0"
-                        class="cr_btn_center"
-                        maxlength="5" />
-                      <button type="button" class="cr_btn" txt="증가">
-                        <i
-                          ><img src="/public/images/icon/plus_icon.png" alt=""
-                        /></i>
-                      </button>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="cr_name_area">
-                      <p>
-                        <span class="cr_name">L 사이즈</span>
-                        <span class="cr_txt">최장변 길이 65cm이상</span>
-                      </p>
-                    </div>
-                    <div class="cr_btn_area">
-                      <button type="button" class="cr_btn" txt="감소">
-                        <i
-                          ><img src="/public/images/icon/minus_icon.png" alt=""
-                        /></i>
-                      </button>
-                      <input
-                        type="text"
-                        value="0"
-                        class="cr_btn_center"
-                        maxlength="5" />
-                      <button type="button" class="cr_btn" txt="증가">
+                        @click="changeQuantity(product.id, 1)">
                         <i
                           ><img src="/public/images/icon/plus_icon.png" alt=""
                         /></i>
@@ -361,7 +355,7 @@ const decrease = () => {
           <div class="rrb_default">
             <div class="rrb_price">
               <label>배송 예상 금액</label>
-              <div>0원</div>
+              <div>{{ formatPrice(totalPrice) }}원</div>
             </div>
             <div class="rrb_sumbit_btn">
               <input type="button" value="배송 예약하기" />
@@ -463,22 +457,20 @@ const decrease = () => {
     font-size: 18px;
     font-weight: 600;
   }
-  // 토글 아이콘
-  .accordion_icon {
-    float: right;
-    color: gray;
-    font-size: 1.5em;
-    padding: 0px 10px;
-  }
-  // 토글시 라인
-  .row_line {
-    margin: 15px 0;
-    border-top: 2px dashed $input-select;
-  }
 }
-.tr{
-  transition: all 0.3s;
+// 토글 아이콘
+.accordion_icon {
+  float: right;
+  color: gray;
+  font-size: 1.5em;
+  padding: 0px 10px;
 }
+// 토글시 라인
+.row_line {
+  margin: 15px 0;
+  border-top: 2px dashed $input-select;
+}
+
 .row {
   position: relative;
   padding-top: 25px;
@@ -497,6 +489,12 @@ const decrease = () => {
     border: 1px solid $input-select;
     border-radius: 10px;
     padding-left: 45px;
+    outline: none;
+    &:focus {
+      border: none;
+      outline: 3px solid rgba(255, 111, 0, 0.5);
+      box-shadow: $reservation-boxShadow;
+    }
   }
   // 아이콘
   .res_input {
@@ -510,6 +508,24 @@ const decrease = () => {
   }
 }
 // 수하물
+.luggage_box {
+  height: 54px;
+  background-color: #fff;
+  padding: 18px 25px;
+  margin: 0 1vh 3vh 0;
+  border-radius: 10px;
+  transition: all 0.7s;
+  &.active {
+    border: none;
+    box-shadow: $reservation-boxShadow;
+    height: 488px;
+  }
+  h3 {
+    display: inline-block;
+    font-size: 18px;
+    font-weight: 600;
+  }
+}
 .carrier_list {
   padding: 30px 0;
   li {
@@ -528,18 +544,26 @@ const decrease = () => {
     margin-left: 20px;
   }
   // 수하물 버튼
-  .cr_btn {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    background-color: rgba(255, 111, 0, 0.1);
-    border: 1px solid rgba(255, 111, 0, 0.5);
-    cursor: pointer;
-    i {
-      width: 100%;
+  .cr_btn_area {
+    button {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background-color: rgba(255, 111, 0, 0.1);
+      border: 1px solid rgba(255, 111, 0, 0.5);
+      cursor: pointer;
+      i {
+        width: 100%;
+      }
+    }
+    input {
+      width: 30px;
+      text-align: center;
+      border: none;
     }
   }
 }
+
 // 수하물 주의문
 .cr_warning {
   display: flex;
