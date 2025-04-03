@@ -1,6 +1,6 @@
 @use "./variables" as *;
 // 색상만
-.btn{
+.c_btn{
     color: #fff;
     background-color: $primary-color;
     &:hover{
