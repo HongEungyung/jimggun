@@ -52,7 +52,6 @@ img {
 }
 .toMain {
   text-decoration: none;
-  
 }
 .mainBtn {
   margin: auto;
@@ -66,8 +65,8 @@ img {
   color: $primary-color;
   font-size: 16px;
   font-weight: bold;
-  align-items: center; 
-  justify-content: center; 
+  align-items: center;
+  justify-content: center;
   margin-bottom: 50px;
   cursor: pointer;
 }

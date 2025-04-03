@@ -1,5 +1,8 @@
 <script setup>
 import { ref } from 'vue';
+import ModalInquire from '@/components/ModalInquire.vue'; // 모달 컴포넌트 임포트
+
+const isModalOpen = ref(false);
 </script>
 
 <template>
@@ -9,7 +12,9 @@ import { ref } from 'vue';
       지금 여행을 떠나세요 !
     </h1>
     <h2>짐 보관부터 운송, 그리고 KTX특송까지</h2>
-    <p>자주 사용하는 계정으로 간편하게 로그인</p>
+    <p @click="isModalOpen = true">자주 사용하는 계정으로 간편하게 로그인</p>
+      <!-- 모달 컴포넌트 -->
+      <ModalInquire :isOpen="isModalOpen" @close="isModalOpen = false" />
     <div class="btn">
       <router-link to="/signUp" class="routerBtn">
         <button class="loginBtn naver">
