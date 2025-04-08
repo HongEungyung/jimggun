@@ -1,0 +1,45 @@
+@import "/src/assets/variables";
+.res_wrap {
+  width: 100%;
+  background-color: $sub-color;
+  .res_inner {
+    padding-top: 80px;
+    max-width: 920px;
+    min-width: 320px;
+    margin: auto;
+  }
+}
+// 상단
+#res_top_title {
+  margin: 10px 0;
+  display: inline-block;
+  border-radius: 20px;
+  line-height: 1.4;
+  background-color: $primary-color;
+  color: #fff;
+  font-size: 1.25rem;
+  padding: 2px 20px;
+}
+.res_top {
+  text-align: center;
+  margin-bottom: 50px;
+  .res_text_box {
+    margin-bottom: 70px;
+    h2 {
+      font-size: 2.25rem;
+      font-weight: bold;
+    }
+  }
+  // 프로그래스 영역
+  .progress_bar {
+    width: 100%;
+    margin-bottom: 25px;
+  }
+  .progress_text {
+    font-size: 1.75rem;
+    display: flex;
+    justify-content: space-between;
+    color: $font-light-gray;
+    
+  }
+}
