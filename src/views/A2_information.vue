@@ -1,6 +1,106 @@
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 const activeTap = ref("delivery");
+
+// 지도 객체를 전역 변수로 선언
+let map = null; // 재할당하려고 let 씀
+
+// 지도 초기화 함수
+const initMap = () => {
+  // 카카오지도 API 로드시 생성되는 전역 객체
+  if (window.kakao && window.kakao.maps) {
+    const container = document.getElementById("map");
+
+    // 컨테이너가 존재하는지 확인
+    if (!container) {
+      console.error("지도 컨테이너를 찾을 수 없습니다.");
+      return;
+    }
+
+    const options = {
+      center: new kakao.maps.LatLng(37.5665, 126.978), // 서울시청 좌표
+      level: 12,
+    };
+
+    map = new kakao.maps.Map(container, options);
+
+    // 마커 생성 함수
+    const createMarker = (lat, lng, title, imageUrl = null) => {
+      const markerPosition = new kakao.maps.LatLng(lat, lng);
+      const markerOptions = {
+        position: markerPosition,
+        title,
+      };
+
+      // 사용자 이미지 마커 설정
+      if (imageUrl) {
+        markerOptions.image = new kakao.maps.MarkerImage(imageUrl, new kakao.maps.Size(44, 51));
+      }
+
+      const marker = new kakao.maps.Marker(markerOptions);
+      marker.setMap(map);
+    };
+
+    // 서울시청, 서울역, 김포공항 마커 생성
+    createMarker(37.5547, 126.9706, "서울역", "/public/images/lee/mapposition.png");
+    createMarker(37.5156, 126.9077, "영등포역", "/public/images/lee/mapposition.png");
+    createMarker(36.6209, 127.3296, "오송역", "/public/images/lee/mapposition.png");
+    createMarker(36.3324, 127.4342, "대전역", "/public/images/lee/mapposition.png");
+    createMarker(35.8807, 128.6288, "동대구역", "/public/images/lee/mapposition.png");
+    createMarker(35.1152, 129.041, "부산역", "/public/images/lee/mapposition.png");
+    createMarker(37.4602, 126.4407, "인천국제공항", "/public/images/lee/mapposition.png"); // 사용자 이미지 마커
+    createMarker(35.8997, 128.638, "대구국제공항", "/public/images/lee/mapposition.png");
+    createMarker(35.1795, 128.9382, "김해국제공항", "/public/images/lee/mapposition.png");
+    createMarker(37.5583, 126.7906, "김포공항", "/public/images/lee/mapposition.png");
+
+    console.log("지도 초기화 완료");
+  } else {
+    console.error("카카오 지도 API 로드되지 않았습니다.");
+  }
+};
+
+// 카카오 지도 스크립트 로드
+const loadKakaoMap = () => {
+  const kakaoApiKey = import.meta.env.VITE_KAKAO_MAP_KEY;
+  if (!kakaoApiKey) {
+    console.error("카카오 API키가 설정되지 않았습니다.");
+    return;
+  }
+
+  const scriptId = "kakao-map-script";
+  if (!document.getElementById(scriptId)) {
+    const script = document.createElement("script");
+    script.id = scriptId;
+    script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${kakaoApiKey}&autoload=false&libraries=services`;
+
+    script.onload = () => {
+      // DOM이 완전히 렌더링된 후에 지도를 초기화
+      setTimeout(() => {
+        kakao.maps.load(initMap);
+        console.log("카카오 지도 API 로드 완료");
+      }, 100);
+    };
+    document.head.appendChild(script);
+  } else {
+    // 이미 스크립트가 로드된 경우에도 DOM 렌더링을 기다림
+    setTimeout(initMap, 100);
+  }
+};
+
+// 컴포넌트가 마운트된 후 지도 초기화
+onMounted(() => {
+  // 탭이 'keep'일 때만 지도를 초기화
+  if (activeTap.value === "keep") {
+    loadKakaoMap();
+  }
+});
+
+// 탭 변경 시 지도 초기화
+watch(activeTap, (newValue) => {
+  if (newValue === "keep") {
+    loadKakaoMap();
+  }
+});
 </script>
 
 <template>
@@ -53,9 +153,6 @@ const activeTap = ref("delivery");
                 <img src="/public/images/lee/fastIcon2.png" alt="집 앞 픽업" />
               </div>
             </div>
-            <!-- <div class="a2-next">
-              <img src="/public/images/lee/nextstep.png" alt="화살표" />
-            </div> -->
           </li>
           <li>
             <div class="fast-list3 fast-list">
@@ -70,9 +167,6 @@ const activeTap = ref("delivery");
                 <img src="/public/images/lee/fastIcon3.png" alt="예약/결제 이미지" />
               </div>
             </div>
-            <!-- <div class="a2-next">
-              <img src="/public/images/lee/nex`tstep.png" alt="화살표" />
-            </div> -->
           </li>
           <li>
             <div class="fast-list4 fast-list">
@@ -87,7 +181,6 @@ const activeTap = ref("delivery");
                 <img src="/public/images/lee/fastIcon4.png" alt="예약/결제 이미지" />
               </div>
             </div>
-            <!-- <div class="a2-next"></div> -->
           </li>
         </ul>
       </div>
@@ -100,7 +193,9 @@ const activeTap = ref("delivery");
             <ul class="pst-icon">
               <li><img src="/public/images/lee/house.png" alt="집아이콘" /></li>
               <li><img src="/public/images/lee/arrow.png" alt="화살표" /></li>
-              <li><img src="/public/images/lee/arrival.png" alt="도착아이콘" /></li>
+              <li>
+                <img src="/public/images/lee/arrival.png" alt="도착아이콘" />
+              </li>
             </ul>
             <ul class="pst-text">
               <li>1.가방은 문앞에! 픽업은 새벽에!</li>
@@ -111,7 +206,9 @@ const activeTap = ref("delivery");
           <li class="pst-list2">
             <h4 class="pst-title">집 - 숙소</h4>
             <ul class="pst-icon">
-              <li><img src="/public/images/lee/airplane.png" alt="비행기아이콘" /></li>
+              <li>
+                <img src="/public/images/lee/airplane.png" alt="비행기아이콘" />
+              </li>
               <li><img src="/public/images/lee/arrow.png" alt="화살표" /></li>
               <li><img src="/public/images/lee/house.png" alt="집아이콘" /></li>
             </ul>
@@ -123,9 +220,13 @@ const activeTap = ref("delivery");
           <li class="pst-list3">
             <h4 class="pst-title">집 - 숙소</h4>
             <ul class="pst-icon">
-              <li><img src="/public/images/lee/airplane.png" alt="비행기아이콘" /></li>
+              <li>
+                <img src="/public/images/lee/airplane.png" alt="비행기아이콘" />
+              </li>
               <li><img src="/public/images/lee/arrow.png" alt="화살표" /></li>
-              <li><img src="/public/images/lee/arrival.png" alt="도착아이콘" /></li>
+              <li>
+                <img src="/public/images/lee/arrival.png" alt="도착아이콘" />
+              </li>
             </ul>
             <ul class="pst-text">
               <li>1.공항 <span>무인보관함</span>에 짐 넣기</li>
@@ -138,62 +239,64 @@ const activeTap = ref("delivery");
       <!--  -->
       <!-- 3. 문의/불가능 품목 -->
       <!-- 3-1 문의 품목 -->
-      <div class="inquire inner">
-        <h2 class="inquire-title">이런 품목은 <span>문의해요!</span></h2>
-        <ul class="inquire-menu">
-          <li class="inquire-list1 inquire-list">
-            <div class="iq-img">
-              <img src="/public/images/lee/bike.png" alt="자전거아이콘" />
-            </div>
-            <p class="iq-text">가전제품, 자전거, 악기 등 <span>포장되지 않은</span> 품목들</p>
-          </li>
-          <li class="inquire-list2 inquire-list">
-            <div class="iq-img">
-              <img src="/public/images/lee/shopping-bag.png" alt="쇼핑백아이콘" />
-            </div>
-            <p class="iq-text">골프배낭, 쇼핑백 등 배낭 <span>입구가 오픈</span>되어 있는 가방들</p>
-          </li>
-          <li class="inquire-list3 inquire-list">
-            <div class="iq-img">
-              <img src="/public/images/lee/big-box.png" alt="큰박스아이콘" />
-            </div>
-            <p class="iq-text">포장은 되어있으나 <span>부피가 큰</span> 품목들</p>
-          </li>
-        </ul>
-      </div>
-      <!-- 3-2 불가능 품목 -->
-      <div class="diffcult">
-        <div class="diffcult-container inner">
-          <h2 class="diffcult-title">이런 품목은 <span>어려워요</span></h2>
-          <ul class="diffcult-menu">
-            <li class="diffcult-list1 diffcult-list">
-              <div class="dc-icon">
-                <img src="/public/images/lee/cake.png" alt="케이크" />
+      <div class="inqu-diff-wrap inner">
+        <div class="inquire">
+          <h2 class="inquire-title">이런 품목은 <span>문의해요!</span></h2>
+          <ul class="inquire-menu">
+            <li class="inquire-list1 inquire-list">
+              <div class="iq-img">
+                <img src="/public/images/lee/bike.png" alt="자전거아이콘" />
               </div>
-              <p class="dc-text">신선식품, 가공식품, 건강기능 식품 등 모든 <span>식품류</span></p>
+              <p class="iq-text">가전제품, 자전거, 악기 등 <span>포장되지 않은</span> 품목들</p>
             </li>
-            <li class="diffcult-list2 diffcult-list">
-              <div class="dc-icon">
-                <img src="/public/images/lee/plant.png" alt="식물" />
+            <li class="inquire-list2 inquire-list">
+              <div class="iq-img">
+                <img src="/public/images/lee/shopping-bag.png" alt="쇼핑백아이콘" />
               </div>
-              <p class="dc-text">동물, 식물 등 <span>생명</span>을 가지고 있는 모든 것</p>
+              <p class="iq-text">골프배낭, 쇼핑백 등 배낭 <span>입구가 오픈</span>되어 있는 가방들</p>
             </li>
-            <li class="diffcult-list3 diffcult-list">
-              <div class="dc-icon">
-                <img src="/public/images/lee/jewel.png" alt="귀중품" />
+            <li class="inquire-list3 inquire-list">
+              <div class="iq-img">
+                <img src="/public/images/lee/big-box.png" alt="큰박스아이콘" />
               </div>
-              <p class="dc-text">
-                현금 및 귀중품 등 <span>분실</span> 및 <span>도난</span> 우려가 있는 품목들 <br />
-                (분실시 짐꾼은 책임지지 않습니다.)
-              </p>
-            </li>
-            <li class="diffcult-list4 diffcult-list">
-              <div class="dc-icon">
-                <img src="/public/images/lee/fire.png" alt="성냥" />
-              </div>
-              <p class="dc-text">부탄가스, 라이터와 같은 <span>발화성/인화성</span> 물질</p>
+              <p class="iq-text">포장은 되어있으나 <span>부피가 큰</span> 품목들</p>
             </li>
           </ul>
+        </div>
+        <!-- 3-2 불가능 품목 -->
+        <div class="diffcult">
+          <div class="diffcult-container">
+            <h2 class="diffcult-title">이런 품목은 <span>어려워요</span></h2>
+            <ul class="diffcult-menu">
+              <li class="diffcult-list1 diffcult-list">
+                <div class="dc-icon">
+                  <img src="/public/images/lee/cake.png" alt="케이크" />
+                </div>
+                <p class="dc-text">신선식품, 가공식품, 건강기능 식품 등 모든 <span>식품류</span></p>
+              </li>
+              <li class="diffcult-list2 diffcult-list">
+                <div class="dc-icon">
+                  <img src="/public/images/lee/plant.png" alt="식물" />
+                </div>
+                <p class="dc-text">동물, 식물 등 <span>생명</span>을 가지고 있는 모든 것</p>
+              </li>
+              <li class="diffcult-list3 diffcult-list">
+                <div class="dc-icon">
+                  <img src="/public/images/lee/jewel.png" alt="귀중품" />
+                </div>
+                <p class="dc-text">
+                  현금 및 귀중품 등 <span>분실</span> 및 <span>도난</span> 우려가 있는 품목들 <br />
+                  (분실시 짐꾼은 책임지지 않습니다.)
+                </p>
+              </li>
+              <li class="diffcult-list4 diffcult-list">
+                <div class="dc-icon">
+                  <img src="/public/images/lee/fire.png" alt="성냥" />
+                </div>
+                <p class="dc-text">부탄가스, 라이터와 같은 <span>발화성/인화성</span> 물질</p>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
       <!--  -->
@@ -212,7 +315,7 @@ const activeTap = ref("delivery");
             취급하지 않는 품목을 가방에 함께 넣을 경우 파손 및 분실 시 짐꾼은 책임지지 않습니다.
           </li>
           <li class="careful-list">
-            수화물의 결함, 교통장애, 천재지변 등의 이유로 수화물의 문제가 발생할 시 ‘짐꾼’에서 책정한 보상특약에 따라
+            수화물의 결함, 교통장애, 천재지변 등의 이유로 수화물의 문제가 발생할 시 '짐꾼'에서 책정한 보상특약에 따라
             처리합니다.
           </li>
           <li class="careful-list">
@@ -299,10 +402,107 @@ const activeTap = ref("delivery");
           </li>
         </ul>
       </div>
+      <!--  -->
       <!-- 2. 보관함 위치 맵 -->
       <div class="storage-position inner">
-        <h4>짐꾼의 보관함 위치</h4>
-        <div id="kakaoMap"></div>
+        <h4>짐꾼의 보관함 <span>위치</span></h4>
+        <div id="map"></div>
+      </div>
+      <!--  -->
+      <!-- 3. 보관함 사이즈 안내 -->
+      <div class="cabinet-wrap inner">
+        <h3 class="cabinet-title">보관함 <span>사이즈</span> 안내</h3>
+        <ul class="cabinet-list">
+          <li>
+            <p><span>A형</span> 타입</p>
+            <div class="cabinetA cabinet-img">
+              <img src="/public/images/lee/cabinetA.png" alt="캐비넷A" />
+            </div>
+          </li>
+          <li>
+            <p><span>B형</span> 타입</p>
+            <div class="cabinetB cabinet-img">
+              <img src="/public/images/lee/cabinetB.png" alt="캐비넷B" />
+            </div>
+          </li>
+        </ul>
+      </div>
+      <!--  -->
+      <!-- 4. 보관이 어려운 품목 -->
+      <div class="hard-wrap">
+        <div class="hard inner">
+          <h3 class="hard-title">이런 품목은 <span>어려워요!</span></h3>
+          <ul class="hard-menu">
+            <li class="hard-list12 hard-list">
+              <div class="hard-list1 ">
+                <div class="hard-img hard-img1">
+                  <img src="/public/images/lee/hard1.png" alt="귀중품" />
+                </div>
+                <span class="hard-text">귀중품</span>
+              </div>
+              <div class="hard-list2">
+                <div class="hard-img hard-img2">
+                  <img src="/public/images/lee/hard2.png" alt="생물" />
+                </div>
+                <span class="hard-text">동 · 식물</span>
+              </div>
+            </li>
+            <li class="hard-list34 hard-list">
+              <div class="hard-list3">
+                <div class="hard-img hard-img1">
+                  <img src="/public/images/lee/hard3.png" alt="식품" />
+                </div>
+                <span class="hard-text">음식물</span>
+              </div>
+              <div class="hard-list4">
+                <div class="hard-img hard-img2">
+                  <img src="/public/images/lee/hard4.png" alt="자전거" />
+                </div>
+                <span class="hard-text">부피가 큰 물건</span>
+              </div>
+            </li>
+            <li class="hard-list56 hard-list">
+              <div class="hard-list5">
+                <div class="hard-img hard-img1">
+                  <img src="/public/images/lee/hard5.png" alt="성냥" />
+                </div>
+                <span class="hard-text">발·인화성 물질</span>
+              </div>
+              <div class="hard-list6">
+                <div class="hard-img hard-img2">
+                  <img src="/public/images/lee/hard6.png" alt="주의" />
+                </div>
+                <span class="hard-text">기타 위험물</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!--  -->
+      <!-- 5. 유의사항 -->
+      <div class="careful inner">
+        <h2 class="careful-title">유의사항</h2>
+        <ul class="careful-box">
+          <li class="careful-list">
+            보관 후 7일이 지난 물품은 관리자의 요청에 따라 이동될 수 있습니다.
+          </li>
+          
+          <li class="careful-list">
+          보관함의 문을 제대로 닫지않아 발생한 문제에 대해서는 ‘짐꾼’은 책임지지 않습니다. 문을 꼭 확인해주세요.
+          </li>
+          <li class="careful-list">
+            유사시 보관함 관리를  위해 보관함을 임시로 열어 점검할 수 있습니다. 
+          </li>
+          <li class="careful-list">
+            수화물의 결함, 교통장애, 천재지변 등의 이유로 수화물의 문제가 발생할 시 ‘짐꾼’에서 책정한 보상특약에 따라 처리합니다.
+          </li>
+          <li class="careful-list">
+           보관함 이용중 발생한 문제는 고객센터 또는 현장 관리자에게 신고해 주십시오.
+          </li>
+          <li class="careful-list">
+            보관불가 품목을 보관하여 발생한 책임에 대해서 짐꾼은 책임지지 않습니다.
+          </li>
+        </ul>
       </div>
     </section>
   </div>
@@ -317,7 +517,7 @@ const activeTap = ref("delivery");
   flex-direction: column;
 }
 .inner {
-  max-width: 1320px;
+  max-width: 1240px;
   margin: 0 auto;
   padding: 0 20px;
 }
@@ -537,72 +737,23 @@ const activeTap = ref("delivery");
   }
 }
 // 3. 문의/불가능 품목
-// 3-1 문의(inquire) 품목
-.inquire {
+.inqu-diff-wrap {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  margin-top: 122px;
-  margin-bottom: 120px;
-  .inquire-title {
-    font-size: $title-font-M;
-    font-weight: bold;
-    min-width: 240px;
-    span {
-      color: $primary-color;
-    }
-  }
-  .inquire-menu {
-    display: flex;
-    flex-direction: column;
-    gap: 45px;
-    width: 100%;
-    max-width: 800px;
-    .inquire-list {
-      display: flex;
-      align-items: center;
-      width: 100%;
-      gap: 30px;
-      background-color: $sub-color;
-      border-radius: 10px;
-      .iq-img {
-        width: 110px;
-        height: 100px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 25px 0;
-        margin-left: 60px;
-        img {
-          max-width: 102px;
-        }
-      }
-      .iq-text {
-        font-size: 18px;
-        color: $font-gray;
-        font-weight: 500;
-        span {
-          font-size: 20px;
-          color: $font-primary;
-          font-weight: bold;
-        }
-      }
-    }
-  }
-}
-// 3-2 불가능(diffcult) 품목
-.diffcult {
-  position: relative;
-  width: 100%;
-  padding-top: 120px;
-  padding-bottom: 120px;
-  background-color: $sub-color;
-  .diffcult-container {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
+  margin-top: 50px;
+  padding: 50px 20px;
+  // gap: 50px;
 
-    .diffcult-title {
+  // 3-1 문의(inquire) 품목
+  .inquire {
+    width: 45%;
+    display: flex;
+    // flex: 1;
+    flex-direction: column;
+    align-items: center;
+
+    .inquire-title {
       font-size: $title-font-M;
       font-weight: bold;
       min-width: 240px;
@@ -610,35 +761,39 @@ const activeTap = ref("delivery");
         color: $primary-color;
       }
     }
-    .diffcult-menu {
+    .inquire-menu {
       display: flex;
       flex-direction: column;
       gap: 45px;
       width: 100%;
       max-width: 800px;
-      .diffcult-list {
+      margin-top: 50px;
+      .inquire-list {
         display: flex;
         align-items: center;
         width: 100%;
         gap: 30px;
-        background-color: $white;
+        background-color: $sub-color;
         border-radius: 10px;
-        .dc-icon {
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        padding: 0 10px;
+        .iq-img {
           width: 110px;
           height: 100px;
           display: flex;
           align-items: center;
           justify-content: center;
           margin: 25px 0;
-          margin-left: 60px;
+          // margin-left: 10px;
           img {
             max-width: 102px;
           }
         }
-        .dc-text {
+        .iq-text {
           font-size: 18px;
           color: $font-gray;
           font-weight: 500;
+          padding: 0 10px;
           span {
             font-size: 20px;
             color: $font-primary;
@@ -648,11 +803,72 @@ const activeTap = ref("delivery");
       }
     }
   }
+  // 3-2 불가능(diffcult) 품목
+  .diffcult {
+    width: 45%;
+    position: relative;
+    .diffcult-container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .diffcult-title {
+        font-size: $title-font-M;
+        font-weight: bold;
+        min-width: 240px;
+        span {
+          color: $primary-color;
+        }
+      }
+      .diffcult-menu {
+        display: flex;
+        flex-direction: column;
+        gap: 45px;
+        width: 100%;
+        max-width: 800px;
+        margin-top: 50px;
+        .diffcult-list {
+          display: flex;
+          align-items: center;
+          width: 100%;
+          gap: 30px;
+          background-color: $white;
+          border-radius: 10px;
+          box-shadow: $info-boxShadow;
+          padding: 0 10px;
+          .dc-icon {
+            width: 110px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 25px 0;
+            // margin-left: 30px;
+            img {
+              max-width: 102px;
+            }
+          }
+          .dc-text {
+            font-size: 18px;
+            color: $font-gray;
+            font-weight: 500;
+            padding: 0 10px;
+            span {
+              font-size: 20px;
+              color: $font-primary;
+              font-weight: bold;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 // 4. 유의사항
 .careful {
   width: 100%;
-  margin-top: 120px;
+  margin-top: 80px;
+  margin-bottom: 80px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -680,11 +896,11 @@ const activeTap = ref("delivery");
   }
   .iq-text,
   .dc-text {
-    font-size: 16px !important;
+    font-size: 15px !important;
   }
   .iq-text span,
   .dc-text span {
-    font-size: 18px !important;
+    font-size: 17px !important;
   }
 }
 //
@@ -784,6 +1000,139 @@ const activeTap = ref("delivery");
           width: 16px;
           height: 24px;
           background: url("/public/images/lee/nextstep.png");
+        }
+      }
+    }
+  }
+}
+
+// 2. 보관함 위치 맵
+.storage-position {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  h4 {
+    font-weight: 600;
+    font-size: $title-font-M;
+    color: $font-primary;
+    margin-bottom: 50px;
+    span {
+      color: $primary-color;
+    }
+  }
+  #map {
+    width: 700px;
+    height: 432.5px;
+  }
+}
+
+// 3. 보관함 사이즈 안내
+.cabinet-wrap {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 100px;
+  .cabinet-title {
+    font-weight: 600;
+    font-size: $title-font-M;
+    color: $font-primary;
+    margin-bottom: 50px;
+    margin-top: 100px;
+    span {
+      color: $primary-color;
+    }
+  }
+  .cabinet-list {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+    li {
+      width: 47%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 50px;
+      p {
+        font-size: $title-font-S;
+        font-weight: 600;
+        color: $font-light-gray;
+        span {
+          color: $font-primary;
+          font-size: 26px;
+        }
+      }
+      .cabinet-img {
+        width: 100%;
+        max-width: 350px;
+        img {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+// 4. 보관이 어려운 품목
+.hard-wrap {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $sub-color;
+  .hard {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 100px 0;
+    background-color: $sub-color;
+    .hard-title {
+      font-size: $title-font-M;
+      font-weight: bold;
+      min-width: 240px;
+      margin-bottom: 100px;
+      span {
+        color: $primary-color;
+      }
+    }
+    .hard-menu {
+      width: 100%;
+      max-width: 1000px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      .hard-list{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+       
+        >div{
+          width: 100%;
+          max-width: 500px;
+          display: flex;
+          align-items: center;
+          gap: 30px;
+          background-color: $white;
+          border-radius: 10px;
+          .hard-img{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 150px;
+            height: 120px;
+            img{
+              height: 65px;
+            }
+          }
+          span{
+            font-weight: bold;
+            font-size: $text-font-XL;
+            color: $font-light-gray;
+          }
         }
       }
     }
