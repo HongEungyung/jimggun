@@ -4,9 +4,9 @@ import Footer from "./components/Footer.vue";
 </script>
 
 <template>
-  <header>
-    <Header />
-  </header>
+
+    <Header class="header"/>
+ 
   <main>
     <router-view></router-view>
   </main>
@@ -15,4 +15,14 @@ import Footer from "./components/Footer.vue";
   </footer>
 </template>
 
-<style scoped></style>
+<style scoped>
+/* main{
+  text-align: center;
+  padding: 20px;
+} */
+.header {
+  position: relative;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+  z-index: 2;
+}
+</style>
