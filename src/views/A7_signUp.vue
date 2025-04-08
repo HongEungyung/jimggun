@@ -149,7 +149,8 @@ h1 {
 }
 //약관 동의
 .checkboxWrap {
-  width: 499px;
+  // width: 499px;
+  width: 97.8%;
   height: 62px;
   border: 1px solid $bg-primary;
   border-radius: 10px;
