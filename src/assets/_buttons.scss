@@ -2,6 +2,8 @@
 // 색상만
 .c_btn{
     color: #fff;
+    border: none;
+    border-radius: 10px;
     background-color: $primary-color;
     &:hover{
         background-color: $primary-hover;
@@ -23,6 +25,7 @@
     background-color: $warning-color;
     color: #fff;
     border-radius: 6px;
+    border: none;
     &:hover{
         background-color: #E04A58;
     }
