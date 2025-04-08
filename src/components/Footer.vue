@@ -47,6 +47,9 @@
   margin: 0 auto;
   font-size: 14px;
   color: $font-gray;
+  position: relative;
+  box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.05);
+  z-index: 2;
 }
 // 이너
 .footerInner {
