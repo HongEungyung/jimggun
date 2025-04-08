@@ -1112,7 +1112,7 @@ watch(activeTap, (newValue) => {
        
         >div{
           width: 100%;
-          max-width: 500px;
+          max-width: 501px;
           display: flex;
           align-items: center;
           gap: 30px;
