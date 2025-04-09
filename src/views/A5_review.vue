@@ -167,6 +167,7 @@ const toggleReviews = () => {
   line-height: 16px;
   position: relative;
   min-height: 48px;
+  cursor: pointer;
 }
 .review-content p {
   flex: 1;
