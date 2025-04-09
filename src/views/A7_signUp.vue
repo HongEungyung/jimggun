@@ -70,6 +70,20 @@ const handleSignUp = () => {
     router.push('/signUpFinish');
   }
 };
+// 하이픈 자동 입력
+const formatPhone = (e) => {
+  let digits = e.target.value.replace(/\D/g, ''); // 숫자만 남기기
+
+  if (digits.length <= 3) {
+    phone.value = digits;
+  } else if (digits.length <= 7) {
+    phone.value = `${digits.slice(0, 3)}-${digits.slice(3)}`;
+  } else if (digits.length <= 11) {
+    phone.value = `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7, 11)}`;
+  } else {
+    phone.value = `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7, 11)}`;
+  }
+};
 </script>
 
 <template>
@@ -107,6 +121,7 @@ const handleSignUp = () => {
       <input
         type="tel"
         v-model="phone"
+        @input="formatPhone"
         pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}"
         placeholder="000-0000-0000"
         class="infoInput phone"
@@ -304,5 +319,38 @@ h2 {
   position: absolute;
   left: 160px;
   top: 64px;
+}
+//반응형
+@media screen and (max-width: 540px) {
+  .checkboxWrap {
+    width: 360px;
+  }
+  .wrap {
+    width: 360px;
+    padding-top: 50px;
+  }
+  .infoWrap {
+    width: 360px;
+  }
+  .signUpBtn {
+    width: 340px;
+  }
+  .name {
+    padding-left: 42px;
+  }
+  .phone {
+    padding-left: 14px;
+  }
+  .mail {
+    padding-left: 22px;
+  }
+  .infoIcon {
+    margin-right: 15px;
+  }
+  .infoSectionTitle {
+    font-size: 14px;
+
+    margin-right: 10px;
+  }
 }
 </style>

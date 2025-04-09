@@ -17,7 +17,7 @@ const setTab = (tab) => {
 <template>
   <div v-if="isOpen" class="modal-overlay" @click.self="close">
     <div class="modal-content">
-      <button class="close-btn" @click="close">X</button>
+      <button class="close-btn" @click="close"><img src="../../public/images/kang/close.png" alt="close" /></button>
       <div class="inqTitle">
         <h2>출발지 조회</h2>
       </div>
@@ -169,7 +169,7 @@ const setTab = (tab) => {
               </div>
             </div>
             <div class="next-btn-box">
-              <button type="button" class="next-btn">확인</button>
+              <button type="button" class="next-btn" @click="close">확인</button>
             </div>
           </div>
           <div v-if="activeTab === 'tab2'">
@@ -194,7 +194,7 @@ const setTab = (tab) => {
               />
             </div>
             <div class="complete-btn-box">
-              <button type="button" class="complete-btn">주소지선택 완료</button>
+              <button type="button" class="complete-btn" @click="close">주소지선택 완료</button>
             </div>
           </div>
         </div>
@@ -216,28 +216,6 @@ const setTab = (tab) => {
   justify-content: center;
   align-items: center;
   z-index: 13;
-  /* 전체 스크롤 바 스타일 */
-  ::-webkit-scrollbar {
-    width: 10px; /* 세로 스크롤 바 너비 */
-    height: 10px; /* 가로 스크롤 바 높이 */
-  }
-
-  /* 스크롤 바 트랙 (배경) */
-  ::-webkit-scrollbar-track {
-    background: $bg-primary;
-    border-radius: 10px;
-  }
-
-  /* 스크롤 바 핸들  */
-  ::-webkit-scrollbar-thumb {
-    background: $primary-color;
-    border-radius: 10px;
-  }
-
-  /* 스크롤 바 핸들 호버 시 */
-  ::-webkit-scrollbar-thumb:hover {
-    background: $primary-hover;
-  }
 }
 .modal-content {
   background: white;
@@ -247,15 +225,21 @@ const setTab = (tab) => {
   max-height: 90vh;
   overflow-y: auto;
   position: relative;
+  border-radius: 10px;
+  font-family: $font-family;
 }
 .close-btn {
   background: none;
   border: none;
-  font-size: 24px;
+
   cursor: pointer;
   position: absolute;
   top: 12px;
   right: 12px;
+}
+.close-btn > img {
+  width: 28px;
+  height: 28px;
 }
 // 상단 텍스트
 .inqTitle {
@@ -308,9 +292,10 @@ h2 {
   align-items: flex-start;
 }
 .areaSelectBox-title {
-  margin-top: 24px;
-  margin-bottom: 8px;
-  margin-left: 12px;
+  // margin-top: 24px;
+  // margin-bottom: 12px;
+  // margin-left: 12px;
+  margin: 24px 12px;
   font-size: 18px;
   font-weight: bold;
   color: $font-primary;
@@ -325,6 +310,7 @@ h2 {
   border: $input-select solid 1px;
   background-color: #fff;
   color: $font-light-gray;
+  cursor: pointer;
 }
 .areaSelectBox-btn > p {
   padding: 6px 15px;
@@ -338,6 +324,7 @@ h2 {
 // 탭1 확인 버튼
 .next-btn-box {
   margin-top: 90px;
+  border-top: solid 1px $bg-primary;
 }
 .next-btn {
   background: #505050;
@@ -350,6 +337,10 @@ h2 {
   border: none;
   border-radius: 6px;
   cursor: pointer;
+}
+// 선
+.tab1:first-child {
+  border-top: solid 1px $bg-primary;
 }
 // 탭2
 // 탭2 주의사항 텍스트

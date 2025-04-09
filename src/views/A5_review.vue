@@ -22,11 +22,21 @@ const dummyReviews = [
   },
   {
     name: 'kang1234@naver.com',
-    images: ['/images/kang/4-1.jpg', '/images/kang/4-2.jpg', '/images/kang/4-3.jpg'],
+    images: ['/images/kang/4-1.jpg', '/images/kang/4-2.jpg'],
     content:
       '처음 이용해봤는데 너무 좋았습니다.\n매번 짐 때문에 고생했는데, 짐 걱정이 없으니까 여행의 질이 너무 좋아졌어요.\n안내도 너무 친절하게 잘해주셔서 좋았어요.\n처음부터 끝까지 친절하고 자세하게 알려주십니다.\n뚜벅이 여행객들에게 강추합니다!',
   },
 ];
+// 사진이 무조건 3개가 나오도록 하는 함수
+const defaultImg = '/images/kang/default.png'; // 대체 이미지
+
+const getThreeImages = (images) => {
+  const filled = [...images];
+  while (filled.length < 3) {
+    filled.push(defaultImg);
+  }
+  return filled;
+};
 // 로컬스토리지에서 불러올 데이터
 // 사용자가 새롭게 작성한 리뷰를 저장하고 불러오는 역할
 const reviews = ref([]);
@@ -73,17 +83,13 @@ const toggleReviews = () => {
       <h1 class="A5-h1">이용후기</h1>
       <div class="review-box" v-for="(review, index) in visibleReviews" :key="index">
         <h2 class="review-title">{{ maskedName(review.name) }} 님 감사합니다!</h2>
-        <div class="review-content">
+        <div class="review-content" @click="toggleShowFull(index)">
           <p :class="{ 'clamp-text': !showFull[index] }" v-html="formatContent(review.content)"></p>
-
-          <button class="toggle-btn" @click="toggleShowFull(index)">
-            {{ showFull[index] ? '▲' : '▼' }}
-          </button>
         </div>
 
         <div class="review-images">
           <img
-            v-for="(img, imgIndex) in review.images"
+            v-for="(img, imgIndex) in getThreeImages(review.images)"
             :key="imgIndex"
             :src="img"
             alt="리뷰 이미지"
@@ -105,6 +111,7 @@ const toggleReviews = () => {
 .A5-wrap {
   background-color: $sub-color;
   width: 100%;
+  font-family: $font-family;
 }
 .A5-inner {
   max-width: 1280px;
@@ -140,7 +147,7 @@ const toggleReviews = () => {
 
   padding-bottom: 95px;
   border-radius: 25px;
-  box-shadow: $info-boxShadow;
+  box-shadow: $reservation-boxShadow;
 }
 .review-title {
   text-align: left;
@@ -174,16 +181,16 @@ const toggleReviews = () => {
   max-height: calc(16px * 2);
 }
 
-.toggle-btn {
-  position: absolute;
-  top: 15px;
-  left: 50%;
-  background: none;
-  border: none;
-  color: $font-primary;
-  cursor: pointer;
-  font-weight: bold;
-}
+// .toggle-btn {
+//   position: absolute;
+//   top: 15px;
+//   left: 60%;
+//   background: none;
+//   border: none;
+//   color: $font-primary;
+//   cursor: pointer;
+//   font-weight: bold;
+// }
 .review-images {
   display: flex;
   justify-content: center;
@@ -218,6 +225,48 @@ const toggleReviews = () => {
   }
 }
 //반응형
-@media screen and (max-width: 1065px) {
+@media screen and (max-width: 1100px) {
+  .review-images img:nth-child(n + 3) {
+    display: none;
+  }
+  .review-images {
+    // justify-content: left;
+    padding-left: 90px;
+
+    justify-content: center;
+    padding-left: 0px;
+  }
+}
+@media screen and (max-width: 900px) {
+  .review-images {
+    gap: 30px;
+    margin-top: 10px;
+  }
+  .user-image {
+    width: 220px;
+    height: 220px;
+  }
+}
+@media screen and (max-width: 730px) {
+  .review-images img:nth-child(n + 2) {
+    display: none;
+  }
+}
+@media screen and (max-width: 440px) {
+  .A5-h1 {
+    padding-top: 50px;
+  }
+  .review-box {
+    padding-top: 40px;
+    padding-bottom: 55px;
+  }
+  .review-title {
+    padding-left: 40px;
+    font-size: 14px;
+  }
+  .review-content {
+    padding-left: 40px;
+    width: 80%;
+  }
 }
 </style>

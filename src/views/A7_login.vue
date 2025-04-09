@@ -86,6 +86,7 @@ p {
   display: flex;
   align-items: center;
   cursor: pointer;
+  margin: auto;
 }
 .naver {
   background-color: $naver-color;
@@ -94,8 +95,10 @@ p {
 .naver > .icon,
 .kakao > .icon {
   display: block;
-  margin-left: 10px;
-  margin-right: 141px;
+  // margin-left: 10px;
+  margin-left: 1.9%;
+  // margin-right: 141px;
+  margin-right: 27.1%;
 }
 .kakao {
   background-color: $kakao-color;
@@ -109,7 +112,9 @@ p {
 }
 .google > .icon {
   display: block;
-  margin-left: 10px;
-  margin-right: 157px;
+  // margin-left: 10px;
+  margin-left: 1.9%;
+  // margin-right: 157px;
+  margin-right: 30.2%;
 }
 </style>
