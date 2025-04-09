@@ -17,15 +17,15 @@ const setTab = (tab) => {
 <template>
   <div v-if="isOpen" class="modal-overlay" @click.self="close">
     <div class="modal-content">
-      <button class="close-btn" @click="close">×</button>
+      <button class="close-btn" @click="close">X</button>
       <div class="inqTitle">
         <h2>출발지 조회</h2>
       </div>
       <div class="area-content">
         <div class="tabs">
           <!-- 탭 버튼 -->
-          <button @click="setTab('tab1')" :class="{ active: activeTab === 'tab1' }">역공항</button>
-          <button @click="setTab('tab2')" :class="{ active: activeTab === 'tab2' }">주소검색</button>
+          <button type="button" @click="setTab('tab1')" :class="{ active: activeTab === 'tab1' }">역공항</button>
+          <button type="button" @click="setTab('tab2')" :class="{ active: activeTab === 'tab2' }">주소검색</button>
         </div>
 
         <!-- 탭 콘텐츠 -->
@@ -34,16 +34,16 @@ const setTab = (tab) => {
             <div class="areaSelectBox">
               <h3 class="areaSelectBox-title">서울</h3>
               <div class="areaSelectBox-btn-box">
-                <button class="areaSelectBox-btn">
+                <button type="button" class="areaSelectBox-btn">
                   <p>김포공항 국내선</p>
                 </button>
-                <button class="areaSelectBox-btn">
+                <button type="button" class="areaSelectBox-btn">
                   <p>서울역</p>
                 </button>
-                <button class="areaSelectBox-btn">
+                <button type="button" class="areaSelectBox-btn">
                   <p>서울고속터미널</p>
                 </button>
-                <button class="areaSelectBox-btn">
+                <button type="button" class="areaSelectBox-btn">
                   <p>용산역</p>
                 </button>
               </div>
@@ -51,19 +51,19 @@ const setTab = (tab) => {
             <div class="areaSelectBox">
               <h3 class="areaSelectBox-title">부산</h3>
               <div class="areaSelectBox-btn-box">
-                <button class="areaSelectBox-btn">
+                <button type="button" class="areaSelectBox-btn">
                   <p>부산역</p>
                 </button>
-                <button class="areaSelectBox-btn">
+                <button type="button" class="areaSelectBox-btn">
                   <p>부산항 국제여객터미널</p>
                 </button>
-                <button class="areaSelectBox-btn">
+                <button type="button" class="areaSelectBox-btn">
                   <p>김해공항 국내선</p>
                 </button>
-                <button class="areaSelectBox-btn">
+                <button type="button" class="areaSelectBox-btn">
                   <p>김해공항 국제선</p>
                 </button>
-                <button class="areaSelectBox-btn">
+                <button type="button" class="areaSelectBox-btn">
                   <p>BEXCO</p>
                 </button>
               </div>
@@ -71,7 +71,7 @@ const setTab = (tab) => {
             <div class="areaSelectBox">
               <h3 class="areaSelectBox-title">제주</h3>
               <div class="areaSelectBox-btn-box">
-                <button class="areaSelectBox-btn">
+                <button type="button" class="areaSelectBox-btn">
                   <p>제주공항</p>
                 </button>
               </div>
@@ -79,7 +79,7 @@ const setTab = (tab) => {
             <div class="areaSelectBox">
               <h3 class="areaSelectBox-title">강릉/양양</h3>
               <div class="areaSelectBox-btn-box">
-                <button class="areaSelectBox-btn">
+                <button type="button" class="areaSelectBox-btn">
                   <p>강릉역</p>
                 </button>
               </div>
@@ -87,7 +87,7 @@ const setTab = (tab) => {
             <div class="areaSelectBox">
               <h3 class="areaSelectBox-title">경주</h3>
               <div class="areaSelectBox-btn-box">
-                <button class="areaSelectBox-btn">
+                <button type="button" class="areaSelectBox-btn">
                   <p>경주역</p>
                 </button>
               </div>
@@ -95,10 +95,10 @@ const setTab = (tab) => {
             <div class="areaSelectBox">
               <h3 class="areaSelectBox-title">여수</h3>
               <div class="areaSelectBox-btn-box">
-                <button class="areaSelectBox-btn">
+                <button type="button" class="areaSelectBox-btn">
                   <p>여수엑스포역</p>
                 </button>
-                <button class="areaSelectBox-btn">
+                <button type="button" class="areaSelectBox-btn">
                   <p>여수종합버스터미널(금호고속)</p>
                 </button>
               </div>
@@ -106,10 +106,10 @@ const setTab = (tab) => {
             <div class="areaSelectBox">
               <h3 class="areaSelectBox-title">대구</h3>
               <div class="areaSelectBox-btn-box">
-                <button class="areaSelectBox-btn">
+                <button type="button" class="areaSelectBox-btn">
                   <p>대구공항 국내선</p>
                 </button>
-                <button class="areaSelectBox-btn">
+                <button type="button" class="areaSelectBox-btn">
                   <p>동대구역</p>
                 </button>
               </div>
@@ -117,10 +117,10 @@ const setTab = (tab) => {
             <div class="areaSelectBox">
               <h3 class="areaSelectBox-title">광주</h3>
               <div class="areaSelectBox-btn-box">
-                <button class="areaSelectBox-btn">
+                <button type="button" class="areaSelectBox-btn">
                   <p>광주 유스퀘어(금호고속)</p>
                 </button>
-                <button class="areaSelectBox-btn">
+                <button type="button" class="areaSelectBox-btn">
                   <p>광주송정역</p>
                 </button>
               </div>
@@ -128,7 +128,7 @@ const setTab = (tab) => {
             <div class="areaSelectBox">
               <h3 class="areaSelectBox-title">목포</h3>
               <div class="areaSelectBox-btn-box">
-                <button class="areaSelectBox-btn">
+                <button type="button" class="areaSelectBox-btn">
                   <p>목포역</p>
                 </button>
               </div>
@@ -136,10 +136,10 @@ const setTab = (tab) => {
             <div class="areaSelectBox">
               <h3 class="areaSelectBox-title">경기/인천</h3>
               <div class="areaSelectBox-btn-box">
-                <button class="areaSelectBox-btn">
+                <button type="button" class="areaSelectBox-btn">
                   <p>김포공항 국내선</p>
                 </button>
-                <button class="areaSelectBox-btn">
+                <button type="button" class="areaSelectBox-btn">
                   <p>광명역</p>
                 </button>
               </div>
@@ -147,7 +147,7 @@ const setTab = (tab) => {
             <div class="areaSelectBox">
               <h3 class="areaSelectBox-title">천안/아산</h3>
               <div class="areaSelectBox-btn-box">
-                <button class="areaSelectBox-btn">
+                <button type="button" class="areaSelectBox-btn">
                   <p>천안아산역</p>
                 </button>
               </div>
@@ -155,7 +155,7 @@ const setTab = (tab) => {
             <div class="areaSelectBox">
               <h3 class="areaSelectBox-title">청주</h3>
               <div class="areaSelectBox-btn-box">
-                <button class="areaSelectBox-btn">
+                <button type="button" class="areaSelectBox-btn">
                   <p>오송역</p>
                 </button>
               </div>
@@ -163,13 +163,13 @@ const setTab = (tab) => {
             <div class="areaSelectBox">
               <h3 class="areaSelectBox-title">대전</h3>
               <div class="areaSelectBox-btn-box">
-                <button class="areaSelectBox-btn">
+                <button type="button" class="areaSelectBox-btn">
                   <p>대전역</p>
                 </button>
               </div>
             </div>
             <div class="next-btn-box">
-              <button class="next-btn">확인</button>
+              <button type="button" class="next-btn">확인</button>
             </div>
           </div>
           <div v-if="activeTab === 'tab2'">
@@ -181,7 +181,7 @@ const setTab = (tab) => {
               <p class="notice-text">• 주소지 배송은 같은 지역 내에서만 가능합니다.</p>
             </div>
             <div class="address-box">
-              <button class="address-btn">주소검색</button>
+              <button type="button" class="address-btn">주소검색</button>
               <input type="text" class="address-input" placeholder="기본주소" />
               <input type="text" class="address-input" placeholder="상세주소" />
             </div>
@@ -194,7 +194,7 @@ const setTab = (tab) => {
               />
             </div>
             <div class="complete-btn-box">
-              <button class="complete-btn">주소지선택 완료</button>
+              <button type="button" class="complete-btn">주소지선택 완료</button>
             </div>
           </div>
         </div>
@@ -215,7 +215,7 @@ const setTab = (tab) => {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9;
+  z-index: 13;
   /* 전체 스크롤 바 스타일 */
   ::-webkit-scrollbar {
     width: 10px; /* 세로 스크롤 바 너비 */
@@ -246,15 +246,16 @@ const setTab = (tab) => {
   text-align: center;
   max-height: 90vh;
   overflow-y: auto;
+  position: relative;
 }
 .close-btn {
   background: none;
   border: none;
-  font-size: 28px;
+  font-size: 24px;
   cursor: pointer;
-  position: fixed;
-  top: 0;
-  right: 0;
+  position: absolute;
+  top: 12px;
+  right: 12px;
 }
 // 상단 텍스트
 .inqTitle {
@@ -389,7 +390,9 @@ strong {
   width: 98.3%;
   line-height: 45px;
   padding-left: 12px;
-  font-size: 16px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid $input-select;
 }
 // 탭2 물품보관장소
 .place-box {
@@ -410,6 +413,8 @@ strong {
   line-height: 45px;
   padding-left: 12px;
   font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid $input-select;
 }
 // 주소지선택 완료 버튼
 .complete-btn-box {
