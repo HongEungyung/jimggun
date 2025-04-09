@@ -1,20 +1,16 @@
 <script setup>
 import { ref } from 'vue';
-import ModalInquire from '@/components/ModalInquire.vue'; // 모달 컴포넌트 임포트
-
-const isModalOpen = ref(false);
 </script>
 
 <template>
   <div class="a7-wrap">
-    <span class="login-title login-title-top">짐꾼에게 짐을 맡기고</span>
-    <br />
-    <span class="login-title login-title-bt">지금 여행을 떠나세요 !</span>
-
-    <h2 class="login-sub-title">짐 보관부터 운송, 그리고 KTX특송까지</h2>
-    <p @click="isModalOpen = true">자주 사용하는 계정으로 간편하게 로그인</p>
-    <!-- 모달 컴포넌트 -->
-    <ModalInquire :isOpen="isModalOpen" @close="isModalOpen = false" />
+    <h1 class="A7-h1">자주 사용하는 계정으로<br />간편하게 로그인</h1>
+    <!-- <h1 class="A7-h1">
+      짐꾼에게 짐을 맡기고
+      <br />
+      지금 여행을 떠나세요 !
+    </h1>
+    <p>자주 사용하는 계정으로 간편하게 로그인</p> -->
     <div class="btn-warp">
       <router-link to="/signUp" class="routerBtn routerBtn1">
         <button class="loginBtn naver">
@@ -32,12 +28,6 @@ const isModalOpen = ref(false);
         </button>
       </router-link>
     </div>
-    <router-link to="/" class="toMain">
-      <div class="toMainContent">
-        <span class="toMainSpan">메인으로 돌아가기</span>
-        <img src="../../public/images/kang/toMain.png" alt="메인으로" class="toMainIcon" />
-      </div>
-    </router-link>
   </div>
 </template>
 
@@ -50,25 +40,17 @@ const isModalOpen = ref(false);
   padding-top: 100px;
   text-align: center;
 }
-// 로그인 메인 타이틀
-.login-title {
+a {
+  text-decoration: none;
+}
+.A7-h1 {
   font-size: 36px;
   font-weight: bold;
+  line-height: 45px;
   color: $font-primary;
-}
-.login-title-top {
-  line-height: 1.3;
-}
-
-// 로그인 서브 타이틀
-.login-sub-title {
-  font-size: 18px;
-  font-weight: bold;
-  color: $font-gray;
-  margin-top: 10px;
+  // margin-bottom: 10px;
   margin-bottom: 61px;
 }
-// 모달창 (임시)
 p {
   font-size: 20px;
   color: $font-gray;
@@ -121,7 +103,7 @@ p {
 }
 .google {
   color: $font-primary;
-  margin-bottom: 36px;
+  margin-bottom: 100px;
   background-color: #fff;
   border: $input-select, 1px, solid;
 }
@@ -129,37 +111,5 @@ p {
   display: block;
   margin-left: 10px;
   margin-right: 157px;
-}
-// 메인으로 돌아가기
-.toMain {
-  text-decoration: none;
-}
-.routerBtn {
-  text-decoration: none;
-}
-.toMainSpan {
-  font-size: 16px;
-  position: relative;
-  padding-bottom: 2px;
-  color: $font-light-gray;
-  display: inline-block;
-  text-align: right;
-}
-span::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 115px;
-  height: 1px;
-  background-color: $font-light-gray;
-}
-.toMainContent {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
-.toMainIcon {
-  padding-left: 10px;
 }
 </style>
