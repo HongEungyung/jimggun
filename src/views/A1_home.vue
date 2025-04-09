@@ -17,7 +17,33 @@ const slides = ref(["/images/hong/mainbanner1.png", "/images/hong/mainbanner2.pn
           <div class="slide" :style="{ backgroundImage: `url(${slide})` }"></div>
         </SwiperSlide>
       </Swiper>
+    <!-- 바로 예약하기 -->
+    <div class="reservationMini">
+      <form>
+        <div class="mini-text mini-text1">
+          <label for="mini1">출발지</label>
+          <input type="text" id="mini1" placeholder="집 앞" />
+        </div>
+        <div class="mini-text mini-text1">
+          <label for="mini1">짐 맡길 일정</label>
+          <input type="text" id="mini1" placeholder="2025.03.21 / 10:00" />
+        </div>
+        <div class="mini-text mini-text1">
+          <label for="mini1">도착지</label>
+          <input type="text" id="mini1" placeholder="대구역" />
+        </div>
+        <div class="mini-text">
+          <label for="mini1">짐 찾을 일정</label>
+          <input type="text" id="mini1" placeholder="2025.03.22 / 11:00" />
+        </div>
+      </form>
+        <div class="mini-button">
+          <p>바로 예약</p>
+        </div>
+    </div>
     </section>
+
+
     <!-- 파트 1 -->
     <section class="a1-part1 inner">
       <div class="a1-part1-title">
@@ -56,15 +82,16 @@ const slides = ref(["/images/hong/mainbanner1.png", "/images/hong/mainbanner2.pn
       </ul>
     </section>
 
-    <!-- 파트 2 제목-->
-    <section class="a1-part2 inner">
-      <div class="a1-part2-title">
+    <!-- 파트 2 -->
+    <section class="a1-part2">
+      <!-- 파트2 - 제목 -->
+      <div class="part2-title">
         <h3>여행가방 걱정 끝</h3>
         <p>짐꾼은 집앞에서 역/공항으로 역/공항에서 숙소로 여행짐을</p>
         <p>배송하는 캐리어 딜리버리 서비스입니다.</p>
       </div>
 
-      <!-- 파트2 내용 -->
+      <!-- 파트2 - 내용 -->
       <div class="part2-contents-all">
         <!-- 왼쪽 두개 -->
         <div class="part2-left">
@@ -78,7 +105,10 @@ const slides = ref(["/images/hong/mainbanner1.png", "/images/hong/mainbanner2.pn
             <!-- 말풍선 글 -->
             <div class="p2-contents-texts">
               <h3>출장갈때, 더 편하게 짐꾼!</h3>
-              <p>미팅 끝나고 가는 출장까지, <br> 짐은 짐꾼에 맡기고 두 손 가볍게 <br>이동하세요!</p>
+              <p>
+                미팅 끝나고 가는 출장까지, <br />
+                짐은 짐꾼에 맡기고 두 손 가볍게 <br />이동하세요!
+              </p>
               <div class="bubble-img">
                 <img src="/public/images/hong/bubble-left.png" alt="말풍선" />
               </div>
@@ -94,7 +124,7 @@ const slides = ref(["/images/hong/mainbanner1.png", "/images/hong/mainbanner2.pn
             <!-- 말풍선 글 -->
             <div class="p2-contents-texts">
               <h3>골프투어도, 더 즐겁게 짐꾼!</h3>
-              <p>골프, 스쿠버다이빙, 서핑, 스키! <br>즐거운만큼 무거운 취미 용품들 <br>짐꾼이 안전하게 배송해드릴게요!</p>
+              <p>골프, 스쿠버다이빙, 서핑, 스키! <br />즐거운만큼 무거운 취미 용품들 <br />짐꾼이 안전하게 배송해드릴게요!</p>
               <div class="bubble-img">
                 <img src="/public/images/hong/bubble-left.png" alt="말풍선" />
               </div>
@@ -109,7 +139,7 @@ const slides = ref(["/images/hong/mainbanner1.png", "/images/hong/mainbanner2.pn
             <!-- 말풍선 글 -->
             <div class="p2-contents-texts">
               <h3>주말여행 갈 때, 더 빠르게 짐꾼!</h3>
-              <p>짧은 주말을 이용해 떠나는 여행! <br>회사에 들고가자니 눈치보이는 <br>캐리어 짐꾼이 먼저 옮겨드릴게요!</p>
+              <p>짧은 주말을 이용해 떠나는 여행! <br />회사에 들고가자니 눈치보이는 <br />캐리어 짐꾼이 먼저 옮겨드릴게요!</p>
               <div class="bubble-img">
                 <img src="/public/images/hong/bubble-right.png" alt="말풍선" />
               </div>
@@ -125,7 +155,7 @@ const slides = ref(["/images/hong/mainbanner1.png", "/images/hong/mainbanner2.pn
             <!-- 말풍선 글 -->
             <div class="p2-contents-texts">
               <h3>퇴근 후 여행, 더 가볍게 짐꾼!</h3>
-              <p>사람 많고, 정신없는 출근시간 <br>지옥철에 크고 무거운 캐리어와 <br>함께 타는 건 이제 그만!</p>
+              <p>사람 많고, 정신없는 출근시간 <br />지옥철에 크고 무거운 캐리어와 <br />함께 타는 건 이제 그만!</p>
               <div class="bubble-img">
                 <img src="/public/images/hong/bubble-right.png" alt="말풍선" />
               </div>
@@ -139,13 +169,67 @@ const slides = ref(["/images/hong/mainbanner1.png", "/images/hong/mainbanner2.pn
         </div>
       </div>
     </section>
+
+    <!-- 파트 3 -->
+    <section class="a1-part3 inner">
+      <!-- 첫번째 박스 -->
+      <div class="part3-box1">
+        <!-- 백그라운드 이미지 -->
+        <!-- <div class="bgImg">
+      <img src="/public/images/hong/part3-bg1.png" alt="">
+      </div> -->
+
+        <!-- 폰 이미지 -->
+        <div class="phoneImg">
+          <img src="/public/images/hong/part3-phoneImg.png" alt="폰 이미지" />
+        </div>
+        <!-- 텍스트 영역 전체 -->
+        <div class="appTextPart">
+          <div class="appTexts">
+            <div class="appTexts-spans">
+              <span class="jimggun-span">짐꾼</span>
+              <span class="appdownload-span">앱 다운받기</span>
+            </div>
+            <p>여행가방 없이 떠나는 새로운 여행</p>
+            <p>짐꾼에서 경험하세요!</p>
+          </div>
+          <!-- 다운로드 버튼들 -->
+          <div class="downloadBtns">
+            <!-- 안드로이드 -->
+            <div class="androidBtn">
+              <div class="androidBtnImg">
+                <img src="/public/images/hong/p3-playstore.png" alt="플레이스토어 로고" />
+                <span class="playstoreENG">Google Play</span>
+              </div>
+              <div class="androidBtnText">
+                <span class="playstoreKOR">안드로이드</span>
+              </div>
+            </div>
+            <!-- IOS -->
+            <div class="appstoreBtn">
+              <div class="appstoreBtnImg">
+                <img src="/public/images/hong/p3-appstore.png" alt="플레이스토어 로고" />
+                <span class="appstoreENG">App Store</span>
+              </div>
+              <span class="appstoreIOS">IOS</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 두번째 박스 -->
+      <div class="part3-box2">
+        <h3>짐꾼이 처음인 당신을 위한 쿠폰 혜택</h3>
+        <p>신규회원 모두에게 가입 즉시 사용할 수 있는 쿠폰을 넣어드립니다.</p>
+        <p>할인 혜택으로 여행을 가볍게 시작해보세요</p>
+        <div class="couponImg">
+          <img src="/public/images/hong/part3-coupon.png" alt="쿠폰 이미지" />
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 
 <style lang="scss" scoped>
-
-// 폰트 칼라 하나도 안 넣음 . 넣기!!!
-
 @import "/src/assets/variables";
 .inner {
   max-width: 1240px;
@@ -157,6 +241,7 @@ const slides = ref(["/images/hong/mainbanner1.png", "/images/hong/mainbanner2.pn
   /* 슬라이드 */
   .visual {
     width: 100%;
+    position: relative;
   }
   .slide {
     width: 100%;
@@ -164,7 +249,103 @@ const slides = ref(["/images/hong/mainbanner1.png", "/images/hong/mainbanner2.pn
     background-size: cover;
     background-position: center;
   }
+
+  // 바로 예약하기
+  .reservationMini {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 10px;
+    padding-left: 5px;
+    background-color: $white;
+    border: 1px solid $bg-primary;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: $reservation-boxShadow;
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50% , 50%);
+    z-index: 10;
+    form {
+      width: 100%;
+      max-width: 770px;
+      display: flex;
+    }
+    .mini-text1{
+      position: relative;
+      &::after{
+        content: "";
+        display: block;
+        width: 1px;
+        height: 35px; // 선 높이
+        background-color: $bg-primary;
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-55%);
+      }
+    }
+    .mini-text {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+      width: calc(100% / 4);
+      // padding: 10px;
+      margin: 15px 0 10px 0;
+      // border-left: 1px solid $bg-primary;
+      &:first-of-type{
+        border: none;
+      }
+      label {
+        // width: 100px;
+        // flex-shrink: 0;
+        width: 85%;
+        font-size: 14px;
+        margin-right: 10px;
+        padding-left: 20px;
+        padding-right: 5px;
+        font-weight: 500;
+      }
+      input {
+        // flex: 1;
+        width: 85%;
+        border: none;
+        outline: none;
+        padding: 4px 6px;
+        margin-left: 15px;
+        margin-right: 15px;
+        border-radius: 6px;
+        &::placeholder {
+          color: $font-light-gray;
+        }
+        &:focus {
+          background-color: $sub-color;
+        }
+      }
+    }
+    .mini-button {
+      background-color: $primary-color;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      max-width: 130px;
+      cursor: pointer;
+      // min-width: 70px;
+      // border-top-right-radius: 20px;
+      // border-bottom-right-radius: 20px;
+      p {
+        color: $white;
+        font-weight: 700;
+      }
+    }
+  }
+
   /* part 1 */
+
+  // 파트 1 전체
   .a1-part1 {
     display: flex;
     justify-content: space-between;
@@ -179,9 +360,10 @@ const slides = ref(["/images/hong/mainbanner1.png", "/images/hong/mainbanner2.pn
       }
       p {
         line-height: 20px;
+        color: $font-gray;
       }
     }
-    /* 이미지 박스 */
+    /* 이미지 박스들 */
     /* ul */
     .a1-part1-boxes {
       display: flex;
@@ -193,7 +375,8 @@ const slides = ref(["/images/hong/mainbanner1.png", "/images/hong/mainbanner2.pn
       .part1-box {
         display: flex;
         flex-direction: column;
-        width: calc((100% - 100px) / 3);
+        width: calc(100% / 3);
+        max-width: 300px;
         overflow: hidden;
         border: 1px solid $input-select;
         border-radius: 10px;
@@ -213,6 +396,7 @@ const slides = ref(["/images/hong/mainbanner1.png", "/images/hong/mainbanner2.pn
           }
           p {
             font-size: $text-font-S;
+            color: $font-gray;
           }
         }
       }
@@ -220,13 +404,17 @@ const slides = ref(["/images/hong/mainbanner1.png", "/images/hong/mainbanner2.pn
   }
 
   //   part 2
+
+  // 파트 2 전체
   .a1-part2 {
+    background-color: $sub-color;
+    padding: 100px 0;
     margin-top: 100px;
     display: flex;
     flex-direction: column;
     gap: 50px;
     //   p2 제목
-    .a1-part2-title {
+    .part2-title {
       text-align: center;
       h3 {
         font-size: $title-font-L;
@@ -236,6 +424,7 @@ const slides = ref(["/images/hong/mainbanner1.png", "/images/hong/mainbanner2.pn
       p {
         font-size: $text-font-XS;
         line-height: 16px;
+        color: $font-gray;
       }
     }
 
@@ -282,18 +471,19 @@ const slides = ref(["/images/hong/mainbanner1.png", "/images/hong/mainbanner2.pn
             p {
               font-size: $text-font-S;
               line-height: 16px;
+              color: $font-gray;
             }
-              .bubble-img{
-                  position: absolute;
-                  bottom: -36px;
-                  left: 38%;
-                  transform: translateX(-50%);
-                  width: 280px;
-                  z-index: -1;
-                img{
-                    width: 100%;
-                    display: block;
-                }
+            .bubble-img {
+              position: absolute;
+              bottom: -36px;
+              left: 38%;
+              transform: translateX(-50%);
+              width: 280px;
+              z-index: -1;
+              img {
+                width: 100%;
+                display: block;
+              }
             }
           }
         }
@@ -312,46 +502,204 @@ const slides = ref(["/images/hong/mainbanner1.png", "/images/hong/mainbanner2.pn
           gap: 70px;
           // 아이콘
           .p2-contents-icons {
-              display: flex;
-              flex-direction: column;
-              text-align: center;
-              gap: 10px;
-              width: 100px;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            gap: 10px;
+            width: 100px;
+            img {
+              width: 100%;
+            }
+            h3 {
+              font-size: $title-font-S;
+              font-weight: 600; //semibold
+            }
+          }
+          // 말풍선 글
+          .p2-contents-texts {
+            // background: url("/public/images/hong/bubble-right.png") center center / cover no-repeat;
+            position: relative;
+            width: 200px;
+            h3 {
+              font-size: $text-font-M;
+              font-weight: 600;
+              margin-bottom: 10px;
+            }
+            p {
+              font-size: $text-font-S;
+              line-height: 16px;
+              color: $font-gray;
+            }
+            .bubble-img {
+              position: absolute;
+              bottom: -36px;
+              left: 55%;
+              transform: translateX(-50%);
+              width: 280px;
+              z-index: -1;
               img {
-                  width: 100%;
-                }
-                h3 {
-                    font-size: $title-font-S;
-                    font-weight: 600; //semibold
-                }
+                width: 100%;
+                display: block;
+              }
             }
-            // 말풍선 글
-            .p2-contents-texts {
-              // background: url("/public/images/hong/bubble-right.png") center center / cover no-repeat;
-              position: relative;
-              width: 200px;
-              h3 {
-                font-size: $text-font-M;
+          }
+        }
+      }
+    }
+  }
+
+  // part 3
+
+  // 파트3 전체
+  .a1-part3 {
+    margin-top: 100px;
+    margin-bottom: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // background-color: aqua;
+    // 파트 3 - 첫번째 박스
+    .part3-box1 {
+      background: url("/public/images/hong/part3-bg1.png") center center / cover no-repeat;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 45px;
+      width: 55%;
+      height: 407px;
+      // width: 100%;
+      // height: 100%;
+      // padding: 100px 0;
+      // max-width: 706px;
+      // max-height: 407px;
+      // position: relative;
+      // .bgImg{
+      //   position: absolute;
+      //   width: 100%;
+      //   height: 100%;
+      //   z-index: -1;
+      //   top: 0;
+      //   left: 0;
+      //   img{
+      //     width: 100%;
+      //     height: 100%;
+      //   }
+      // }
+
+      // 폰이미지
+      .phoneImg {
+        width: 150px;
+        img {
+          margin-top: 18px;
+          width: 100%;
+          display: block;
+        }
+      }
+      // 텍스트 영역 전체
+      .appTextPart {
+        // 텍스트
+        .appTexts {
+          .appTexts-spans {
+            margin-bottom: 10px;
+            .jimggun-span {
+              font-size: 32px;
+              color: $white;
+              margin-right: 5px;
+            }
+            .appdownload-span {
+              font-size: 32px;
+              font-weight: 700;
+              color: $white;
+            }
+          }
+          p {
+            font-size: $text-font-S;
+            color: $white;
+            line-height: 17px;
+            &:last-child {
+              margin-bottom: 20px;
+            }
+          }
+        }
+        // 다운로드 버튼들
+        .downloadBtns {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          // 안드로이드
+          .androidBtn {
+            background-color: $white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            border-radius: 6px;
+            width: 300px;
+            .androidBtnImg {
+              display: flex;
+              align-items: center;
+              img {
+                width: 24px;
+                margin-right: 5px;
+              }
+            }
+            .androidBtnText {
+              display: flex;
+              justify-content: space-between;
+              .playstoreENG {
+              }
+              .playstoreKOR {
+                color: $primary-color;
                 font-weight: 600;
-                margin-bottom: 10px;
               }
-              p {
-                font-size: $text-font-S;
-                line-height: 16px;
+            }
+          }
+          // IOS
+          .appstoreBtn {
+            background-color: $white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            border-radius: 6px;
+            width: 300px;
+            .appstoreBtnImg {
+              img {
+                width: 23px;
+                margin-right: 5px;
               }
-              .bubble-img{
-                  position: absolute;
-                  bottom: -36px;
-                  left: 55%;
-                  transform: translateX(-50%);
-                  width: 280px;
-                  z-index: -1;
-                img{
-                    width: 100%;
-                    display: block;
-                }
             }
+            span {
             }
+          }
+        }
+      }
+    }
+    // 파트 3 - 두번째 박스
+    .part3-box2 {
+      background: url("/public/images/hong/part3-bg2.png") center center / cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 45%;
+      height: 407px;
+      h3 {
+        font-size: $title-font-XS;
+        font-weight: 700;
+        margin-bottom: 9px;
+      }
+      p {
+        font-size: $text-font-XS;
+        line-height: 14px;
+        color: $font-gray;
+      }
+      .couponImg {
+        margin-top: 18px;
+        width: 300px;
+        img {
+          width: 100%;
+          display: block;
         }
       }
     }
