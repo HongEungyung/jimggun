@@ -119,10 +119,20 @@
         </li>
       </ul>
       <p class="distance-info">
-      <span>※ 권역소개</span>
-      <span>타권역 : 동일권역 외 모든 지역</span>
-      <span>동일권역 : 출발지로부터  150km 내에 위치</span>
+        <span>※ 권역소개</span>
+        <span>타권역 : 동일권역 외 모든 지역</span>
+        <span>동일권역 : 출발지로부터 150km 내에 위치</span>
       </p>
+    </div>
+    <!-- 4. 유의 사항 -->
+    <div class="charge-careful inner">
+      <h2 class="charge-careful-title">유의사항</h2>
+      <ul class="charge-careful-box">
+        <li class="charge-careful-list">서비스 이용 하루 전날 18:00시까지 취소 및 변경이 가능합니다.(취소시 100% 환불)</li>
+        <li class="charge-careful-list">서비스 이용 1일전 18시이후부터는 취소 및 환불이 불가하오니 유의하시기 바랍니다.</li>
+        <li class="charge-careful-list">짐꾼의 픽업방식으로 인해 당일 예약은 불가능합니다.</li>
+        <li class="charge-careful-list">배송 짐에 아이스박스 포함 시 꼭 문의하시기 바랍니다.</li>
+      </ul>
     </div>
   </section>
 </template>
@@ -311,12 +321,12 @@
       flex-direction: column;
       gap: 40px;
       padding-bottom: 60px;
-      border-bottom: 1px solid rgba(118, 118, 118, .2);
+      border-bottom: 1px solid rgba(118, 118, 118, 0.2);
       .divide1 {
         margin-bottom: 10px;
 
         padding-bottom: 30px;
-        border-bottom: 1px solid rgba(118, 118, 118, .2);
+        border-bottom: 1px solid rgba(118, 118, 118, 0.2);
       }
       .divide {
         width: 100%;
@@ -324,7 +334,6 @@
         .sub-divide {
           width: 100%;
           display: flex;
-          
 
           li {
             width: calc(100% / 3);
@@ -345,17 +354,42 @@
       }
     }
     .distance-info {
-        width: 100%;
-        max-width: 1000px;
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-        margin-top: 20px;
-        span{
-            font-size: $text-font-S;
-            font-weight: bold;
-            color: $font-light-gray;
-        }
+      width: 100%;
+      max-width: 1000px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin-top: 20px;
+      span {
+        font-size: $text-font-S;
+        font-weight: bold;
+        color: $font-light-gray;
+      }
+    }
+  }
+  // 4. 유의사항
+  .charge-careful {
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    .charge-careful-title {
+      font-size: $title-font-XL;
+      font-weight: bold;
+    }
+    .charge-careful-box {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      .charge-careful-list {
+        list-style: disc;
+        font-size: $text-font-L;
+        font-weight: 300;
+        color: $font-primary;
+      }
     }
   }
 } // 전체 레이아웃 닫힘 영역

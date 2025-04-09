@@ -35,7 +35,7 @@ const confirmPayment = () => emit("next", { paymentComfirmed: true });
         <form class="card_form card_box">
           <!-- 예약확인 영역 -->
           <h2 class="pay_title">예약정보<span>*</span></h2>
-          <div class="res_pay_card">
+          <div class="res_pay_card res_cart">
             <ul class="cart_row">
               <li>
                 <label>출발지</label>
@@ -57,12 +57,12 @@ const confirmPayment = () => emit("next", { paymentComfirmed: true });
                 <label>수하물</label>
                 <div>L 1개</div>
               </li>
-              <li class="cart_line"></li>
-              <!-- 수정 버튼 -->
-              <div>
-                <button class="edit_btn">수정</button>
-              </div>
             </ul>
+            <div class="cart_line"></div>
+            <!-- 수정 버튼 -->
+            <div class="edbtn">
+              <button class="edit_btn">수정</button>
+            </div>
           </div>
         </form>
         <!-- 예약정보 확인 끝 -->
@@ -277,13 +277,32 @@ const confirmPayment = () => emit("next", { paymentComfirmed: true });
   margin: 50px 0;
 }
 //예약 정보
-.cart_row{
-  li{
-    display: flex;
-    justify-content: space-between;
-    font-weight: bold;
-    margin-bottom: 24px;
+.res_cart {
+  padding: 0;
+  .cart_row {
+    padding: 35px 35px 0;
+    li {
+      display: flex;
+      justify-content: space-between;
+      font-weight: bold;
+      margin-bottom: 24px;
+      > div {
+        font-size: 15px;
+      }
+      // &:last-child{
+      //   margin-bottom: 20px;
+      // }
+    }
   }
+}
+.edbtn {
+  padding: 12px 35px;
+  display: flex;
+  flex-direction: row-reverse;
+}
+.cart_line {
+  border-bottom: 1px dashed $input-select;
+  width: 100%;
 }
 // 예약자 정보
 .res_info ul li {
@@ -461,12 +480,16 @@ const confirmPayment = () => emit("next", { paymentComfirmed: true });
   }
 }
 // 결제하기 버튼
-.btn_submit {
-  width: 100%;
-  font-size: 16px;
-  font-weight: bold;
-  padding: 10px;
-  padding: 20px 0;
+.confirm_btn {
   margin: 0 0 50px 0;
+  display: flex;
+  .btn_submit {
+    width: 50%;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 20px 0;
+    margin: auto;
+    cursor: pointer;
+  }
 }
 </style>

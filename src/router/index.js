@@ -8,6 +8,7 @@ import A6_cs from "@/views/A6_cs.vue";
 import A7_login from "@/views/A7_login.vue";
 import A7_signUp from "@/views/A7_signUp.vue";
 import A7_signUpFinish from "@/views/A7_signUpFinish.vue";
+import A8_mypage from "@/views/A8_mypage.vue";
 
 const routes = [
     {path : "/" , component : A1_home},
@@ -18,7 +19,8 @@ const routes = [
     {path : "/cs" , component : A6_cs},
     {path : "/login" , component : A7_login},
     {path : "/signUp" , component : A7_signUp},
-    {path : "/signUpFinish" , component : A7_signUpFinish}
+    {path : "/signUpFinish" , component : A7_signUpFinish},
+    {path : "/mypage" , component : A8_mypage}
 ]
 const router = createRouter({
     history : createWebHistory(),
