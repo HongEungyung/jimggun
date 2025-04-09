@@ -269,12 +269,7 @@ const handleDateSelect = (date) => {
                   <label>도착지</label>
                   <div class="res_input">
                     <img src="/public/images/icon/lens_icon.png" alt="돋보기" />
-                    <input
-                      type="text"
-                      value=""
-                      readonly=""
-                      autocomplete="off"
-                      placeholder="도착장소" />
+                    <input type="text" value="" readonly="" autocomplete="off" placeholder="도착장소"/>
                   </div>
                 </div>
                 <!-- 찾을 날짜 선택 -->
