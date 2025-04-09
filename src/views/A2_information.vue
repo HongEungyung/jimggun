@@ -351,7 +351,7 @@ watch(activeTap, (newValue) => {
               <div class="safe-line"></div>
               <div class="safe-icon">
                 <span>01</span>
-                <img src="/public/images/lee/safe1.png" alt="안전보관아이콘1" />
+                <img src="/public/images/lee/fastIcon1.png" alt="안전보관아이콘1" />
               </div>
             </div>
           </li>
