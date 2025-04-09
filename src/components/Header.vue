@@ -18,6 +18,7 @@
         <li><router-link to="/cs">고객센터</router-link></li>
       </ul>
       <div class="headerSubnav">
+        <router-link to="/mypage">마이</router-link>
         <router-link to="/login">로그인</router-link>
         <div class="headerSubLangs">
           <a href="#">KOR</a>
