@@ -110,9 +110,9 @@ watch(activeTap, (newValue) => {
     <!-- 탭 메뉴 -->
     <div class="info-tap inner">
       <h3 @click="activeTap = 'delivery'" class="delivery-tap" :class="{ active: activeTap === 'delivery' }">
-        배송 서비스
+        <span>배송 서비스</span>
       </h3>
-      <h3 @click="activeTap = 'keep'" class="keep-tap" :class="{ active: activeTap === 'keep' }">보관 서비스</h3>
+      <h3 @click="activeTap = 'keep'" class="keep-tap" :class="{ active: activeTap === 'keep' }"><span>보관 서비스</span></h3>
     </div>
     <!--  -->
     <!-- 짐배송 영역 -->
@@ -366,7 +366,7 @@ watch(activeTap, (newValue) => {
               <div class="safe-line"></div>
               <div class="safe-icon">
                 <span>02</span>
-                <img src="/public/images/lee/safe2.png" alt="안전보관아이콘2" />
+                <img src="/public/images/lee/fastIcon2.png" alt="안전보관아이콘2" />
               </div>
             </div>
           </li>
@@ -506,6 +506,9 @@ watch(activeTap, (newValue) => {
       </div>
     </section>
   </div>
+  <div class="img-url">
+  <img src="/public/images/lee/mapposition.png" alt="">
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -536,17 +539,25 @@ watch(activeTap, (newValue) => {
 }
 .info-tap h3 {
   flex: 1;
-  text-align: center;
+  
   height: 100%;
-  line-height: 50px;
-  color: $font-light-gray;
-  font-size: $text-font-L;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
   cursor: pointer;
   border: 3px solid #f1f1f5;
   &.active {
     background-color: $primary-color;
-    color: $white;
+    
     border: none;
+    span{
+      color: $white;
+    }
+  }
+  span{
+    color: $font-light-gray;
+  font-size: $text-font-L;
   }
 }
 .keep-tap {
