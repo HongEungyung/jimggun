@@ -380,6 +380,7 @@ const slides = ref(["/images/hong/mainbanner1.png", "/images/hong/mainbanner2.pn
         overflow: hidden;
         border: 1px solid $input-select;
         border-radius: 10px;
+        cursor: pointer;
 
         .part1-img {
           width: 100%;
@@ -635,6 +636,7 @@ const slides = ref(["/images/hong/mainbanner1.png", "/images/hong/mainbanner2.pn
             padding: 15px 30px;
             border-radius: 6px;
             width: 300px;
+            cursor: pointer;
             .androidBtnImg {
               display: flex;
               align-items: center;
@@ -663,6 +665,7 @@ const slides = ref(["/images/hong/mainbanner1.png", "/images/hong/mainbanner2.pn
             padding: 15px 30px;
             border-radius: 6px;
             width: 300px;
+            cursor: pointer;
             .appstoreBtnImg {
               img {
                 width: 23px;
@@ -697,6 +700,7 @@ const slides = ref(["/images/hong/mainbanner1.png", "/images/hong/mainbanner2.pn
       .couponImg {
         margin-top: 18px;
         width: 300px;
+        cursor: pointer;
         img {
           width: 100%;
           display: block;
