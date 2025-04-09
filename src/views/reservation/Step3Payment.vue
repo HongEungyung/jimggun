@@ -36,18 +36,32 @@ const confirmPayment = () => emit("next", { paymentComfirmed: true });
           <!-- 예약확인 영역 -->
           <h2 class="pay_title">예약정보<span>*</span></h2>
           <div class="res_pay_card">
-            <ul class="card_row">
+            <ul class="cart_row">
+              <li>
+                <label>출발지</label>
+                <div>대구역</div>
+              </li>
+              <li>
+                <label>짐 맡길 일정</label>
+                <div>몇일 몇시</div>
+              </li>
+              <li>
+                <label>도착지</label>
+                <div>동대구역</div>
+              </li>
+              <li>
+                <label>짐 찾을 일정</label>
+                <div>몇일 몇시</div>
+              </li>
               <li>
                 <label>수하물</label>
-                <div>1개</div>
+                <div>L 1개</div>
               </li>
+              <li class="cart_line"></li>
               <!-- 수정 버튼 -->
-              <li class="card_line">
-                <label>수하물</label>
-                <div>
-                  <button class="edit_btn">수정</button>
-                </div>
-              </li>
+              <div>
+                <button class="edit_btn">수정</button>
+              </div>
             </ul>
           </div>
         </form>
@@ -176,7 +190,7 @@ const confirmPayment = () => emit("next", { paymentComfirmed: true });
                             type="text"
                             placeholder="쿠폰번호를 입력해 주세요" />
                           <!-- 알림창 띄우기 쿠폰 번호를 입력해주세요 -->
-                          <span class="coupon_btn">적용</span>
+                          <span class="coupon_btn close_btn">적용</span>
                           <span class="coupon_btn" style="display: none"
                             >취소</span
                           >
@@ -186,6 +200,7 @@ const confirmPayment = () => emit("next", { paymentComfirmed: true });
                         <label>쿠폰할인</label>
                         <strong class="right_price">0원</strong>
                       </li>
+                      <li class="right_line"></li>
                       <li>
                         <label>최종 결제 금액</label>
                         <strong class="right_price">0원</strong>
@@ -201,15 +216,16 @@ const confirmPayment = () => emit("next", { paymentComfirmed: true });
             <h2 class="pay_title">이용 약관 동의<span>*</span></h2>
             <div id="agree_card">
               <div class="agree">
-                <label class="agree_line">
+                <label>
                   <input type="checkbox" value="all" />모든 약관에 동의합니다.
                 </label>
               </div>
+              <div class="agree agree_line"></div>
               <div class="agree">
                 <label>
                   <input type="checkbox" value="stipulation" />
                   <span>[필수]</span>
-                  "이용약관 동의"
+                  이용약관 동의
                   <u>보기</u>
                 </label>
               </div>
@@ -217,7 +233,7 @@ const confirmPayment = () => emit("next", { paymentComfirmed: true });
                 <label>
                   <input type="checkbox" value="stipulation" />
                   <span>[필수]</span>
-                  "개인정보 취급방침 동의"
+                  개인정보 취급방침 동의
                   <u>보기</u>
                 </label>
               </div>
@@ -259,6 +275,15 @@ const confirmPayment = () => emit("next", { paymentComfirmed: true });
 }
 .card_box {
   margin: 50px 0;
+}
+//예약 정보
+.cart_row{
+  li{
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    margin-bottom: 24px;
+  }
 }
 // 예약자 정보
 .res_info ul li {
@@ -324,6 +349,85 @@ const confirmPayment = () => emit("next", { paymentComfirmed: true });
   width: 85%;
   margin-left: 10px;
 }
+// 결제 정보
+.res_pay_sl {
+  h3 {
+    font-weight: bold;
+  }
+  fieldset {
+    border: 2px solid $input-select;
+    border-radius: 20px;
+    padding: 10px 20px 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+    font-size: 15px;
+    label {
+      margin-right: 10px;
+    }
+  }
+}
+.res_pay_line {
+  border-bottom: 1px dashed $input-select;
+  margin: 15px 0;
+}
+.pay_order_box {
+  --bs-gutter-x: 1.5rem;
+  --bs-gutter-y: 0;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: calc(-1 * var(--bs-gutter-y));
+  margin-right: calc(-0.5 * var(--bs-gutter-x));
+  margin-left: calc(-0.5 * var(--bs-gutter-x));
+  .pay_order {
+    flex: 0 0 auto;
+    width: 50%;
+    padding: 0 12px;
+    ul > li {
+      width: 100%;
+      margin: 23px 0;
+      display: flex;
+      justify-content: space-between;
+      label {
+        font-size: 13px;
+      }
+      &.right_line {
+        width: 100%;
+        border-bottom: 1px dashed $input-select;
+      }
+      &:last-child strong {
+        color: $primary-color;
+      }
+      // 쿠폰
+      .coupon_area {
+        input {
+          text-align: center;
+          padding: 10px;
+          width: 260px;
+          height: 30px;
+          font-size: 13px;
+          color: $font-light-gray;
+          border: 1px solid $input-select;
+          background: #fff;
+          border-radius: 5px;
+          &:focus {
+            border: none;
+            outline: 3px solid rgba(255, 111, 0, 0.5);
+            box-shadow: $reservation-boxShadow;
+          }
+        }
+        .coupon_btn {
+          padding: 7.5px 8px;
+          font-size: 14px;
+          margin-left: 5px;
+          font-weight: 300;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
 // 이용약관 동의
 #agree_card {
   padding: 35px 35px;
@@ -331,8 +435,28 @@ const confirmPayment = () => emit("next", { paymentComfirmed: true });
   border-radius: 10px;
   .agree {
     width: 100%;
-    &:first-child {
+    margin-bottom: 10px;
+    &.agree_line {
       border-bottom: 1px dashed $input-select;
+    }
+    input {
+      width: 16px;
+      height: 16px;
+      margin: 0 10px;
+      vertical-align: bottom;
+      background-color: #fff;
+      border: 1px solid rgba(0, 0, 0, 0.25);
+      cursor: pointer;
+    }
+    span {
+      margin-right: 4px;
+      color: $primary-color;
+    }
+    u {
+      color: $font-light-gray;
+      float: right;
+      font-size: 13px;
+      cursor: pointer;
     }
   }
 }
