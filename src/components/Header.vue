@@ -21,7 +21,7 @@
         <router-link to="/login">로그인</router-link>
         <div class="headerSubLangs">
           <a href="#">KOR</a>
-          <span>|</span> 
+          <span>|</span>
           <a href="#">ENG</a>
         </div>
       </div>
