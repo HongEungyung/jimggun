@@ -1,6 +1,5 @@
 <script setup>
 import { reactive, ref, computed, watch } from "vue";
-
 // 질문 별 주제 카테고리 데이터 더미
 const categories = [
   { id: "all", name: "전체" },
@@ -334,7 +333,7 @@ const nextPage = () => {
     <!-- 5. 문의하기 -->
     <div class="contact-section">
       <p>원하는 답변을 찾지 못하셨나요?</p>
-      <router-link>문의하기</router-link>
+      <router-link to="/inquiry">문의하기</router-link>
     </div>
   </section>
 </template>
@@ -357,16 +356,16 @@ const nextPage = () => {
     width: 100%;
     max-width: 560px;
     // height: 60px;
-    padding: 15px 0;
+    padding: 11px 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 3px solid rgba(229, 229, 236, 1);
+    border: 3px solid #f1f1f5;
     margin: 70px 0;
     // 타이틀 글자조절
     span {
       color: $font-light-gray;
-      font-size: $title-font-S;
+      font-size: $title-font-XS;
       font-weight: bold;
     }
   }
@@ -400,16 +399,13 @@ const nextPage = () => {
       width: calc(100% / 6);
       padding: 10px 0;
       color: $font-light-gray;
-      // border: 1px solid rgba(118, 118, 118, 1);
-      border: 1px solid rgba(255, 111, 0, 0.5);
-      // border: none;
-      // background-color: $sub-color;
-      box-shadow: $reservation-boxShadow;
+      border: 1px solid rgba(118, 118, 118, 1);
       border-radius: 10px;
       background-color: $white;
       font-weight: bold;
 
-      &:hover {
+      &:hover,
+      &.active {
         background-color: $primary-hover;
         color: $white;
         border: 1px solid $white;
@@ -456,27 +452,63 @@ const nextPage = () => {
           font-weight: 500;
         }
       }
-      
     }
     // 4-3. 페이지네이션 버튼
     .pagination {
-        width: 100%;
-        // margin-top: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 20px;
-        button {
-          
-          &:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-          }
+      width: 100%;
+      // margin-top: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+      margin-bottom: 50px;
+      button {
+        padding: 7px 18px;
+        background-color: $sub-color;
+        border: 1px solid rgba(118, 118, 118, 0.1);
+        border-radius: 10px;
+        font-size: $text-font-S;
+        color: $font-light-gray;
+        &:disabled {
+          background-color: #ccc;
+          cursor: not-allowed;
         }
       }
+    }
   }
   // 5. 문의하기
   .contact-section {
+    width: 100%;
+    max-width: 560px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    margin-top: 40px;
+    margin-bottom: 100px;
+    p {
+      color: rgba(118, 118, 118, 0.5);
+    }
+    a {
+      display: block;
+      width: 90px;
+      height: 40px;
+      background-color: $white;
+      color: $font-light-gray;
+      border: 1px solid rgba(118, 118, 118, .5);
+      border-radius: 10px;
+      font-size: $text-font-M;
+      font-weight: bold;
+      text-align: center;
+      text-decoration: none;
+      line-height: 40px;
+      &:hover{
+        background-color: $primary-hover;
+        color: $white;
+        border: 1px solid $white;
+      }
+    }
   }
 }
 
