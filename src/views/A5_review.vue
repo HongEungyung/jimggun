@@ -80,7 +80,10 @@ const toggleReviews = () => {
 <template>
   <div class="A5-wrap">
     <div class="A5-inner">
-      <h1 class="A5-h1">이용후기</h1>
+      <div class="A5-h1-box">
+        <h1 class="A5-h1">이용후기</h1>
+      </div>
+      
       <div class="review-box" v-for="(review, index) in visibleReviews" :key="index">
         <h2 class="review-title">{{ maskedName(review.name) }} 님 감사합니다!</h2>
         <div class="review-content" @click="toggleShowFull(index)">
@@ -112,6 +115,7 @@ const toggleReviews = () => {
   background-color: $sub-color;
   width: 100%;
   font-family: $font-family;
+  padding-top: 70px;
 }
 .A5-inner {
   max-width: 1280px;
@@ -119,25 +123,23 @@ const toggleReviews = () => {
   text-align: center;
 }
 // 이용후기
+.A5-h1-box{
+  width: 100%;
+    max-width: 560px;
+    height: 60px;
+   
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid $font-light-gray;
+    margin: auto;
+}
 .A5-h1 {
-  font-size: 28px;
+  color: $font-gray;
+      font-size: $title-font-XS;
+      font-weight: bold;
+}
 
-  padding-top: 100px;
-  padding-bottom: 3.5px;
-  position: relative;
-  display: inline-block;
-  color: $font-primary;
-}
-// 이용후기 밑줄
-.A5-h1::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 10%;
-  width: 80%;
-  height: 1px;
-  background-color: $font-primary;
-}
 // 리뷰 박스
 .review-box {
   width: 84.4%;
