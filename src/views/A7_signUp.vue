@@ -17,7 +17,7 @@ const errors = ref({
   phone: '',
   email: '',
 });
-
+// 모두 동의합니다
 watch(allAgree, (newValue) => {
   terms.value = newValue;
   privacy.value = newValue;
@@ -26,6 +26,16 @@ watch(allAgree, (newValue) => {
 watch([terms, privacy], ([newTerms, newPrivacy]) => {
   allAgree.value = newTerms && newPrivacy;
 });
+// 약관 내용 펼치기
+const showTermsContent = ref(false); // 회원가입약관
+const showPrivacyContent = ref(false); // 개인정보처리방침
+
+const toggleTerms = () => {
+  showTermsContent.value = !showTermsContent.value;
+};
+const togglePrivacy = () => {
+  showPrivacyContent.value = !showPrivacyContent.value;
+};
 
 // 유효성 검사 & 회원가입 처리 함수
 const handleSignUp = () => {
@@ -93,12 +103,27 @@ const formatPhone = (e) => {
     <div class="checkboxWrap">
       <input type="checkbox" v-model="terms" class="checkbox" />
       <p>회원가입약관</p>
-      <img src="../../public/images/kang/moreView.png" alt="펼치기" class="moreView" />
+      <img src="../../public/images/kang/moreView.png" alt="펼치기" class="moreView" @click="toggleTerms" />
+    </div>
+    <!-- 약관 펼쳐지는 내용 -->
+    <div v-if="showTermsContent" class="termsContent">
+      <p>
+        [회원가입약관]<br />
+        제1조 목적<br />
+        이 약관은 회원가입을 위해 필요한...
+      </p>
     </div>
     <div class="checkboxWrap">
       <input type="checkbox" v-model="privacy" class="checkbox" />
       <p>개인정보처리방침안내</p>
-      <img src="../../public/images/kang/moreView.png" alt="펼치기" class="moreView" />
+      <img src="../../public/images/kang/moreView.png" alt="펼치기" class="moreView" @click="togglePrivacy" />
+    </div>
+    <!-- 개인정보 처리방침 펼쳐지는 내용 -->
+    <div v-if="showPrivacyContent" class="termsContent">
+      <p>
+        [개인정보 처리방침]<br />
+        수집하는 개인정보 항목은 다음과 같습니다...
+      </p>
     </div>
     <div class="allAgree">
       <input type="checkbox" v-model="allAgree" class="checkbox" />
@@ -215,6 +240,7 @@ h1 {
   margin-left: 10px;
   margin-left: auto;
   margin-right: 21px;
+  cursor: pointer;
 }
 .allAgree {
   display: flex;
@@ -227,6 +253,23 @@ h1 {
   font-size: 16px;
   font-weight: bold;
   margin-left: 5px;
+}
+// 약관 & 개인정보처리방침
+.termsContent {
+  background-color: $bg-light;
+  font-size: 13px;
+  color: $font-primary;
+  border: 1px solid $bg-primary;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 10px;
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+  line-height: 1.6;
+  // max-height: 200px;
+  // overflow-y: auto;
 }
 //개인정보 입력
 h2 {
