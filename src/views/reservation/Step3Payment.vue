@@ -12,7 +12,7 @@ const confirmPayment = () => emit("next", { paymentComfirmed: true });
   <div class="res_wrap">
     <div class="res_inner">
       <!-- 상단 -->
-      <button @click="confirmPayment">다음</button>
+      
       <section class="res_top">
         <div class="res_text_box">
           <p id="res_top_title">3분 안에 예약하고</p>
@@ -246,7 +246,7 @@ const confirmPayment = () => emit("next", { paymentComfirmed: true });
             </div>
           </div>
           <!-- 결제하기 버튼 -->
-          <div class="confirm_btn">
+          <div class="confirm_btn" @click="confirmPayment">
             <input class="c_btn btn_submit" type="button" value="결제하기" />
           </div>
         </form>
@@ -261,7 +261,7 @@ const confirmPayment = () => emit("next", { paymentComfirmed: true });
 
 .progress_text p:nth-child(2) {
   // font-size: 1.875rem;
-  font-weight: 500;
+  font-weight: 600;
   color: $primary-color;
 }
 // 소타이틀
