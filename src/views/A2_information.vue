@@ -204,7 +204,7 @@ watch(activeTap, (newValue) => {
             </ul>
           </li>
           <li class="pst-list2">
-            <h4 class="pst-title">집 - 숙소</h4>
+            <h4 class="pst-title">공항 - 집</h4>
             <ul class="pst-icon">
               <li>
                 <img src="/public/images/lee/airplane.png" alt="비행기아이콘" />
@@ -218,7 +218,7 @@ watch(activeTap, (newValue) => {
             </ul>
           </li>
           <li class="pst-list3">
-            <h4 class="pst-title">집 - 숙소</h4>
+            <h4 class="pst-title">공항 - 숙소</h4>
             <ul class="pst-icon">
               <li>
                 <img src="/public/images/lee/airplane.png" alt="비행기아이콘" />
@@ -366,7 +366,7 @@ watch(activeTap, (newValue) => {
               <div class="safe-line"></div>
               <div class="safe-icon">
                 <span>02</span>
-                <img src="/public/images/lee/fastIcon2.png" alt="안전보관아이콘2" />
+                <img src="/public/images/lee/safe2.png" alt="안전보관아이콘2" />
               </div>
             </div>
           </li>

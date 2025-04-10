@@ -158,16 +158,16 @@
     width: 100%;
     max-width: 560px;
     // height: 60px;
-    padding: 15px 0;
+    padding: 11px 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 3px solid rgba(229, 229, 236, 1);
+    border: 3px solid #f1f1f5;
     margin: 70px 0;
     // 타이틀 글자조절
     span {
       color: $font-light-gray;
-      font-size: $title-font-S;
+      font-size: $title-font-XS;
       font-weight: bold;
     }
   }
