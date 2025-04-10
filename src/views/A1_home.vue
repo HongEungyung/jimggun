@@ -17,32 +17,31 @@ const slides = ref(["/images/hong/mainbanner1.png", "/images/hong/mainbanner2.pn
           <div class="slide" :style="{ backgroundImage: `url(${slide})` }"></div>
         </SwiperSlide>
       </Swiper>
-    <!-- 바로 예약하기 -->
-    <div class="reservationMini">
-      <form>
-        <div class="mini-text mini-text1">
-          <label for="mini1">출발지</label>
-          <input type="text" id="mini1" placeholder="집 앞" />
-        </div>
-        <div class="mini-text mini-text1">
-          <label for="mini1">짐 맡길 일정</label>
-          <input type="text" id="mini1" placeholder="2025.03.21 / 10:00" />
-        </div>
-        <div class="mini-text mini-text1">
-          <label for="mini1">도착지</label>
-          <input type="text" id="mini1" placeholder="대구역" />
-        </div>
-        <div class="mini-text">
-          <label for="mini1">짐 찾을 일정</label>
-          <input type="text" id="mini1" placeholder="2025.03.22 / 11:00" />
-        </div>
-      </form>
+      <!-- 바로 예약하기 -->
+      <div class="reservationMini">
+        <form>
+          <div class="mini-text mini-text1">
+            <label for="mini1">출발지</label>
+            <input type="text" id="mini1" placeholder="집 앞" />
+          </div>
+          <div class="mini-text mini-text1">
+            <label for="mini1">짐 맡길 일정</label>
+            <input type="text" id="mini1" placeholder="2025.03.21 / 10:00" />
+          </div>
+          <div class="mini-text mini-text1">
+            <label for="mini1">도착지</label>
+            <input type="text" id="mini1" placeholder="대구역" />
+          </div>
+          <div class="mini-text">
+            <label for="mini1">짐 찾을 일정</label>
+            <input type="text" id="mini1" placeholder="2025.03.22 / 11:00" />
+          </div>
+        </form>
         <div class="mini-button">
           <p>바로 예약</p>
         </div>
-    </div>
+      </div>
     </section>
-
 
     <!-- 파트 1 -->
     <section class="a1-part1 inner">
@@ -109,9 +108,6 @@ const slides = ref(["/images/hong/mainbanner1.png", "/images/hong/mainbanner2.pn
                 미팅 끝나고 가는 출장까지, <br />
                 짐은 짐꾼에 맡기고 두 손 가볍게 <br />이동하세요!
               </p>
-              <div class="bubble-img">
-                <img src="/public/images/hong/bubble-left.png" alt="말풍선" />
-              </div>
             </div>
           </div>
           <!-- 2 -->
@@ -125,9 +121,6 @@ const slides = ref(["/images/hong/mainbanner1.png", "/images/hong/mainbanner2.pn
             <div class="p2-contents-texts">
               <h3>골프투어도, 더 즐겁게 짐꾼!</h3>
               <p>골프, 스쿠버다이빙, 서핑, 스키! <br />즐거운만큼 무거운 취미 용품들 <br />짐꾼이 안전하게 배송해드릴게요!</p>
-              <div class="bubble-img">
-                <img src="/public/images/hong/bubble-left.png" alt="말풍선" />
-              </div>
             </div>
           </div>
         </div>
@@ -140,9 +133,6 @@ const slides = ref(["/images/hong/mainbanner1.png", "/images/hong/mainbanner2.pn
             <div class="p2-contents-texts">
               <h3>주말여행 갈 때, 더 빠르게 짐꾼!</h3>
               <p>짧은 주말을 이용해 떠나는 여행! <br />회사에 들고가자니 눈치보이는 <br />캐리어 짐꾼이 먼저 옮겨드릴게요!</p>
-              <div class="bubble-img">
-                <img src="/public/images/hong/bubble-right.png" alt="말풍선" />
-              </div>
             </div>
             <!-- 아이콘 -->
             <div class="p2-contents-icons">
@@ -156,9 +146,6 @@ const slides = ref(["/images/hong/mainbanner1.png", "/images/hong/mainbanner2.pn
             <div class="p2-contents-texts">
               <h3>퇴근 후 여행, 더 가볍게 짐꾼!</h3>
               <p>사람 많고, 정신없는 출근시간 <br />지옥철에 크고 무거운 캐리어와 <br />함께 타는 건 이제 그만!</p>
-              <div class="bubble-img">
-                <img src="/public/images/hong/bubble-right.png" alt="말풍선" />
-              </div>
             </div>
             <!-- 아이콘 -->
             <div class="p2-contents-icons">
@@ -265,16 +252,16 @@ const slides = ref(["/images/hong/mainbanner1.png", "/images/hong/mainbanner2.pn
     position: absolute;
     bottom: 0;
     left: 50%;
-    transform: translate(-50% , 50%);
+    transform: translate(-50%, 50%);
     z-index: 10;
     form {
       width: 100%;
       max-width: 770px;
       display: flex;
     }
-    .mini-text1{
+    .mini-text1 {
       position: relative;
-      &::after{
+      &::after {
         content: "";
         display: block;
         width: 1px;
@@ -295,7 +282,7 @@ const slides = ref(["/images/hong/mainbanner1.png", "/images/hong/mainbanner2.pn
       // padding: 10px;
       margin: 15px 0 10px 0;
       // border-left: 1px solid $bg-primary;
-      &:first-of-type{
+      &:first-of-type {
         border: none;
       }
       label {
@@ -414,7 +401,7 @@ const slides = ref(["/images/hong/mainbanner1.png", "/images/hong/mainbanner2.pn
     display: flex;
     flex-direction: column;
     gap: 50px;
-    //   p2 제목
+    //   파트 2 제목
     .part2-title {
       text-align: center;
       h3 {
@@ -429,7 +416,7 @@ const slides = ref(["/images/hong/mainbanner1.png", "/images/hong/mainbanner2.pn
       }
     }
 
-    //  p2 내용
+    //  파트 2 내용
     .part2-contents-all {
       display: flex;
       justify-content: center;
@@ -464,6 +451,9 @@ const slides = ref(["/images/hong/mainbanner1.png", "/images/hong/mainbanner2.pn
           .p2-contents-texts {
             position: relative;
             width: 200px;
+            // background-color: $white;
+            // border-radius: 10px;
+            // padding: 30px;
             h3 {
               font-size: $text-font-M;
               font-weight: 600;
@@ -473,18 +463,6 @@ const slides = ref(["/images/hong/mainbanner1.png", "/images/hong/mainbanner2.pn
               font-size: $text-font-S;
               line-height: 16px;
               color: $font-gray;
-            }
-            .bubble-img {
-              position: absolute;
-              bottom: -36px;
-              left: 38%;
-              transform: translateX(-50%);
-              width: 280px;
-              z-index: -1;
-              img {
-                width: 100%;
-                display: block;
-              }
             }
           }
         }
@@ -518,7 +496,6 @@ const slides = ref(["/images/hong/mainbanner1.png", "/images/hong/mainbanner2.pn
           }
           // 말풍선 글
           .p2-contents-texts {
-            // background: url("/public/images/hong/bubble-right.png") center center / cover no-repeat;
             position: relative;
             width: 200px;
             h3 {
@@ -530,18 +507,6 @@ const slides = ref(["/images/hong/mainbanner1.png", "/images/hong/mainbanner2.pn
               font-size: $text-font-S;
               line-height: 16px;
               color: $font-gray;
-            }
-            .bubble-img {
-              position: absolute;
-              bottom: -36px;
-              left: 55%;
-              transform: translateX(-50%);
-              width: 280px;
-              z-index: -1;
-              img {
-                width: 100%;
-                display: block;
-              }
             }
           }
         }
@@ -568,24 +533,6 @@ const slides = ref(["/images/hong/mainbanner1.png", "/images/hong/mainbanner2.pn
       gap: 45px;
       width: 55%;
       height: 407px;
-      // width: 100%;
-      // height: 100%;
-      // padding: 100px 0;
-      // max-width: 706px;
-      // max-height: 407px;
-      // position: relative;
-      // .bgImg{
-      //   position: absolute;
-      //   width: 100%;
-      //   height: 100%;
-      //   z-index: -1;
-      //   top: 0;
-      //   left: 0;
-      //   img{
-      //     width: 100%;
-      //     height: 100%;
-      //   }
-      // }
 
       // 폰이미지
       .phoneImg {

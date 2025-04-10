@@ -110,6 +110,7 @@
 }
 .footerRightButtons{
     button{
+      cursor: pointer;
         font-size: 12px;
         color: $font-gray;
         line-height: 16px;
