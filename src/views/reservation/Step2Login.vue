@@ -9,10 +9,7 @@ const confirmPayment = () => emit('next', { paymentComfirmed: true });
 </script>
 
 <template>
-  <div>
-    <h1>step2 로그인</h1>
-    <button @click="confirmPayment">다음</button>
-  </div>
+  
   <div class="login-btn-box">
     <div class="btn-warp">
       <router-link to="/signUp" class="routerBtn routerBtn1">
@@ -31,7 +28,7 @@ const confirmPayment = () => emit('next', { paymentComfirmed: true });
         </button>
       </router-link>
       <router-link class="routerBtn routerBtn4">
-        <button class="loginBtn nonAccount">비회원으로 예약하기</button>
+        <button @click="confirmPayment" class="loginBtn nonAccount">비회원으로 예약하기</button>
       </router-link>
     </div>
   </div>

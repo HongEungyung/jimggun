@@ -33,7 +33,7 @@
 
 .progress_text p:last-child {
       // font-size: 1.875rem;
-      font-weight: 500;
+      font-weight: 600;
       color: $primary-color;
     }
 </style>

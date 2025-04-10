@@ -1,8 +1,9 @@
 <script setup>
-import { computed, ref } from "vue";
+import { computed, ref, watch, onUnmounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import ModalInquire from "@/components/ModalInquire.vue"; // 모달 컴포넌트 임포트
 import DatePicker from "@/components/DatePicker.vue"; // 날짜 선택 컴포넌트 임포트
+import TimePicker from "@/components/TimePicker.vue";
 
 const isModalOpen = ref(false);
 const route = useRoute();
@@ -109,6 +110,7 @@ const selectedArrivalDate = ref("");
 const datePickerType = ref(""); // 'departure' 또는 'arrival'
 //위치잡기
 const datePickerPosition = ref({ top: 0, left: 0 });
+//팝업 열기
 const openDatePicker = (type, event) => {
   datePickerType.value = type;
   const inputElement = event.target;
@@ -121,12 +123,6 @@ const openDatePicker = (type, event) => {
   isDatePickerOpen.value = true;
 };
 
-// 날짜 선택 팝업 열기
-// const openDatePicker = (type) => {
-//   datePickerType.value = type;
-//   isDatePickerOpen.value = true;
-// };
-
 // 날짜 선택 완료
 const handleDateSelect = (date) => {
   if (datePickerType.value === "departure") {
@@ -136,6 +132,106 @@ const handleDateSelect = (date) => {
   }
   isDatePickerOpen.value = false;
 };
+
+// 외부 클릭 감지 함수
+const handleClickOutside = (event) => {
+  const datePicker = document.querySelector(".date-picker");
+  const dateInput = document.querySelector(".date_input");
+
+  if (
+    datePicker &&
+    !datePicker.contains(event.target) &&
+    !dateInput.contains(event.target)
+  ) {
+    isDatePickerOpen.value = false;
+  }
+};
+
+// 외부 클릭 이벤트 리스너 추가/제거
+watch(isDatePickerOpen, (newValue) => {
+  if (newValue) {
+    // setTimeout을 사용하여 이벤트 버블링을 피함
+    setTimeout(() => {
+      document.addEventListener("click", handleClickOutside);
+    }, 0);
+  } else {
+    document.removeEventListener("click", handleClickOutside);
+  }
+});
+// 시간 선택 팝업
+const isTimePickerOpen = ref(false);
+const departureTime = ref("");
+const arrivalTime = ref("");
+const timePickerType = ref(""); // 'departure' 또는 'arrival'
+const timePickerPosition = ref({ top: 0, left: 0 });
+
+const openTimePicker = (type, event) => {
+  timePickerType.value = type;
+  const inputElement = event.target;
+  const rect = inputElement.getBoundingClientRect();
+  timePickerPosition.value = {
+    top: rect.bottom + window.scrollY + 5,
+    left: rect.left + window.scrollX,
+  };
+  isTimePickerOpen.value = true;
+};
+
+const handleTimeSelect = (time) => {
+  if (timePickerType.value === "departure") {
+    departureTime.value = time;
+  } else if (timePickerType.value === "arrival") {
+    arrivalTime.value = time;
+  }
+  isTimePickerOpen.value = false;
+};
+
+// 시간 팝업 닫기
+const handleTimeClickOutside = (event) => {
+  const timePicker = document.querySelector(".time-picker");
+  const timeInput = document.querySelector(".time_input");
+
+  if (
+    timePicker &&
+    !timePicker.contains(event.target) &&
+    !timeInput.contains(event.target)
+  ) {
+    isTimePickerOpen.value = false;
+  }
+};
+
+// 외부 클릭 이벤트 리스너 추가/제거
+watch(isTimePickerOpen, (newValue) => {
+  if (newValue) {
+    // setTimeout을 사용하여 이벤트 버블링을 피함
+    setTimeout(() => {
+      document.addEventListener("click", handleTimeClickOutside);
+    }, 0);
+  } else {
+    document.removeEventListener("click", handleTimeClickOutside);
+  }
+});
+
+const isDepartureModalOpen = ref(false);
+const isArrivalModalOpen = ref(false);
+const departurePlace = ref("");
+const arrivalPlace = ref("");
+
+const handleDepartureSelect = (area) => {
+  departurePlace.value = area;
+  isDepartureModalOpen.value = false;
+};
+
+const handleArrivalSelect = (area) => {
+  arrivalPlace.value = area;
+  isArrivalModalOpen.value = false;
+};
+// 수하물 입력값 나타내기
+const selectedLuggage = computed(() => {
+  return products.value
+    .filter((product) => product.quantity > 0)
+    .map((product) => `${product.name} ${product.quantity}개`)
+    .join(", ");
+});
 </script>
 
 <template>
@@ -194,18 +290,18 @@ const handleDateSelect = (date) => {
                   <label>출발지</label>
                   <div class="res_input">
                     <img src="/public/images/icon/lens_icon.png" alt="돋보기" />
-
                     <input
                       type="text"
-                      value=""
+                      :value="departurePlace"
                       readonly=""
                       autocomplete="off"
                       placeholder="출발장소"
-                      @click="isModalOpen = true" />
-                    <!-- 모달 컴포넌트 -->
+                      class="departure_input"
+                      @click="isDepartureModalOpen = true" />
                     <ModalInquire
-                      :isOpen="isModalOpen"
-                      @close="isModalOpen = false" />
+                      :isOpen="isDepartureModalOpen"
+                      @close="isDepartureModalOpen = false"
+                      @select="handleDepartureSelect" />
                   </div>
                 </div>
                 <!-- 맡길 날짜 선택 -->
@@ -229,12 +325,13 @@ const handleDateSelect = (date) => {
                   <div class="res_input">
                     <img src="/public/images/icon/watch_icon.png" alt="시계" />
                     <input
+                      class="time_input"
                       type="text"
-                      v-model="time"
-                      value=""
-                      readonly=""
+                      :value="departureTime"
+                      readonly
                       autocomplete="off"
-                      placeholder="맡길 시간" />
+                      placeholder="맡길 시간"
+                      @click="openTimePicker('departure', $event)" />
                   </div>
                 </div>
               </div>
@@ -269,7 +366,18 @@ const handleDateSelect = (date) => {
                   <label>도착지</label>
                   <div class="res_input">
                     <img src="/public/images/icon/lens_icon.png" alt="돋보기" />
-                    <input type="text" value="" readonly="" autocomplete="off" placeholder="도착장소"/>
+                    <input
+                      type="text"
+                      :value="arrivalPlace"
+                      readonly=""
+                      autocomplete="off"
+                      placeholder="도착장소"
+                      class="arrival_input"
+                      @click="isArrivalModalOpen = true" />
+                    <ModalInquire
+                      :isOpen="isArrivalModalOpen"
+                      @close="isArrivalModalOpen = false"
+                      @select="handleArrivalSelect" />
                   </div>
                 </div>
                 <!-- 찾을 날짜 선택 -->
@@ -293,11 +401,13 @@ const handleDateSelect = (date) => {
                   <div class="res_input">
                     <img src="/public/images/icon/watch_icon.png" alt="시계" />
                     <input
+                      class="time_input"
                       type="text"
-                      value=""
-                      readonly=""
+                      :value="arrivalTime"
+                      readonly
                       autocomplete="off"
-                      placeholder="찾을 시간" />
+                      placeholder="찾을 시간"
+                      @click="openTimePicker('arrival', $event)" />
                   </div>
                 </div>
               </div>
@@ -388,23 +498,31 @@ const handleDateSelect = (date) => {
           <ul class="rrb_detail">
             <li class="rrb_fr">
               <label>출발지</label>
-              <div>-</div>
+              <div>{{ departurePlace || "-" }}</div>
             </li>
             <li class="rrb_fr_data">
               <label>짐 맡길 일정</label>
-              <div>-</div>
+              <div>{{
+                  selectedDepartureDate && departureTime
+                    ? `${selectedDepartureDate} / ${departureTime}`
+                    : "-"
+                }}</div>
             </li>
             <li class="rrb_to">
               <label>도착지</label>
-              <div>-</div>
+              <div>{{ arrivalPlace || "-" }}</div>
             </li>
             <li class="rrb_to_data">
               <label>짐 찾을 일정</label>
-              <div>-</div>
+              <div>{{
+                  selectedArrivalDate && arrivalTime
+                    ? `${selectedArrivalDate} / ${arrivalTime}`
+                    : "-"
+                }}</div>
             </li>
             <li class="rrb_cr">
               <label>수하물</label>
-              <div>-</div>
+              <div>{{ selectedLuggage || "-" }}</div>
             </li>
           </ul>
           <!-- 총 금액 -->
@@ -427,14 +545,26 @@ const handleDateSelect = (date) => {
     v-if="isDatePickerOpen"
     :type="datePickerType"
     @select="handleDateSelect"
-    @close="isDatePickerOpen = false" 
+    @close="isDatePickerOpen = false"
     :style="{
       position: 'absolute',
       top: `${datePickerPosition.top}px`,
       left: `${datePickerPosition.left}px`,
       zIndex: 1000,
-    }"
-    />
+    }" />
+
+  <!-- 시간 선택 팝업 -->
+  <TimePicker
+    v-if="isTimePickerOpen"
+    :type="timePickerType"
+    @select="handleTimeSelect"
+    @close="isTimePickerOpen = false"
+    :style="{
+      position: 'absolute',
+      top: `${timePickerPosition.top}px`,
+      left: `${timePickerPosition.left}px`,
+      zIndex: 1000,
+    }" />
 </template>
 
 <style lang="scss" scoped>
@@ -443,7 +573,7 @@ const handleDateSelect = (date) => {
 @import "/src/assets/resTop.scss";
 .progress_text p:first-child {
   // font-size: 1.875rem;
-  font-weight: 500;
+  font-weight: 600;
   color: $primary-color;
 }
 // 배송정보 타이틀
@@ -698,4 +828,5 @@ const handleDateSelect = (date) => {
     border-color: $primary-color;
   }
 }
+
 </style>
