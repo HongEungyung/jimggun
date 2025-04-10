@@ -83,7 +83,7 @@ const toggleReviews = () => {
       <div class="A5-h1-box">
         <h1 class="A5-h1">이용후기</h1>
       </div>
-      
+
       <div class="review-box" v-for="(review, index) in visibleReviews" :key="index">
         <h2 class="review-title">{{ maskedName(review.name) }} 님 감사합니다!</h2>
         <div class="review-content" @click="toggleShowFull(index)">
@@ -123,21 +123,23 @@ const toggleReviews = () => {
   text-align: center;
 }
 // 이용후기
-.A5-h1-box{
+.A5-h1-box {
   width: 100%;
-    max-width: 560px;
-    height: 60px;
-   
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid $font-light-gray;
-    margin: auto;
+  max-width: 560px;
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid #f1f1f5;
+  margin: auto;
+  background-color: #fff;
 }
 .A5-h1 {
-  color: $font-gray;
-      font-size: $title-font-XS;
-      font-weight: bold;
+  color: $font-light-gray;
+  font-size: $title-font-XS;
+  font-weight: bold;
+  font-size: 22px;
 }
 
 // 리뷰 박스
