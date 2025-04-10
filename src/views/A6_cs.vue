@@ -380,7 +380,7 @@ const nextPage = () => {
       width: 100%;
       padding: 10px;
       border: 1px solid $input-select;
-      border-radius: 4px;
+      border-radius: 10px;
       //   font-size: 1rem;
       outline: none;
       &:focus {
@@ -403,7 +403,7 @@ const nextPage = () => {
       border-radius: 10px;
       background-color: $white;
       font-weight: bold;
-
+      cursor: pointer;
       &:hover,
       &.active {
         background-color: $primary-hover;
@@ -432,14 +432,16 @@ const nextPage = () => {
         justify-content: space-between;
         align-items: center;
         border-bottom: 1px solid $input-select;
+        cursor: pointer;
         .question-text {
           color: $font-gray;
           font-weight: 500;
           padding: 10px 20px;
           margin: 13px 0;
+          
         }
         .arrow {
-          color: rgba(118, 118, 118, 0.5);
+          color: $input-select;
           font-weight: 500;
           padding: 10px 20px;
         }
@@ -448,8 +450,9 @@ const nextPage = () => {
       .faq-answer {
         .answer-text {
           background-color: $sub-color;
-          padding: 30px 20px;
-          font-weight: 500;
+          padding: 30px 0;
+          padding-left: 60px;
+          font-weight: 400;
         }
       }
     }
@@ -465,13 +468,15 @@ const nextPage = () => {
       margin-bottom: 50px;
       button {
         padding: 7px 18px;
-        background-color: $sub-color;
-        border: 1px solid rgba(118, 118, 118, 0.1);
+        background-color: $white;
+        border: 1px solid rgba(229, 229, 236, 1);
+        cursor: pointer;
         border-radius: 10px;
         font-size: $text-font-S;
         color: $font-light-gray;
         &:disabled {
-          background-color: #ccc;
+          background-color: rgba(229, 229, 236, .7);
+          border: 1px solid rgba(229, 229, 236, .7);
           cursor: not-allowed;
         }
       }
@@ -494,7 +499,7 @@ const nextPage = () => {
       display: block;
       width: 90px;
       height: 40px;
-      background-color: $white;
+      background-color: $sub-color;
       color: $font-light-gray;
       border: 1px solid rgba(118, 118, 118, .5);
       border-radius: 10px;
