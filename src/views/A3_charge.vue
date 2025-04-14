@@ -156,19 +156,22 @@
   //   요금안내 타이틀
   .charge-title {
     width: 100%;
-    max-width: 560px;
-    // height: 60px;
-    padding: 11px 0;
+    max-width: 400px;
+    height: 50px;
+    // padding: 12.5px 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 3px solid #f1f1f5;
+    // color: white;
+    background-color: $primary-color;
+    // border: 3px solid #f1f1f5;
     margin: 70px 0;
     // 타이틀 글자조절
     span {
-      color: $font-light-gray;
-      font-size: $title-font-XS;
-      font-weight: bold;
+      // color: $font-light-gray;
+      color: $white ;
+      font-size: $text-font-L;
+      // font-weight: bold;
     }
   }
   //   1. 요금 안내 품목
