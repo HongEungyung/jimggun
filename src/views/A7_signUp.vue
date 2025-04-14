@@ -17,6 +17,32 @@ const errors = ref({
   phone: '',
   email: '',
 });
+// 유효성 검사 정의
+const validateField = (field) => {
+  if (field === 'name') {
+    errors.value.name = !name.value.trim() ? '이름을 입력해주세요.' : '';
+  }
+
+  if (field === 'phone') {
+    if (!phone.value.trim()) {
+      errors.value.phone = '전화번호를 입력해주세요.';
+    } else if (!/^\d{3}-\d{4}-\d{4}$/.test(phone.value)) {
+      errors.value.phone = '올바른 전화번호 형식이 아닙니다. (000-0000-0000)';
+    } else {
+      errors.value.phone = '';
+    }
+  }
+
+  if (field === 'email') {
+    if (!email.value.trim()) {
+      errors.value.email = '이메일을 입력해주세요.';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+      errors.value.email = '올바른 이메일 형식이 아닙니다.';
+    } else {
+      errors.value.email = '';
+    }
+  }
+};
 // 모두 동의합니다
 watch(allAgree, (newValue) => {
   terms.value = newValue;
@@ -38,45 +64,20 @@ const togglePrivacy = () => {
 };
 
 // 유효성 검사 & 회원가입 처리 함수
+const validateAllFields = () => {
+  validateField('name');
+  validateField('phone');
+  validateField('email');
+
+  return !errors.value.name && !errors.value.phone && !errors.value.email;
+};
 const handleSignUp = () => {
-  let isValid = true;
-
-  // 입력 필드 유효성 검사
-  if (!name.value.trim()) {
-    errors.value.name = '이름을 입력해주세요.';
-    isValid = false;
-  } else {
-    errors.value.name = '';
-  }
-
-  if (!phone.value.trim()) {
-    errors.value.phone = '전화번호를 입력해주세요.';
-    isValid = false;
-  } else if (!/^\d{3}-\d{4}-\d{4}$/.test(phone.value)) {
-    errors.value.phone = '올바른 전화번호 형식이 아닙니다. (000-0000-0000)';
-    isValid = false;
-  } else {
-    errors.value.phone = '';
-  }
-
-  if (!email.value.trim()) {
-    errors.value.email = '이메일을 입력해주세요.';
-    isValid = false;
-  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
-    errors.value.email = '올바른 이메일 형식이 아닙니다.';
-    isValid = false;
-  } else {
-    errors.value.email = '';
-  }
-
-  // 약관 체크 여부 검사
   if (!terms.value || !privacy.value) {
     alert('모든 약관에 동의해야 회원가입이 가능합니다.');
     return;
   }
 
-  // 모든 유효성 검사를 통과한 경우, 페이지 이동
-  if (isValid) {
+  if (validateAllFields()) {
     router.push('/signUpFinish');
   }
 };
@@ -93,6 +94,7 @@ const formatPhone = (e) => {
   } else {
     phone.value = `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7, 11)}`;
   }
+  validateField('phone');
 };
 </script>
 
@@ -133,11 +135,13 @@ const formatPhone = (e) => {
     <h2>개인정보 입력</h2>
     <div class="infoWrap">
       <span class="star">*</span> <span class="infoSectionTitle">이름</span>
-      <input type="text" v-model="name" placeholder="홍길동" class="infoInput name" /><img
-        src="../../public/images/kang/inputName.png"
-        alt="이름 입력"
-        class="infoIcon"
-      />
+      <input
+        type="text"
+        v-model="name"
+        placeholder="홍길동"
+        class="infoInput name"
+        @input="validateField('name')"
+      /><img src="../../public/images/kang/inputName.png" alt="이름 입력" class="infoIcon" />
       <p class="errorText" v-if="errors.name">{{ errors.name }}</p>
     </div>
 
@@ -156,18 +160,20 @@ const formatPhone = (e) => {
 
     <div class="infoWrap">
       <span class="star">*</span> <span class="infoSectionTitle">E-mail</span>
-      <input type="email" v-model="email" placeholder="0000@naver.com" class="infoInput mail" /><img
-        src="../../public/images/kang/inputMail.png"
-        alt="이메일 입력"
-        class="infoIcon"
-      />
+      <input
+        type="email"
+        v-model="email"
+        placeholder="0000@naver.com"
+        class="infoInput mail"
+        @input="validateField('email')"
+      /><img src="../../public/images/kang/inputMail.png" alt="이메일 입력" class="infoIcon" />
       <p class="errorText" v-if="errors.email">{{ errors.email }}</p>
     </div>
 
     <div class="btTextParent">
       <p class="btText"><strong>*휴대전화</strong>는 수하물 운송 서비스 이용시 필수</p>
     </div>
-    <button class="signUpBtn" @click="handleSignUp">가입하기</button>
+    <button type="button" class="signUpBtn" @click="handleSignUp">가입하기</button>
   </div>
 </template>
 
