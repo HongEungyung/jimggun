@@ -25,8 +25,8 @@
           <p class="footerPhonNumber">1234-5678</p>
           <p>오전 9시 ~ 오후 6시 (토요일, 공휴일 휴무)</p>
           <div class="footerRightButtons">
-            <button>제휴문의</button>
-            <button>고객센터</button>
+            <a>제휴문의</a>
+            <router-link to="/cs">고객센터</router-link>
           </div>
           <div class="footerRightServices">
             <p>서비스 이용약관</p>
@@ -64,12 +64,12 @@
   height: 296px;
   display: flex;
   flex-direction: column;
-  justify-content: center
+  justify-content: center;
 }
 // 푸터 콘텐츠
-.footercontents{
-    display: flex;
-    justify-content: space-between;
+.footercontents {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
 }
 // 로고
@@ -82,50 +82,55 @@
   }
 }
 //  왼쪽 텍스트
-.footerLeftText{
-    p{
-        margin-bottom: 8px;
-    }
+.footerLeftText {
+  p {
+    margin-bottom: 8px;
+  }
 }
 // 오른쪽 영역
-.footerRightText{
-    text-align: right;
-    .footerPhonNumber{
-        font-size: $title-font-S;
-        color: $font-primary;
-        font-weight: 600;
+.footerRightText {
+  text-align: right;
+  .footerPhonNumber {
+    font-size: $title-font-S;
+    color: $font-primary;
+    font-weight: 600;
+  }
+  p {
+    margin-bottom: 12px;
+  }
+  button {
+    margin-bottom: 12px;
+    &:first-child {
+      margin-right: 6px;
     }
-    p{
-        margin-bottom: 12px;
-    }
-    button{
-        margin-bottom: 12px;
-        &:first-child{
-            margin-right: 6px;
-        }
-    }
-    span{
-        margin-bottom: 12px;
-    }
+  }
+  span {
+    margin-bottom: 12px;
+  }
 }
-.footerRightButtons{
-    button{
-      cursor: pointer;
-        font-size: 12px;
-        color: $font-gray;
-        line-height: 16px;
-        background-color: $white;
-        padding: 3px 8px;
-        border: 1px solid $bg-primary;
-        // border-color: $bg-primary;
-    }
+.footerRightButtons {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-bottom: 12px;
+  a {
+    cursor: pointer;
+    height: 24px;
+    font-size: 12px;
+    color: $font-gray;
+    background-color: $white;
+    padding: 3px 8px;
+    border: 1px solid $bg-primary;
+    text-decoration: none;
+    line-height: 16px;
+  }
 }
-.footerRightServices{
-    display: flex;
-    justify-content: flex-end;
-    span{
-        margin: 0 20px;
-        color: $bg-primary;
-    }
+.footerRightServices {
+  display: flex;
+  justify-content: flex-end;
+  span {
+    margin: 0 20px;
+    color: $bg-primary;
+  }
 }
 </style>

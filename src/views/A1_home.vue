@@ -1,22 +1,121 @@
 <script setup>
-import { ref } from "vue";
-import { Autoplay } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/vue";
+// import { ref } from "vue";
+// import { Autoplay } from "swiper/modules";
+// import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/autoplay";
 // 슬라이드 이미지 데이터
-const slides = ref(["/images/hong/mainbanner1.png", "/images/hong/mainbanner2.png", "/images/hong/mainbanner3.png", "/images/hong/mainbanner4.png"]);
+// const slides = ref([
+//   {title1 : "무거운 짐" , 
+//   title2 : "짐꾼이 옮겨드립니다!",
+//   title3 : "짐꾼은 무거운 여행짐을 집에서 숙소까지",}
+// ])
+// const slides = ref(["/images/hong/slideImg1.png", "/images/hong/slideImg2.png", "/images/hong/slideImg3.png", "/images/hong/slideImg4.png"]);
 </script>
 
 <template>
   <div class="main-wrap">
     <!-- 메인배너 슬라이드 -->
     <section class="visual">
-      <Swiper :modules="[Autoplay]" :loop="true" :autoplay="{ delay: 3000 }">
+      <!-- <Swiper :modules="[Autoplay]" :loop="true" :autoplay="{ delay: 3000 }">
         <SwiperSlide v-for="(slide, index) in slides" :key="index">
           <div class="slide" :style="{ backgroundImage: `url(${slide})` }"></div>
         </SwiperSlide>
-      </Swiper>
+      </Swiper> -->
+
+      <!-- 메인베너 -->
+      <div class="mainbanner">
+        <div class="slide slide1">
+          <div class="mainbannerText">
+            <h1>무거운 짐</h1>
+            <h2>짐꾼이 옮겨드립니다!</h2>
+            <h3>짐꾼은 무거운 여행짐을 <span>집에서 숙소</span>까지</h3>
+            <h4>대신 들어드리는 여행 도우미 입니다.</h4>
+          </div>
+          <div class="mainbannerImage">
+            <img src="/public/images/hong/slideImg1.png" alt="슬라이드이미지1" />
+          </div>
+        </div>
+        <!-- <div class="slide slide2">
+          <div class="mainbannerText">
+            <h1>간단한 예약</h1>
+            <h2>짐꾼은 많이 묻지 않습니다!</h2>
+            <h3>짐꾼의 몇 번의 클릭으로<span>빠르고 편리하게</span></h3>
+            <h4>예약할 수 있습니다.</h4>
+          </div>
+          <div class="mainbannerImage">
+            <img src="/public/images/hong/slideImg2.png" alt="슬라이드이미지2" />
+          </div>
+        </div>
+        <div class="slide slide3">
+          <div class="mainbannerText">
+            <h1>직접 찾아갑니다</h1>
+            <h2>간단하고 편리한 서비스!</h2>
+            <h3>짐꾼은 고객님이 앞에 두신 짐을</h3>
+            <h4><span>직접 찾아가서</span>수거해갑니다.</h4>
+          </div>
+          <div class="mainbannerImage">
+            <img src="/public/images/hong/slideImg3.png" alt="슬라이드이미지3" />
+          </div>
+        </div>
+        <div class="slide slide4">
+          <div class="mainbannerText">
+            <h1>여행은 가볍게</h1>
+            <h2>짐꾼이 짐을 맡아드립니다!</h2>
+            <h3>짐꾼은 고객님의 소중한 짐을</h3>
+            <h4><span>안전하게 보관</span>해드립니다.</h4>
+          </div>
+          <div class="mainbannerImage">
+            <img src="/public/images/hong/slideImg4.png" alt="슬라이드이미지3" />
+          </div>
+        </div> -->
+      </div>
+      <!-- <div class="mainbanner">
+        <div class="slide slide1">
+          <div class="mainbannerText">
+            <h1>무거운 짐</h1>
+            <h2>짐꾼이 옮겨드립니다!</h2>
+            <h3>짐꾼은 무거운 여행짐을 <span>집에서 숙소</span>까지</h3>
+            <h4>대신 들어드리는 여행 도우미 입니다.</h4>
+          </div>
+          <div class="mainbannerImage">
+            <img src="/public/images/hong/slideImg1.png" alt="슬라이드이미지1" />
+          </div>
+        </div>
+        <div class="slide slide2">
+          <div class="mainbannerText">
+            <h1>간단한 예약</h1>
+            <h2>짐꾼은 많이 묻지 않습니다!</h2>
+            <h3>짐꾼의 몇 번의 클릭으로<span>빠르고 편리하게</span></h3>
+            <h4>예약할 수 있습니다.</h4>
+          </div>
+          <div class="mainbannerImage">
+            <img src="/public/images/hong/slideImg2.png" alt="슬라이드이미지2" />
+          </div>
+        </div>
+        <div class="slide slide3">
+          <div class="mainbannerText">
+            <h1>직접 찾아갑니다</h1>
+            <h2>간단하고 편리한 서비스!</h2>
+            <h3>짐꾼은 고객님이 앞에 두신 짐을</h3>
+            <h4><span>직접 찾아가서</span>수거해갑니다.</h4>
+          </div>
+          <div class="mainbannerImage">
+            <img src="/public/images/hong/slideImg3.png" alt="슬라이드이미지3" />
+          </div>
+        </div>
+        <div class="slide slide4">
+          <div class="mainbannerText">
+            <h1>여행은 가볍게</h1>
+            <h2>짐꾼이 짐을 맡아드립니다!</h2>
+            <h3>짐꾼은 고객님의 소중한 짐을</h3>
+            <h4><span>안전하게 보관</span>해드립니다.</h4>
+          </div>
+          <div class="mainbannerImage">
+            <img src="/public/images/hong/slideImg3.png" alt="슬라이드이미지3" />
+          </div>
+        </div>
+      </div> -->
       <!-- 바로 예약하기 -->
       <div class="reservationMini">
         <form>
@@ -198,7 +297,9 @@ const slides = ref(["/images/hong/mainbanner1.png", "/images/hong/mainbanner2.pn
                 <img src="/public/images/hong/p3-appstore.png" alt="플레이스토어 로고" />
                 <span class="appstoreENG">App Store</span>
               </div>
-              <span class="appstoreIOS">IOS</span>
+              <div class="appstoreBtnText">
+                <span class="appstoreIOS">IOS</span>
+              </div>
             </div>
           </div>
         </div>
@@ -226,15 +327,69 @@ const slides = ref(["/images/hong/mainbanner1.png", "/images/hong/mainbanner2.pn
 .main-wrap {
   width: 100%;
   /* 슬라이드 */
-  .visual {
+  // .visual {
+  //   width: 100%;
+  //   position: relative;
+  // }
+  // .slide {
+  //   width: 100%;
+  //   height: 32vw;
+  //   background-size: cover;
+  //   background-position: center;
+  //   img {
+  //     width: 400px;
+  //   }
+  // }
+
+  // 메인베너
+  .mainbanner{
     width: 100%;
     position: relative;
-  }
-  .slide {
-    width: 100%;
-    height: 38vw;
-    background-size: cover;
-    background-position: center;
+    .slide{
+      width: 100%;
+      height: 32vw;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 100px;
+      background-color: $bg-light;
+      .mainbannerText{
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        h1{
+          font-size: 60px;
+          color: $primary-color;
+        }
+        h2{
+          font-size: 65px;
+          font-weight: 800;
+          margin-bottom: 4px;
+        }
+        h3{
+          font-size: $title-font-S;
+          span{
+            color: $primary-color;
+            font-weight: 700;
+          }
+        }
+        h4{
+          font-size: $title-font-S;
+          span{
+            color: $primary-color;
+            font-weight: 700;
+          }
+        }
+      }
+      .mainbannerImage{
+        width: 400px; 
+        img{
+        width: 100%;
+        }
+      }
+    }
+    .slide1{
+    }
   }
 
   // 바로 예약하기
@@ -339,7 +494,7 @@ const slides = ref(["/images/hong/mainbanner1.png", "/images/hong/mainbanner2.pn
     margin-top: 130px;
     /* 타이틀 */
     .a1-part1-title {
-      width: 30%;
+      width: 25%;
       h3 {
         font-size: $title-font-M;
         font-weight: bold;
@@ -356,7 +511,7 @@ const slides = ref(["/images/hong/mainbanner1.png", "/images/hong/mainbanner2.pn
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      width: 65%;
+      width: 70%;
       gap: 20px;
       /* li */
       .part1-box {
@@ -449,11 +604,26 @@ const slides = ref(["/images/hong/mainbanner1.png", "/images/hong/mainbanner2.pn
           }
           // 말풍선 글
           .p2-contents-texts {
+            background-color: $white;
             position: relative;
-            width: 200px;
-            // background-color: $white;
-            // border-radius: 10px;
-            // padding: 30px;
+            width: 255px;
+            padding: 30px;
+            border-radius: 10px;
+            border-bottom-left-radius: 0;
+            &::after {
+              content: "";
+              position: absolute;
+              bottom: 0;
+              left: -30px;
+              // transform: translateY(50%);
+              transform: scaleX(-1);
+              transform: scaleY(-1);
+              width: 0;
+              height: 0;
+              border-left: 30px solid transparent;
+              // border-right: 30px solid transparent;
+              border-top: 25px solid $white;
+            }
             h3 {
               font-size: $text-font-M;
               font-weight: 600;
@@ -496,8 +666,25 @@ const slides = ref(["/images/hong/mainbanner1.png", "/images/hong/mainbanner2.pn
           }
           // 말풍선 글
           .p2-contents-texts {
+            background-color: $white;
             position: relative;
-            width: 200px;
+            width: 255px;
+            padding: 30px;
+            border-radius: 10px;
+            border-bottom-right-radius: 0;
+            &::after {
+              content: "";
+              position: absolute;
+              bottom: 0;
+              right: -30px;
+              transform: translateY(-50%);
+              transform: scaleY(-1);
+              width: 0;
+              height: 0;
+              // border-left: 50px solid transparent;
+              border-right: 30px solid transparent;
+              border-top: 25px solid $white;
+            }
             h3 {
               font-size: $text-font-M;
               font-weight: 600;
@@ -513,7 +700,6 @@ const slides = ref(["/images/hong/mainbanner1.png", "/images/hong/mainbanner2.pn
       }
     }
   }
-
   // part 3
 
   // 파트3 전체
@@ -599,7 +785,7 @@ const slides = ref(["/images/hong/mainbanner1.png", "/images/hong/mainbanner2.pn
               }
               .playstoreKOR {
                 color: $primary-color;
-                font-weight: 600;
+                font-weight: 700;
               }
             }
           }
@@ -614,12 +800,20 @@ const slides = ref(["/images/hong/mainbanner1.png", "/images/hong/mainbanner2.pn
             width: 300px;
             cursor: pointer;
             .appstoreBtnImg {
+              display: flex;
+              align-items: center;
               img {
                 width: 23px;
-                margin-right: 5px;
+                margin-right: 7px;
               }
             }
-            span {
+            .appstoreBtnText {
+              display: flex;
+              justify-content: space-between;
+              span {
+                color: $primary-color;
+                font-weight: 700;
+              }
             }
           }
         }
