@@ -1,18 +1,141 @@
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 // 결제 , step
 const emit = defineEmits(["next", "prev"]);
-defineProps({ resevationData: Object });
+const props = defineProps({
+  resevationData: Object,
+});
+
+const isModalOpen = ref(false);
+const modalMessage = ref("");
+
+const reservationDetails = computed(
+  () => props.resevationData?.reservationDetails || {}
+);
+
 const agree = ref(false);
+const individualAgrees = ref({
+  stipulation1: false,
+  stipulation2: false,
+});
+
+const name = ref("");
+const phone = ref("");
+const email = ref("");
+const showNumberOnlyMessage = ref(false);
+const showEmailError = ref(false);
+
 const prevStep = () => emit("prev");
-const confirmPayment = () => emit("next", { paymentComfirmed: true });
+
+const confirmPayment = () => {
+  // 약관 동의 확인
+  if (
+    !individualAgrees.value.stipulation1 ||
+    !individualAgrees.value.stipulation2
+  ) {
+    isModalOpen.value = true;
+    modalMessage.value = "모든 약관에 동의해주세요.";
+    return;
+  }
+
+  // 입력 필드 검증
+  if (!name.value) {
+    isModalOpen.value = true;
+    modalMessage.value = "예약자 성명을 입력해주세요.";
+    return;
+  }
+
+  if (!phone.value) {
+    isModalOpen.value = true;
+    modalMessage.value = "휴대폰 번호를 입력해주세요.";
+    return;
+  }
+
+  if (!email.value) {
+    isModalOpen.value = true;
+    modalMessage.value = "이메일을 입력해주세요.";
+    return;
+  }
+
+  if (!email.value.includes("@")) {
+    showEmailError.value = true;
+    isModalOpen.value = true;
+    modalMessage.value = "올바른 이메일 형식을 입력해주세요.";
+    return;
+  }
+
+  emit("next", { paymentComfirmed: true });
+};
+
+const closeModal = () => {
+  isModalOpen.value = false;
+};
+
+// 가격 포맷 함수 추가
+const formatPrice = (price) => {
+  if (!price) return "0";
+  return `${price.toLocaleString()}`;
+};
+
+// 전체 동의 체크박스 변경 시
+const handleAllAgree = (event) => {
+  const isChecked = event.target.checked;
+  agree.value = isChecked;
+  individualAgrees.value.stipulation1 = isChecked;
+  individualAgrees.value.stipulation2 = isChecked;
+};
+
+// 개별 동의 체크박스 변경 시
+const handleIndividualAgree = (type) => {
+  individualAgrees.value[type] = !individualAgrees.value[type];
+  agree.value =
+    individualAgrees.value.stipulation1 && individualAgrees.value.stipulation2;
+};
+
+// 휴대폰 번호 입력 처리
+const handlePhoneInput = (event) => {
+  const input = event.target.value;
+
+  // 숫자가 아닌 문자가 포함되어 있는지 확인
+  if (!/^\d*$/.test(input)) {
+    showNumberOnlyMessage.value = true;
+    // 숫자만 나머지 제거
+    phone.value = input.replace(/[^0-9]/g, "");
+    return;
+  }
+
+  showNumberOnlyMessage.value = false;
+  let value = input;
+
+  // 9자리 이상 입력 방지
+  if (value.length > 8) {
+    value = value.slice(0, 8);
+  }
+
+  // 4자리 이상일 때 - 추가
+  if (value.length > 4) {
+    value = value.slice(0, 4) + "-" + value.slice(4);
+  }
+
+  phone.value = value;
+};
+
+// 이메일 입력 처리
+const handleEmailInput = (event) => {
+  const input = event.target.value;
+  email.value = input;
+  // '@'가 포함되어 있으면 에러 메시지 숨김
+  if (input.includes("@")) {
+    showEmailError.value = false;
+  }
+};
 </script>
 
 <template>
   <div class="res_wrap">
     <div class="res_inner">
       <!-- 상단 -->
-      
+
       <section class="res_top">
         <div class="res_text_box">
           <p id="res_top_title">3분 안에 예약하고</p>
@@ -39,23 +162,43 @@ const confirmPayment = () => emit("next", { paymentComfirmed: true });
             <ul class="cart_row">
               <li>
                 <label>출발지</label>
-                <div>대구역</div>
+                <div>{{ reservationDetails.departurePlace || "-" }}</div>
               </li>
               <li>
                 <label>짐 맡길 일정</label>
-                <div>몇일 몇시</div>
+                <div>
+                  {{
+                    reservationDetails.departureDate &&
+                    reservationDetails.departureTime
+                      ? `${reservationDetails.departureDate} / ${reservationDetails.departureTime}`
+                      : "-"
+                  }}
+                </div>
               </li>
               <li>
                 <label>도착지</label>
-                <div>동대구역</div>
+                <div>{{ reservationDetails.arrivalPlace || "-" }}</div>
               </li>
               <li>
                 <label>짐 찾을 일정</label>
-                <div>몇일 몇시</div>
+                <div>
+                  {{
+                    reservationDetails.arrivalDate &&
+                    reservationDetails.arrivalTime
+                      ? `${reservationDetails.arrivalDate} / ${reservationDetails.arrivalTime}`
+                      : "-"
+                  }}
+                </div>
               </li>
               <li>
                 <label>수하물</label>
-                <div>L 1개</div>
+                <div>
+                  {{
+                    reservationDetails.luggage
+                      ?.map((item) => `${item.name} ${item.quantity}개`)
+                      .join(", ") || "-"
+                  }}
+                </div>
               </li>
             </ul>
             <div class="cart_line"></div>
@@ -101,11 +244,12 @@ const confirmPayment = () => emit("next", { paymentComfirmed: true });
                   <input
                     class="res_info_input"
                     type="text"
+                    v-model="name"
                     placeholder="보내는 사람의 성함을 입력해 주세요."
                     required />
                 </li>
                 <!-- 휴대폰 번호 -->
-                <li class="info_row">
+                <li class="info_row info_row_phone">
                   <label class="res_info_title">휴대폰 번호</label>
                   <select class="res_select res_info_input">
                     <optgroup label="번호선택">
@@ -116,18 +260,30 @@ const confirmPayment = () => emit("next", { paymentComfirmed: true });
                   <input
                     class="res_info_input"
                     type="text"
+                    v-model="phone"
+                    @input="handlePhoneInput"
                     placeholder="카카오 알림톡을 받으실 연락처를 알려주세요."
                     id="number_input"
+                    maxlength="9"
                     required />
+                  <p v-if="showNumberOnlyMessage" class="error-message">
+                    숫자만 입력해주세요.
+                  </p>
                 </li>
                 <!-- 이메일 -->
                 <li class="info_row">
                   <label class="res_info_title">이메일</label>
                   <input
+                    id="email_input"
                     class="res_info_input"
                     type="text"
+                    v-model="email"
+                    @input="handleEmailInput"
                     placeholder="예약확정 안내 메일이 전송됩니다."
                     required />
+                  <p v-if="showEmailError" class="error-message">
+                    올바른 이메일 형식을 입력해주세요.
+                  </p>
                 </li>
               </ul>
             </div>
@@ -177,7 +333,12 @@ const confirmPayment = () => emit("next", { paymentComfirmed: true });
                     <ul class="od_right_ul">
                       <li>
                         <label>운송요금</label>
-                        <strong class="right_price">0원</strong>
+                        <strong class="right_price"
+                          >{{
+                            formatPrice(reservationDetails.totalPrice)
+                          }}
+                          원</strong
+                        >
                       </li>
                       <li>
                         <label>추가요금</label>
@@ -203,7 +364,12 @@ const confirmPayment = () => emit("next", { paymentComfirmed: true });
                       <li class="right_line"></li>
                       <li>
                         <label>최종 결제 금액</label>
-                        <strong class="right_price">0원</strong>
+                        <strong class="right_price"
+                          >{{
+                            formatPrice(reservationDetails.totalPrice)
+                          }}
+                          원</strong
+                        >
                       </li>
                     </ul>
                   </div>
@@ -217,13 +383,20 @@ const confirmPayment = () => emit("next", { paymentComfirmed: true });
             <div id="agree_card">
               <div class="agree">
                 <label>
-                  <input type="checkbox" value="all" />모든 약관에 동의합니다.
+                  <input
+                    class="form_check_all"
+                    type="checkbox"
+                    :checked="agree"
+                    @change="handleAllAgree" />모든 약관에 동의합니다.
                 </label>
               </div>
               <div class="agree agree_line"></div>
               <div class="agree">
                 <label>
-                  <input type="checkbox" value="stipulation" />
+                  <input
+                    type="checkbox"
+                    :checked="individualAgrees.stipulation1"
+                    @change="handleIndividualAgree('stipulation1')" />
                   <span>[필수]</span>
                   이용약관 동의
                   <u>보기</u>
@@ -231,7 +404,10 @@ const confirmPayment = () => emit("next", { paymentComfirmed: true });
               </div>
               <div class="agree">
                 <label>
-                  <input type="checkbox" value="stipulation" />
+                  <input
+                    type="checkbox"
+                    :checked="individualAgrees.stipulation2"
+                    @change="handleIndividualAgree('stipulation2')" />
                   <span>[필수]</span>
                   개인정보 취급방침 동의
                   <u>보기</u>
@@ -251,6 +427,13 @@ const confirmPayment = () => emit("next", { paymentComfirmed: true });
           </div>
         </form>
       </section>
+    </div>
+  </div>
+  <!-- 모달 컴포넌트 -->
+  <div v-if="isModalOpen" class="modal-overlay">
+    <div class="modal-content">
+      <p>{{ modalMessage }}</p>
+      <button @click="closeModal">확인</button>
     </div>
   </div>
 </template>
@@ -337,6 +520,7 @@ const confirmPayment = () => emit("next", { paymentComfirmed: true });
   width: 100%;
   display: flex;
   align-items: center;
+  position: relative;
 }
 .res_info_title {
   font-weight: bold;
@@ -357,6 +541,15 @@ const confirmPayment = () => emit("next", { paymentComfirmed: true });
     border: none;
     outline: 3px solid rgba(255, 111, 0, 0.5);
     box-shadow: $reservation-boxShadow;
+  }
+}
+//연락처 에러 메세지
+.info_row_phone {
+  position: relative;
+  .error-message {
+    position: absolute;
+    top: 15px;
+    right: 15px;
   }
 }
 .res_select {
@@ -491,5 +684,58 @@ const confirmPayment = () => emit("next", { paymentComfirmed: true });
     margin: auto;
     cursor: pointer;
   }
+}
+
+/* 모달 스타일 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  max-width: 300px;
+  width: 100%;
+
+  p {
+    margin-bottom: 20px;
+    font-size: 16px;
+  }
+
+  button {
+    background-color: $primary-color;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+
+    &:hover {
+      background-color: $primary-hover;
+    }
+  }
+}
+
+.error-message {
+  color: $primary-color;
+  font-size: 12px;
+  margin-top: 5px;
+  margin-left: 10px;
+  position: absolute;
+  top: 15px;
+  right: 15px;
 }
 </style>
