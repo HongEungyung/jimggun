@@ -15,12 +15,36 @@ defineProps({ resevationData: Object });
 const name = ref("");
 const phone = ref("");
 const luggageCount = ref(1);
+//입력값 저장
+const reservationDetails = ref({
+  departurePlace: "",
+  departureDate: "",
+  departureTime: "",
+  arrivalPlace: "",
+  arrivalDate: "",
+  arrivalTime: "",
+  luggage: [],
+  totalPrice: 0,
+});
 const prevStep = () => emit("prev");
 const nextStep = () => {
+  // 현재 선택된 값들을 reservationDetails에 저장
+  reservationDetails.value = {
+    departurePlace: departurePlace.value,
+    departureDate: selectedDepartureDate.value,
+    departureTime: departureTime.value,
+    arrivalPlace: arrivalPlace.value,
+    arrivalDate: selectedArrivalDate.value,
+    arrivalTime: arrivalTime.value,
+    luggage: products.value.filter((product) => product.quantity > 0),
+    totalPrice: totalPrice.value,
+  };
+
   emit("next", {
-    name: name.value, //예약자 이름
-    phone: phone.value, //예약자 전화번호
-    luggageCount: luggageCount.value, // 짐개수
+    name: name.value,
+    phone: phone.value,
+    luggageCount: luggageCount.value,
+    reservationDetails: reservationDetails.value,
   });
 };
 // 각 섹션별 토글 상태 관리
