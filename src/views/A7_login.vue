@@ -4,29 +4,30 @@ import { ref } from 'vue';
 
 <template>
   <div class="a7-wrap">
-    <h1 class="A7-h1">자주 사용하는 계정으로<br />간편하게 로그인</h1>
-    <!-- <h1 class="A7-h1">
-      짐꾼에게 짐을 맡기고
-      <br />
-      지금 여행을 떠나세요 !
-    </h1>
-    <p>자주 사용하는 계정으로 간편하게 로그인</p> -->
-    <div class="btn-warp">
-      <router-link to="/signUp" class="routerBtn routerBtn1">
-        <button class="loginBtn naver">
-          <img src="../../public/images/kang/naver.png" alt="네이버" class="icon" /> 네이버 로그인
-        </button>
-      </router-link>
-      <router-link to="/signUp" class="routerBtn routerBtn2">
-        <button class="loginBtn kakao">
-          <img src="../../public/images/kang/kakao.png" alt="카카오" class="icon" />카카오 로그인
-        </button>
-      </router-link>
-      <router-link to="/signUp" class="routerBtn routerBtn3">
-        <button class="loginBtn google">
-          <img src="../../public/images/kang/google.png" alt="구글" class="icon" />구글 로그인
-        </button>
-      </router-link>
+    <div class="logoContainer">
+      <img src="../../public/images/jimggun_logo.png" alt="로고" class="logo" />
+    </div>
+    <div class="loginInputContainer">
+      <input type="text" placeholder="아이디" class="loginInput" />
+      <input type="text" placeholder="비밀번호" class="loginInput" />
+    </div>
+    <button class="loginBtn">로그인</button>
+    <div class="routerContainer">
+      <router-link to="/signUp" class="goSignUp">회원가입</router-link>
+    </div>
+    <div class="snsLoginContainer">
+      <p>자주 사용하는 계정으로 간편하게 로그인</p>
+      <div class="snsIconBox">
+        <div class="snsIcon naver">
+          <img src="../../public/images/kang/naver.png" alt="네이버" />
+        </div>
+        <div class="snsIcon kakao">
+          <img src="../../public/images/kang/kakao.png" alt="카카오" />
+        </div>
+        <div class="snsIcon google">
+          <img src="../../public/images/kang/google.png" alt="구글" />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -35,86 +36,92 @@ import { ref } from 'vue';
 @import '/src/assets/variables';
 
 .a7-wrap {
-  max-width: 520px;
+  max-width: 510px;
   margin: auto;
   padding-top: 100px;
+  flex-direction: column;
   text-align: center;
+  font-family: $font-family;
 }
 a {
   text-decoration: none;
-}
-.A7-h1 {
-  font-size: 36px;
-  font-weight: bold;
-  line-height: 45px;
   color: $font-primary;
-  // margin-bottom: 10px;
-  margin-bottom: 61px;
 }
-p {
-  font-size: 20px;
-  color: $font-gray;
-  margin-bottom: 61px;
+//로고
+.logo {
+  width: 126px;
 }
-// 로그인 버튼
-.btn-warp {
+//인풋
+.loginInputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  margin-top: 50px;
+}
+.loginInput {
+  width: 88%;
+  height: 60px;
+  border: 1px solid $input-select;
+  border-radius: 10px;
+  font-size: 14px;
+  color: $font-light-gray;
+  padding: 21px 23px;
+}
+//로그인 버튼
+.loginBtn {
+  width: 88%;
+  height: 60px;
+  background-color: $primary-color;
+  color: $white;
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 60px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+//회원가입
+.routerContainer {
+  margin-top: 20px;
+}
+.goSignUp {
+  font-size: 14px;
+}
+//간편 로그인
+.snsLoginContainer {
+  margin-top: 50px;
+  margin-bottom: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  gap: 15px;
 }
-.routerBtn {
-  width: 100%;
-  cursor: default;
-}
-// 간편 로그인
-.loginBtn {
-  // width: 507px;
-  width: 97.5%;
-  height: 60px;
+.snsLoginContainer > p {
   font-size: 18px;
-  font-weight: bold;
-  // margin-bottom: 15px;
-  text-decoration: none;
-  border: none;
-  outline: none;
-  border-radius: 10px;
+  color: $font-primary;
+}
+.snsIconBox {
   display: flex;
+  margin-top: 20px;
+  gap: 50px;
+}
+.snsIcon {
+  display: flex;
+  justify-content: center;
   align-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
   cursor: pointer;
-  margin: auto;
 }
+
 .naver {
-  background-color: $naver-color;
-  color: #fff;
-}
-.naver > .icon,
-.kakao > .icon {
-  display: block;
-  // margin-left: 10px;
-  margin-left: 1.9%;
-  // margin-right: 141px;
-  margin-right: 27.1%;
+  background: $naver-color;
 }
 .kakao {
-  background-color: $kakao-color;
-  color: $font-primary;
+  background: $kakao-color;
 }
 .google {
-  color: $font-primary;
-  margin-bottom: 100px;
-  background-color: #fff;
-  border: $input-select, 1px, solid;
-}
-.google > .icon {
-  display: block;
-  // margin-left: 10px;
-  margin-left: 1.9%;
-  // margin-right: 157px;
-  margin-right: 30.2%;
+  background-color: $bg-light;
 }
 </style>

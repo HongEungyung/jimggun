@@ -1,4 +1,6 @@
-<script setup></script>
+<script setup>
+
+</script>
 
 <template>
   <!-- 전체 레이아웃 -->
@@ -31,7 +33,7 @@
 </template>
 
 <style lang="scss" scoped>
-@import "/src/assets/variables";
+@import '/src/assets/variables';
 // 전체 레이아웃
 .headerWrap {
   width: 100%;

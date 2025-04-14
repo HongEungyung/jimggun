@@ -1,12 +1,12 @@
 <script setup>
-import { ref } from "vue";
-import { defineProps, defineEmits } from "vue";
+import { ref } from 'vue';
+import { defineProps, defineEmits } from 'vue';
 
 defineProps({ isOpen: Boolean });
-const emit = defineEmits(["close", "select"]);
+const emit = defineEmits(['close', 'select']);
 
-const close = () => emit("close");
-const activeTab = ref("tab1"); // 기본 선택된 탭
+const close = () => emit('close');
+const activeTab = ref('tab1'); // 기본 선택된 탭
 const selectedArea = ref(null);
 
 // 탭 변경 함수
@@ -16,7 +16,7 @@ const setTab = (tab) => {
 
 const selectArea = (area) => {
   selectedArea.value = area;
-  emit("select", area); // 선택된 지역 값을 emit
+  emit('select', area); // 선택된 지역 값을 emit
 };
 </script>
 
@@ -32,18 +32,8 @@ const selectArea = (area) => {
       <div class="area-content">
         <div class="tabs">
           <!-- 탭 버튼 -->
-          <button
-            type="button"
-            @click="setTab('tab1')"
-            :class="{ active: activeTab === 'tab1' }">
-            역공항
-          </button>
-          <button
-            type="button"
-            @click="setTab('tab2')"
-            :class="{ active: activeTab === 'tab2' }">
-            주소검색
-          </button>
+          <button type="button" @click="setTab('tab1')" :class="{ active: activeTab === 'tab1' }">역공항</button>
+          <button type="button" @click="setTab('tab2')" :class="{ active: activeTab === 'tab2' }">주소검색</button>
         </div>
 
         <!-- 탭 콘텐츠 -->
@@ -52,28 +42,16 @@ const selectArea = (area) => {
             <div class="areaSelectBox">
               <h3 class="areaSelectBox-title">서울</h3>
               <div class="areaSelectBox-btn-box">
-                <button
-                  type="button"
-                  class="areaSelectBox-btn"
-                  @click="selectArea('김포공항 국내선')">
+                <button type="button" class="areaSelectBox-btn" @click="selectArea('김포공항 국내선')">
                   <p>김포공항 국내선</p>
                 </button>
-                <button
-                  type="button"
-                  class="areaSelectBox-btn"
-                  @click="selectArea('서울역')">
+                <button type="button" class="areaSelectBox-btn" @click="selectArea('서울역')">
                   <p>서울역</p>
                 </button>
-                <button
-                  type="button"
-                  class="areaSelectBox-btn"
-                  @click="selectArea('서울고속터미널')">
+                <button type="button" class="areaSelectBox-btn" @click="selectArea('서울고속터미널')">
                   <p>서울고속터미널</p>
                 </button>
-                <button
-                  type="button"
-                  class="areaSelectBox-btn"
-                  @click="selectArea('용산역')">
+                <button type="button" class="areaSelectBox-btn" @click="selectArea('용산역')">
                   <p>용산역</p>
                 </button>
               </div>
@@ -81,34 +59,19 @@ const selectArea = (area) => {
             <div class="areaSelectBox">
               <h3 class="areaSelectBox-title">부산</h3>
               <div class="areaSelectBox-btn-box">
-                <button
-                  type="button"
-                  class="areaSelectBox-btn"
-                  @click="selectArea('부산역')">
+                <button type="button" class="areaSelectBox-btn" @click="selectArea('부산역')">
                   <p>부산역</p>
                 </button>
-                <button
-                  type="button"
-                  class="areaSelectBox-btn"
-                  @click="selectArea('부산항 국제여객터미널')">
+                <button type="button" class="areaSelectBox-btn" @click="selectArea('부산항 국제여객터미널')">
                   <p>부산항 국제여객터미널</p>
                 </button>
-                <button
-                  type="button"
-                  class="areaSelectBox-btn"
-                  @click="selectArea('김해공항 국내선')">
+                <button type="button" class="areaSelectBox-btn" @click="selectArea('김해공항 국내선')">
                   <p>김해공항 국내선</p>
                 </button>
-                <button
-                  type="button"
-                  class="areaSelectBox-btn"
-                  @click="selectArea('김해공항 국제선')">
+                <button type="button" class="areaSelectBox-btn" @click="selectArea('김해공항 국제선')">
                   <p>김해공항 국제선</p>
                 </button>
-                <button
-                  type="button"
-                  class="areaSelectBox-btn"
-                  @click="selectArea('BEXCO')">
+                <button type="button" class="areaSelectBox-btn" @click="selectArea('BEXCO')">
                   <p>BEXCO</p>
                 </button>
               </div>
@@ -116,10 +79,7 @@ const selectArea = (area) => {
             <div class="areaSelectBox">
               <h3 class="areaSelectBox-title">제주</h3>
               <div class="areaSelectBox-btn-box">
-                <button
-                  type="button"
-                  class="areaSelectBox-btn"
-                  @click="selectArea('제주공항')">
+                <button type="button" class="areaSelectBox-btn" @click="selectArea('제주공항')">
                   <p>제주공항</p>
                 </button>
               </div>
@@ -127,10 +87,7 @@ const selectArea = (area) => {
             <div class="areaSelectBox">
               <h3 class="areaSelectBox-title">강릉/양양</h3>
               <div class="areaSelectBox-btn-box">
-                <button
-                  type="button"
-                  class="areaSelectBox-btn"
-                  @click="selectArea('강릉역')">
+                <button type="button" class="areaSelectBox-btn" @click="selectArea('강릉역')">
                   <p>강릉역</p>
                 </button>
               </div>
@@ -138,10 +95,7 @@ const selectArea = (area) => {
             <div class="areaSelectBox">
               <h3 class="areaSelectBox-title">경주</h3>
               <div class="areaSelectBox-btn-box">
-                <button
-                  type="button"
-                  class="areaSelectBox-btn"
-                  @click="selectArea('경주역')">
+                <button type="button" class="areaSelectBox-btn" @click="selectArea('경주역')">
                   <p>경주역</p>
                 </button>
               </div>
@@ -149,16 +103,10 @@ const selectArea = (area) => {
             <div class="areaSelectBox">
               <h3 class="areaSelectBox-title">여수</h3>
               <div class="areaSelectBox-btn-box">
-                <button
-                  type="button"
-                  class="areaSelectBox-btn"
-                  @click="selectArea('여수엑스포역')">
+                <button type="button" class="areaSelectBox-btn" @click="selectArea('여수엑스포역')">
                   <p>여수엑스포역</p>
                 </button>
-                <button
-                  type="button"
-                  class="areaSelectBox-btn"
-                  @click="selectArea('여수종합버스터미널(금호고속)')">
+                <button type="button" class="areaSelectBox-btn" @click="selectArea('여수종합버스터미널(금호고속)')">
                   <p>여수종합버스터미널(금호고속)</p>
                 </button>
               </div>
@@ -166,16 +114,10 @@ const selectArea = (area) => {
             <div class="areaSelectBox">
               <h3 class="areaSelectBox-title">대구</h3>
               <div class="areaSelectBox-btn-box">
-                <button
-                  type="button"
-                  class="areaSelectBox-btn"
-                  @click="selectArea('대구공항 국내선')">
+                <button type="button" class="areaSelectBox-btn" @click="selectArea('대구공항 국내선')">
                   <p>대구공항 국내선</p>
                 </button>
-                <button
-                  type="button"
-                  class="areaSelectBox-btn"
-                  @click="selectArea('동대구역')">
+                <button type="button" class="areaSelectBox-btn" @click="selectArea('동대구역')">
                   <p>동대구역</p>
                 </button>
               </div>
@@ -183,16 +125,10 @@ const selectArea = (area) => {
             <div class="areaSelectBox">
               <h3 class="areaSelectBox-title">광주</h3>
               <div class="areaSelectBox-btn-box">
-                <button
-                  type="button"
-                  class="areaSelectBox-btn"
-                  @click="selectArea('광주 유스퀘어(금호고속)')">
+                <button type="button" class="areaSelectBox-btn" @click="selectArea('광주 유스퀘어(금호고속)')">
                   <p>광주 유스퀘어(금호고속)</p>
                 </button>
-                <button
-                  type="button"
-                  class="areaSelectBox-btn"
-                  @click="selectArea('광주송정역')">
+                <button type="button" class="areaSelectBox-btn" @click="selectArea('광주송정역')">
                   <p>광주송정역</p>
                 </button>
               </div>
@@ -200,10 +136,7 @@ const selectArea = (area) => {
             <div class="areaSelectBox">
               <h3 class="areaSelectBox-title">목포</h3>
               <div class="areaSelectBox-btn-box">
-                <button
-                  type="button"
-                  class="areaSelectBox-btn"
-                  @click="selectArea('목포역')">
+                <button type="button" class="areaSelectBox-btn" @click="selectArea('목포역')">
                   <p>목포역</p>
                 </button>
               </div>
@@ -211,16 +144,10 @@ const selectArea = (area) => {
             <div class="areaSelectBox">
               <h3 class="areaSelectBox-title">경기/인천</h3>
               <div class="areaSelectBox-btn-box">
-                <button
-                  type="button"
-                  class="areaSelectBox-btn"
-                  @click="selectArea('김포공항 국내선')">
+                <button type="button" class="areaSelectBox-btn" @click="selectArea('김포공항 국내선')">
                   <p>김포공항 국내선</p>
                 </button>
-                <button
-                  type="button"
-                  class="areaSelectBox-btn"
-                  @click="selectArea('광명역')">
+                <button type="button" class="areaSelectBox-btn" @click="selectArea('광명역')">
                   <p>광명역</p>
                 </button>
               </div>
@@ -228,10 +155,7 @@ const selectArea = (area) => {
             <div class="areaSelectBox">
               <h3 class="areaSelectBox-title">천안/아산</h3>
               <div class="areaSelectBox-btn-box">
-                <button
-                  type="button"
-                  class="areaSelectBox-btn"
-                  @click="selectArea('천안아산역')">
+                <button type="button" class="areaSelectBox-btn" @click="selectArea('천안아산역')">
                   <p>천안아산역</p>
                 </button>
               </div>
@@ -239,10 +163,7 @@ const selectArea = (area) => {
             <div class="areaSelectBox">
               <h3 class="areaSelectBox-title">청주</h3>
               <div class="areaSelectBox-btn-box">
-                <button
-                  type="button"
-                  class="areaSelectBox-btn"
-                  @click="selectArea('오송역')">
+                <button type="button" class="areaSelectBox-btn" @click="selectArea('오송역')">
                   <p>오송역</p>
                 </button>
               </div>
@@ -250,18 +171,13 @@ const selectArea = (area) => {
             <div class="areaSelectBox">
               <h3 class="areaSelectBox-title">대전</h3>
               <div class="areaSelectBox-btn-box">
-                <button
-                  type="button"
-                  class="areaSelectBox-btn"
-                  @click="selectArea('대전역')">
+                <button type="button" class="areaSelectBox-btn" @click="selectArea('대전역')">
                   <p>대전역</p>
                 </button>
               </div>
             </div>
             <div class="next-btn-box">
-              <button type="button" class="next-btn" @click="close">
-                확인
-              </button>
+              <button type="button" class="next-btn" @click="close">확인</button>
             </div>
           </div>
           <div v-if="activeTab === 'tab2'">
@@ -269,14 +185,9 @@ const selectArea = (area) => {
               <p class="notice-text">
                 • '물품보관장소'를 정확히 작성해 주세요. 부정확할 경우
                 <strong>예약취소 및 추가 비용</strong>이 발생할 수 있으며,
-                <strong
-                  >분실/도난/변질에 대한 책임은 짐꾼에서 부담하지
-                  않습니다.</strong
-                >
+                <strong>분실/도난/변질에 대한 책임은 짐꾼에서 부담하지 않습니다.</strong>
               </p>
-              <p class="notice-text">
-                • 주소지 배송은 같은 지역 내에서만 가능합니다.
-              </p>
+              <p class="notice-text">• 주소지 배송은 같은 지역 내에서만 가능합니다.</p>
             </div>
             <div class="address-box">
               <button type="button" class="address-btn">주소검색</button>
@@ -288,12 +199,11 @@ const selectArea = (area) => {
               <input
                 type="text"
                 class="place-input"
-                placeholder="예) 문 앞 (공동현관 비밀번호 0000#), 경비실, 택배함 등" />
+                placeholder="예) 문 앞 (공동현관 비밀번호 0000#), 경비실, 택배함 등"
+              />
             </div>
             <div class="complete-btn-box">
-              <button type="button" class="complete-btn" @click="close">
-                주소지선택 완료
-              </button>
+              <button type="button" class="complete-btn" @click="close">주소지선택 완료</button>
             </div>
           </div>
         </div>
@@ -336,7 +246,7 @@ const selectArea = (area) => {
   position: absolute;
   top: 12px;
   right: 12px;
-  img{
+  img {
     width: 100%;
   }
 }
@@ -411,7 +321,6 @@ h2 {
   background-color: #fff;
   color: $font-light-gray;
   cursor: pointer;
-  
 }
 .areaSelectBox-btn > p {
   padding: 6px 15px;
@@ -422,7 +331,7 @@ h2 {
   border: $primary-color solid 1px;
   color: #fff;
   background-color: $primary-color; // #FF6F00 + 10% opacity
-  p{
+  p {
     font-weight: 700;
   }
 }
@@ -450,8 +359,9 @@ h2 {
 // 탭2
 // 탭2 주의사항 텍스트
 .notice-box {
-  margin: 25px 16px;
+  padding: 25px 16px;
   text-align: left;
+  border-top: solid 1px $bg-primary;
 }
 .notice-text {
   font-size: 16px;
@@ -462,6 +372,7 @@ strong {
   font-weight: bold;
   color: $font-primary;
 }
+
 // 탭2 주소
 .address-box {
   width: 97.8%;
@@ -515,6 +426,7 @@ strong {
 // 주소지선택 완료 버튼
 .complete-btn-box {
   width: 100%;
+  border-top: solid 1px $bg-primary;
 }
 .complete-btn {
   font-size: 14px;
