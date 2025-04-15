@@ -6,17 +6,48 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  departureDate: {
+    type: String,
+    default: null,
+  },
 });
 
 const emit = defineEmits(["select", "close"]);
 
-const currentDate = ref(new Date());
+const today = new Date();
+const currentYear = ref(today.getFullYear());
+const currentMonth = ref(today.getMonth());
 const selectedDate = ref(null);
+
+// 달력 초기화 시 맡길 날짜를 기준으로 설정
+if (props.type === "arrival" && props.departureDate) {
+  const departureDate = new Date(props.departureDate);
+  currentYear.value = departureDate.getFullYear();
+  currentMonth.value = departureDate.getMonth();
+}
+
+// 이전 날짜 비활성화를 위한 함수
+const isDateDisabled = (date) => {
+  const currentDate = new Date();
+  currentDate.setHours(0, 0, 0, 0); // 시간을 00:00:00으로 설정
+  const targetDate = new Date(date);
+  targetDate.setHours(0, 0, 0, 0); // 비교할 날짜도 시간을 00:00:00으로 설정
+
+  // 찾을 날짜 선택 시 맡길 날짜를 기준으로 이전 날짜 비활성화
+  if (props.type === "arrival" && props.departureDate) {
+    const departureDate = new Date(props.departureDate);
+    departureDate.setHours(0, 0, 0, 0);
+    return targetDate <= departureDate;
+  }
+
+  // 맡길 날짜 선택 시 당일 포함 이전 날짜 비활성화
+  return targetDate < currentDate;
+};
 
 // 현재 월의 날짜 배열 생성
 const daysInMonth = computed(() => {
-  const year = currentDate.value.getFullYear();
-  const month = currentDate.value.getMonth();
+  const year = currentYear.value;
+  const month = currentMonth.value;
   const firstDay = new Date(year, month, 1);
   const lastDay = new Date(year, month + 1, 0);
 
@@ -56,19 +87,17 @@ const daysInMonth = computed(() => {
 
 // 월 이동
 const changeMonth = (offset) => {
-  currentDate.value = new Date(
-    currentDate.value.getFullYear(),
-    currentDate.value.getMonth() + offset,
-    1
-  );
+  currentMonth.value = (currentMonth.value + offset + 12) % 12;
+  currentYear.value =
+    currentMonth.value === 11 ? currentYear.value + 1 : currentYear.value;
 };
 
-// 날짜 선택
-const selectDate = (date) => {
-  if (date.isCurrentMonth) {
-    selectedDate.value = date.date;
-    const formattedDate = formatDate(date.date);
-    emit("select", formattedDate);
+// 날짜 선택 핸들러 수정
+const handleDateSelect = (date) => {
+  if (!isDateDisabled(date)) {
+    selectedDate.value = date;
+    emit("select", formatDate(date));
+    emit("close");
   }
 };
 
@@ -81,10 +110,8 @@ const formatDate = (date) => {
 };
 
 // 현재 월 표시
-const currentMonth = computed(() => {
-  return `${currentDate.value.getFullYear()}년 ${
-    currentDate.value.getMonth() + 1
-  }월`;
+const currentMonthDisplay = computed(() => {
+  return `${currentYear.value}년 ${currentMonth.value + 1}월`;
 });
 </script>
 
@@ -93,7 +120,7 @@ const currentMonth = computed(() => {
     <div class="date-picker" @click.stop>
       <div class="date-picker-header">
         <button @click="changeMonth(-1)">&lt;</button>
-        <span>{{ currentMonth }}</span>
+        <span>{{ currentMonthDisplay }}</span>
         <button @click="changeMonth(1)">&gt;</button>
       </div>
       <div class="date-picker-grid">
@@ -111,8 +138,9 @@ const currentMonth = computed(() => {
             'current-month': day.isCurrentMonth,
             selected:
               selectedDate && formatDate(day.date) === formatDate(selectedDate),
+            disabled: isDateDisabled(day.date),
           }"
-          @click="selectDate(day)">
+          @click="handleDateSelect(day.date)">
           {{ day.date.getDate() }}
         </div>
       </div>
@@ -122,18 +150,6 @@ const currentMonth = computed(() => {
 
 <style lang="scss" scoped>
 @import "/src/assets/variables";
-// .date-picker-overlay {
-//   position: fixed;
-//   top: 0;
-//   left: 0;
-//   right: 0;
-//   bottom: 0;
-//   background-color: rgba(0, 0, 0, 0.5);
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   z-index: 1000;
-// }
 
 .date-picker {
   background-color: white;
@@ -154,7 +170,7 @@ const currentMonth = computed(() => {
     font-size: 1.2em;
     cursor: pointer;
     padding: 5px 10px;
-    
+
     &:hover {
       color: $primary-color;
     }
@@ -165,41 +181,74 @@ const currentMonth = computed(() => {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 5px;
-  
+
+  .day {
+    &:nth-child(7n + 1) {
+      // 일요일
+      color: #ff6b6b;
+      &.current-month {
+        color: #ff6b6b;
+      }
+    }
+
+    &:nth-child(7n) {
+      // 토요일
+      color: #5b8cff;
+      &.current-month {
+        color: #5b8cff;
+      }
+    }
+  }
 }
 
 .weekday {
   text-align: center;
-  // font-weight: bold;
   padding: 5px;
   color: $font-gray;
+
+  &:nth-child(1) {
+    color: #ff6b6b; // 일요일 빨간색
+  }
+
+  &:nth-child(7) {
+    color: #5b8cff; // 토요일 파란색
+  }
 }
 
 .day {
-  
   text-align: center;
   padding: 10px;
   cursor: pointer;
   border-radius: 4px;
+
   &:hover {
     background-color: rgba($primary-color, 0.1);
-    &.current-month{
+    &.current-month {
       color: $font-primary;
       font-weight: 500;
     }
   }
+
   &.current-month {
     color: $font-gray;
   }
-  
+
   &:not(.current-month) {
     color: $disabled-color;
     font-weight: 100;
     opacity: 0;
   }
+
   &.selected {
     background-color: $primary-color;
     color: white;
+  }
+
+  &.disabled {
+    color: #111;
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.15;
   }
 }
 </style>

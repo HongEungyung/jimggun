@@ -19,7 +19,7 @@ watch([selectedHour, selectedMinute], () => {
     .toString()
     .padStart(2, "0")}:${selectedMinute.value.toString().padStart(2, "0")}`;
   emit("select", time);
-  emit("close");
+  // emit("close");
 });
 </script>
 
