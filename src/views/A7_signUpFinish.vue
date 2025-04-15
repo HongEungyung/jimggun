@@ -11,8 +11,8 @@
       <br /><span class="colorText">더 새롭고, 더 즐거운 여행이</span> 시작됩니다.
     </p>
   </div>
-  <router-link to="/" class="toMain">
-    <button class="mainBtn">메인으로</button>
+  <router-link to="login" class="toMain">
+    <button class="mainBtn">로그인 페이지로</button>
   </router-link>
 </template>
 <style lang="scss" scoped>
@@ -56,7 +56,7 @@ img {
 .mainBtn {
   margin: auto;
   display: flex;
-  width: 97px;
+  width: 130px;
   height: 40px;
   text-decoration: none;
   border: 1px solid $primary-color;

@@ -1,32 +1,69 @@
 <script setup>
 import { ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
-
-const router = useRouter(); // 페이지 이동을 위한 Vue Router 사용
+import { computed } from 'vue';
+// const showTermsContent = ref(false);
+// const showPrivacyContent = ref(false);
+const router = useRouter();
 
 const allAgree = ref(false);
 const terms = ref(false);
 const privacy = ref(false);
+const showPassword = ref(false);
+const showPassword2 = ref(false);
 
-const name = ref('');
-const phone = ref('');
-const email = ref('');
+// 회원가입 폼 데이터 초기화
+const signUpData = ref({
+  userId: '', //아이디
+  name: '', // 사용자 이름
+  email: '', // 사용자 이메일
+  password: '', // 비밀번호
+  passwordCheck: '', // 비밀번호 확인
+  phone: '', // 휴대폰 번호
+});
+
+const isFormValid = computed(() => {
+  return (
+    signUpData.value.userId.trim() &&
+    signUpData.value.name.trim() &&
+    signUpData.value.phone.trim() &&
+    signUpData.value.email.trim() &&
+    signUpData.value.password &&
+    signUpData.value.passwordCheck &&
+    isEmailVerfied.value &&
+    isPhoneVerified.value &&
+    !errors.value.name &&
+    !errors.value.phone &&
+    !errors.value.email &&
+    !errors.value.passwordCheck &&
+    terms.value &&
+    privacy.value
+  );
+});
 
 const errors = ref({
+  userId: '',
   name: '',
   phone: '',
   email: '',
+  passwordCheck: '',
 });
+
+const isEmailVerfied = ref(false); //이메일 인증 완료 여부
+const isPhoneVerified = ref(false); //휴대폰 인증 완료 여부
 // 유효성 검사 정의
 const validateField = (field) => {
+  if (field === 'userId') {
+    errors.value.userId = !signUpData.value.userId.trim() ? '아이디를 입력해주세요.' : '';
+  }
   if (field === 'name') {
-    errors.value.name = !name.value.trim() ? '이름을 입력해주세요.' : '';
+    errors.value.name = !signUpData.value.name.trim() ? '이름을 입력해주세요.' : '';
   }
 
   if (field === 'phone') {
-    if (!phone.value.trim()) {
+    if (!signUpData.value.phone.trim()) {
       errors.value.phone = '전화번호를 입력해주세요.';
-    } else if (!/^\d{3}-\d{4}-\d{4}$/.test(phone.value)) {
+    } else if (!/^\d{3}-\d{4}-\d{4}$/.test(signUpData.value.phone)) {
       errors.value.phone = '올바른 전화번호 형식이 아닙니다. (000-0000-0000)';
     } else {
       errors.value.phone = '';
@@ -34,16 +71,46 @@ const validateField = (field) => {
   }
 
   if (field === 'email') {
-    if (!email.value.trim()) {
+    if (!signUpData.value.email.trim()) {
       errors.value.email = '이메일을 입력해주세요.';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(signUpData.value.email)) {
       errors.value.email = '올바른 이메일 형식이 아닙니다.';
     } else {
       errors.value.email = '';
     }
   }
 };
-// 모두 동의합니다
+
+// 비밀번호 확인 검사
+const validatePasswordMatch = () => {
+  if (signUpData.value.password !== signUpData.value.passwordCheck) {
+    errors.value.passwordCheck = '비밀번호가 일치하지 않습니다.';
+  } else {
+    errors.value.passwordCheck = '';
+  }
+};
+
+// 비밀번호 표시 토글
+
+const togglePassword = () => {
+  showPassword.value = !showPassword.value;
+};
+
+const togglePassword2 = () => {
+  showPassword2.value = !showPassword2.value;
+};
+// 펼치기 토글
+const showTermsContent = ref(false);
+const showPrivacyContent = ref(false);
+
+const toggleTerms = () => {
+  showTermsContent.value = !showTermsContent.value;
+};
+
+const togglePrivacy = () => {
+  showPrivacyContent.value = !showPrivacyContent.value;
+};
+// 전체 동의 체크
 watch(allAgree, (newValue) => {
   terms.value = newValue;
   privacy.value = newValue;
@@ -52,49 +119,80 @@ watch(allAgree, (newValue) => {
 watch([terms, privacy], ([newTerms, newPrivacy]) => {
   allAgree.value = newTerms && newPrivacy;
 });
-// 약관 내용 펼치기
-const showTermsContent = ref(false); // 회원가입약관
-const showPrivacyContent = ref(false); // 개인정보처리방침
-
-const toggleTerms = () => {
-  showTermsContent.value = !showTermsContent.value;
-};
-const togglePrivacy = () => {
-  showPrivacyContent.value = !showPrivacyContent.value;
-};
 
 // 유효성 검사 & 회원가입 처리 함수
 const validateAllFields = () => {
+  validateField('userId');
   validateField('name');
   validateField('phone');
   validateField('email');
+  validatePasswordMatch();
 
-  return !errors.value.name && !errors.value.phone && !errors.value.email;
+  return (
+    !errors.value.userId &&
+    !errors.value.name &&
+    !errors.value.phone &&
+    !errors.value.email &&
+    !errors.value.passwordCheck
+  );
 };
-const handleSignUp = () => {
-  if (!terms.value || !privacy.value) {
-    alert('모든 약관에 동의해야 회원가입이 가능합니다.');
+
+// 회원가입 가입 처리
+const handleSignup = () => {
+  if (!validateAllFields()) {
     return;
   }
 
-  if (validateAllFields()) {
-    router.push('/signUpFinish');
+  // 1.회원가입 정보 준비
+  const userInfo = {
+    userId: signUpData.value.userId,
+    name: signUpData.value.name, // 사용자 이름
+    email: signUpData.value.email, // 이메일
+    password: signUpData.value.password, // 비밀번호
+    phone: signUpData.value.phone, // 휴대폰 번호
+  };
+  // 2.localStorage에서 기존 사용자 데이터 가져오기
+  // 유저 배열 가져오기 (없으면 빈배열)
+  // 문자열 => 객체
+  const existingUsers = JSON.parse(localStorage.getItem('userDatas') || '[]');
+  // 3.이메일 중복 체크
+  if (existingUsers.some((userData) => userData.email === userInfo.email)) {
+    alert('이미 등록된 이메일입니다.');
+    return; //중복된 이메일이면 회원가입 중단
   }
+  // 4.새 사용자 추가
+  existingUsers.push(userInfo);
+  // 5.업데이트된 사용자 데이터를 localStorage에 저장
+  localStorage.setItem('userDatas', JSON.stringify(existingUsers));
+  // 6.회원가빕 성공 메시지 표시
+  alert('회원가입이 완료 되었습니다.');
+  // 7.로그인페이지 이동
+  router.push('/login');
 };
+
 // 하이픈 자동 입력
 const formatPhone = (e) => {
-  let digits = e.target.value.replace(/\D/g, ''); // 숫자만 남기기
-
+  let digits = e.target.value.replace(/\D/g, '');
   if (digits.length <= 3) {
-    phone.value = digits;
+    signUpData.value.phone = digits;
   } else if (digits.length <= 7) {
-    phone.value = `${digits.slice(0, 3)}-${digits.slice(3)}`;
+    signUpData.value.phone = `${digits.slice(0, 3)}-${digits.slice(3)}`;
   } else if (digits.length <= 11) {
-    phone.value = `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7, 11)}`;
+    signUpData.value.phone = `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7, 11)}`;
   } else {
-    phone.value = `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7, 11)}`;
+    signUpData.value.phone = `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7, 11)}`;
   }
   validateField('phone');
+};
+// 휴대폰인증 처리
+const handlePhoneVerificaion = () => {
+  alert('인증완료');
+  isPhoneVerified.value = true; // 임시로 인증완료처리
+};
+// 이메일 인증 처리
+const handleEmailVerification = () => {
+  alert('인증완료');
+  isEmailVerfied.value = true; //임시로 인증 완료 처리
 };
 </script>
 
@@ -133,47 +231,86 @@ const formatPhone = (e) => {
     </div>
     <!--개인정보 입력-->
     <h2>개인정보 입력</h2>
-    <div class="infoWrap">
-      <span class="star">*</span> <span class="infoSectionTitle">이름</span>
-      <input
-        type="text"
-        v-model="name"
-        placeholder="홍길동"
-        class="infoInput name"
-        @input="validateField('name')"
-      /><img src="../../public/images/kang/inputName.png" alt="이름 입력" class="infoIcon" />
-      <p class="errorText" v-if="errors.name">{{ errors.name }}</p>
-    </div>
+    <form class="signup-form" @submit.prevent="handleSignup">
+      <div class="infoWrap">
+        <span class="star">*</span> <span class="infoSectionTitle">아이디</span>
+        <input type="text" v-model="signUpData.userId" placeholder="아이디" class="infoInput ID" />
+      </div>
+      <div class="infoWrap">
+        <span class="star">*</span> <span class="infoSectionTitle">비밀번호</span>
+        <input
+          :type="showPassword ? 'text' : 'password'"
+          placeholder="비밀번호"
+          class="infoInput password"
+          v-model="signUpData.password"
+          @input="validatePasswordMatch"
+        />
+        <button type="button" @click="togglePassword" class="toggle-password">
+          {{ showPassword ? '👁️' : '👁️‍🗨️' }}
+        </button>
+      </div>
+      <div class="infoWrap">
+        <span class="star">*</span> <span class="infoSectionTitle">비밀번호확인</span>
+        <input
+          :type="showPassword2 ? 'text' : 'password'"
+          placeholder="비밀번호확인"
+          class="infoInput passwordCheck"
+          v-model="signUpData.passwordCheck"
+          @input="validatePasswordMatch"
+        />
+        <button type="button" @click="togglePassword2" class="toggle-password">
+          {{ showPassword2 ? '👁️' : '👁️‍🗨️' }}
+        </button>
+        <p class="errorText" v-if="errors.passwordCheck">{{ errors.passwordCheck }}</p>
+      </div>
+      <div class="infoWrap">
+        <span class="star">*</span> <span class="infoSectionTitle">이름</span>
+        <input
+          type="text"
+          v-model="signUpData.name"
+          placeholder="홍길동"
+          class="infoInput name"
+          @input="validateField('name')"
+        />
+        <p class="errorText" v-if="errors.name">{{ errors.name }}</p>
+      </div>
 
-    <div class="infoWrap">
-      <span class="star">*</span> <span class="infoSectionTitle">전화번호</span>
-      <input
-        type="tel"
-        v-model="phone"
-        @input="formatPhone"
-        pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}"
-        placeholder="000-0000-0000"
-        class="infoInput phone"
-      /><img src="../../public/images/kang/inputPhone.png" alt="전화번호 입력" class="infoIcon" />
-      <p class="errorText" v-if="errors.phone">{{ errors.phone }}</p>
-    </div>
+      <div class="infoWrap">
+        <span class="star">*</span> <span class="infoSectionTitle">전화번호</span>
+        <input
+          type="tel"
+          v-model="signUpData.phone"
+          @input="formatPhone"
+          pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}"
+          placeholder="000-0000-0000"
+          class="infoInput phone"
+        />
+        <p class="errorText" v-if="errors.phone">{{ errors.phone }}</p>
+        <button type="button" @click="handlePhoneVerificaion" :disabled="isPhoneVerified" class="verify-btn">
+          {{ isPhoneVerified ? '인증완료' : '인증하기' }}
+        </button>
+      </div>
 
-    <div class="infoWrap">
-      <span class="star">*</span> <span class="infoSectionTitle">E-mail</span>
-      <input
-        type="email"
-        v-model="email"
-        placeholder="0000@naver.com"
-        class="infoInput mail"
-        @input="validateField('email')"
-      /><img src="../../public/images/kang/inputMail.png" alt="이메일 입력" class="infoIcon" />
-      <p class="errorText" v-if="errors.email">{{ errors.email }}</p>
-    </div>
+      <div class="infoWrap">
+        <span class="star">*</span> <span class="infoSectionTitle">E-mail</span>
+        <input
+          type="email"
+          v-model="signUpData.email"
+          placeholder="0000@naver.com"
+          class="infoInput mail"
+          @input="validateField('email')"
+        />
+        <p class="errorText" v-if="errors.email">{{ errors.email }}</p>
+        <button type="button" @click="handleEmailVerification" :disabled="isEmailVerfied" class="verify-btn">
+          {{ isEmailVerfied ? '인증완료' : '인증하기' }}
+        </button>
+      </div>
 
-    <div class="btTextParent">
-      <p class="btText"><strong>*휴대전화</strong>는 수하물 운송 서비스 이용시 필수</p>
-    </div>
-    <button type="button" class="signUpBtn" @click="handleSignUp">가입하기</button>
+      <div class="btTextParent">
+        <p class="btText"><strong>*휴대전화</strong>는 수하물 운송 서비스 이용시 필수</p>
+      </div>
+      <button type="submit" class="signUpBtn" :disabled="!isFormValid">회원가입</button>
+    </form>
   </div>
 </template>
 
@@ -196,8 +333,8 @@ h1 {
 //약관 동의
 .checkboxWrap {
   // width: 499px;
-  width: 97.8%;
-  height: 62px;
+  width: 98%;
+  height: 60px;
   border: 1px solid $bg-primary;
   border-radius: 10px;
   margin-bottom: 10px;
@@ -243,7 +380,7 @@ h1 {
 .moreView {
   width: 20px;
   height: 20px;
-  margin-left: 10px;
+
   margin-left: auto;
   margin-right: 21px;
   cursor: pointer;
@@ -286,8 +423,8 @@ h2 {
   margin-bottom: 20px;
 }
 .infoWrap {
-  width: 501px;
-  height: 92px;
+  width: 98%;
+  height: 70px;
   border: 1px solid $bg-primary;
   border-radius: 10px;
   display: flex;
@@ -305,7 +442,7 @@ h2 {
 }
 .infoSectionTitle {
   font-size: 16px;
-  font-weight: bold;
+
   color: $font-primary;
   margin-right: 52px;
   display: inline-block;
@@ -314,7 +451,7 @@ h2 {
   border: none;
   outline: none;
   font-size: 16px;
-  font-weight: 500;
+
   line-height: 18px;
 }
 .infoIcon {
@@ -335,15 +472,22 @@ h2 {
   display: flex;
   justify-content: flex-end;
 }
+.ID {
+  padding-left: 41px;
+}
+.password {
+  padding-left: 27px;
+}
 .name {
-  padding-left: 52px;
+  padding-left: 55px;
 }
 .phone {
-  padding-left: 24px;
+  padding-left: 27px;
 }
 .mail {
-  padding-left: 32px;
+  padding-left: 35px;
 }
+
 .signUpBtn {
   width: 480px;
   height: 56px;
@@ -366,8 +510,8 @@ h2 {
   color: $error-color;
   font-size: 14px;
   position: absolute;
-  left: 160px;
-  top: 64px;
+  left: 165px;
+  top: 48px;
 }
 //반응형
 @media screen and (max-width: 540px) {
