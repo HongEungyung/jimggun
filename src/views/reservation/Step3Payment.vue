@@ -21,9 +21,11 @@ const individualAgrees = ref({
 
 const name = ref("");
 const phone = ref("");
+const phonePrefix = ref("010");
 const email = ref("");
 const showNumberOnlyMessage = ref(false);
 const showEmailError = ref(false);
+const paymentMethod = ref("신용카드");
 
 const prevStep = () => emit("prev");
 
@@ -64,7 +66,16 @@ const confirmPayment = () => {
     return;
   }
 
-  emit("next", { paymentComfirmed: true });
+  // 결제 정보를 포함하여 다음 단계로 전달
+  emit("next", {
+    paymentComfirmed: true,
+    reservationInfo: {
+      name: name.value,
+      phone: `${phonePrefix.value}-${phone.value}`,
+      email: email.value,
+      paymentMethod: paymentMethod.value,
+    },
+  });
 };
 
 const closeModal = () => {
@@ -128,6 +139,16 @@ const handleEmailInput = (event) => {
   if (input.includes("@")) {
     showEmailError.value = false;
   }
+};
+
+// 결제 방법 변경 핸들러 추가
+const handlePaymentMethodChange = (method) => {
+  paymentMethod.value = method;
+};
+
+// 휴대폰 번호 앞자리 변경 핸들러 추가
+const handlePhonePrefixChange = (event) => {
+  phonePrefix.value = event.target.value;
 };
 </script>
 
@@ -302,21 +323,24 @@ const handleEmailInput = (event) => {
                     name="od_settle"
                     class="form_check_input"
                     value="신용카드"
-                    id="od_settle_card" />
+                    id="od_settle_card"
+                    @change="handlePaymentMethodChange('신용카드')" />
                   <label for="od_settle_card">신용카드</label>
                   <input
                     type="radio"
                     name="od_settle"
                     class="form_check_input"
                     value="계좌이체"
-                    id="od_settle_iche" />
+                    id="od_settle_iche"
+                    @change="handlePaymentMethodChange('계좌이체')" />
                   <label for="od_settle_iche">실시간 계좌이체</label>
                   <input
                     type="radio"
                     name="od_settle"
                     class="form_check_input"
                     value="네이버페이"
-                    id="od_settle_npay" />
+                    id="od_settle_npay"
+                    @change="handlePaymentMethodChange('네이버페이')" />
                   <label for="od_settle_npay">네이버페이</label>
                 </fieldset>
 
@@ -342,7 +366,7 @@ const handleEmailInput = (event) => {
                       </li>
                       <li>
                         <label>추가요금</label>
-                        <strong class="right_price">0원</strong>
+                        <strong class="right_price">0 원</strong>
                       </li>
                       <li>
                         <label>쿠폰적용</label>
@@ -359,7 +383,7 @@ const handleEmailInput = (event) => {
                       </li>
                       <li>
                         <label>쿠폰할인</label>
-                        <strong class="right_price">0원</strong>
+                        <strong class="right_price">0 원</strong>
                       </li>
                       <li class="right_line"></li>
                       <li>
@@ -433,7 +457,9 @@ const handleEmailInput = (event) => {
   <div v-if="isModalOpen" class="modal-overlay">
     <div class="modal-content">
       <p>{{ modalMessage }}</p>
-      <button @click="closeModal">확인</button>
+      <div class="modal-buttons">
+        <button @click="closeModal" class="confirm-btn">확인</button>
+      </div>
     </div>
   </div>
 </template>
@@ -601,15 +627,23 @@ const handleEmailInput = (event) => {
       margin: 23px 0;
       display: flex;
       justify-content: space-between;
+      strong{
+        font-size: 14px;
+      }
       label {
         font-size: 13px;
       }
+
       &.right_line {
         width: 100%;
         border-bottom: 1px dashed $input-select;
       }
       &:last-child strong {
         color: $primary-color;
+        font-weight: bold;
+      }
+      &:last-child label {
+        font-weight: bold;
       }
       // 쿠폰
       .coupon_area {
@@ -702,31 +736,54 @@ const handleEmailInput = (event) => {
 
 .modal-content {
   background-color: white;
-  padding: 20px;
+  padding-top: 20px;
   border-radius: 10px;
-  text-align: center;
+  width: 250px;
+  height: 150px;
+  // width: 100%;
+  // height: 100%;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  max-width: 300px;
-  width: 100%;
-
+  text-align: center;
   p {
-    margin-bottom: 20px;
-    font-size: 16px;
+    margin-top: 20px;
+    color: #111;
+  }
+  .modal-buttons {
+  margin: 40px auto 0;
+width: 88%;
+height: 30%;
+  button {
+    width: 100%;
+    height: 100%;
+    // padding: 6px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
   }
 
-  button {
+  .confirm-btn {
     background-color: $primary-color;
     color: white;
     border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
 
     &:hover {
       background-color: $primary-hover;
     }
   }
+  // button {
+  //   background-color: $primary-color;
+  //   color: white;
+  //   border: none;
+  //   padding: 6px 12px;
+  //   border-radius: 4px;
+  //   cursor: pointer;
+  //   font-weight: bold;
+
+  //   &:hover {
+  //     background-color: $primary-hover;
+  //   }
+  // }
+}
 }
 
 .error-message {

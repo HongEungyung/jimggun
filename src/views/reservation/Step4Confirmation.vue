@@ -8,6 +8,12 @@ const props = defineProps({
 const reservationDetails = computed(
   () => props.resevationData?.reservationDetails || {}
 );
+
+// 예약자 정보와 결제 방법을 저장하는 computed 속성 추가
+const reservationInfo = computed(
+  () => props.resevationData?.reservationInfo || {}
+);
+
 // 가격 포맷 함수 추가
 const formatPrice = (price) => {
   if (!price) return "0";
@@ -37,7 +43,7 @@ const formatPrice = (price) => {
         </div>
       </section>
       <!-- 본문 -->
-      <section class="res_pay_card">
+      <section class="res_pay_card " id="card_custom">
         <form>
           <!-- 카드 상단 -->
           <div class="confirmation_top">
@@ -117,15 +123,15 @@ const formatPrice = (price) => {
               <ul>
                 <li>
                   <label>예약자 성명</label>
-                  <div>2</div>
+                  <div>{{ reservationInfo.name }}</div>
                 </li>
                 <li>
                   <label>휴대폰 번호</label>
-                  <div>2</div>
+                  <div>{{ reservationInfo.phone }}</div>
                 </li>
                 <li>
                   <label>이메일</label>
-                  <div>2</div>
+                  <div>{{ reservationInfo.email }}</div>
                 </li>
               </ul>
             </div>
@@ -142,11 +148,13 @@ const formatPrice = (price) => {
               <ul>
                 <li>
                   <label>결제 방법</label>
-                  <div>0</div>
+                  <div>{{ reservationInfo.paymentMethod }}</div>
                 </li>
                 <li>
                   <label>결제 금액</label>
-                  <div id="totalPrice_info">{{ formatPrice(reservationDetails.totalPrice) }} 원</div>
+                  <div id="totalPrice_info">
+                    {{ formatPrice(reservationDetails.totalPrice) }} 원
+                  </div>
                 </li>
               </ul>
             </div>
@@ -164,6 +172,8 @@ const formatPrice = (price) => {
 @import "/src/assets/variables";
 @import "/src/assets/resTop.scss";
 
+
+
 .progress_text p:last-child {
   // font-size: 1.875rem;
   font-weight: 600;
@@ -175,9 +185,9 @@ const formatPrice = (price) => {
   text-align: center;
   .conTopTitle {
     h2 {
-      margin: 20px 0;
+      margin: 15px 0 25px;
       font-weight: bold;
-      font-size: 28px;
+      font-size: 26px;
       // margin-top: 20px;
       b {
         color: $primary-color;
@@ -189,7 +199,7 @@ const formatPrice = (price) => {
     // background-color: aqua;
     position: absolute;
     bottom: -10px;
-    right: 5px;
+    right: 15px;
     button {
       cursor: pointer;
       border: none;
@@ -206,9 +216,16 @@ const formatPrice = (price) => {
   }
 }
 // 본문
+#card_custom{
+  max-width: 700px;
+  margin: auto;
+  padding: 30px 0;
+
+}
 .confirmation_info {
   .confirmation_card {
-    width: 100%;
+    width: 95%;
+    margin: auto;
     padding-top: 20px;
     border-top: 1px dashed $input-select;
     .confirmation_title {
@@ -229,19 +246,16 @@ const formatPrice = (price) => {
     li {
       display: flex;
       justify-content: space-between;
-      margin: 20px 0;
+      margin: 18px 0;
+      font-size: 14px;
       label {
         color: $font-light-gray;
-        font-size: 15px;
-      }
-      div {
-        font-weight: bold;
       }
     }
   }
 }
 .confirm_btn {
-  margin: 50px 0;
+  margin: 70px 0;
   display: flex;
   .btn_submit {
     width: 50%;
@@ -252,7 +266,8 @@ const formatPrice = (price) => {
     cursor: pointer;
   }
 }
-#totalPrice_info{
+#totalPrice_info {
   color: $warning-color;
+  // font-weight: bold;
 }
 </style>

@@ -67,9 +67,15 @@ const toggleStates = ref({
 });
 // 토글 함수
 const toggleSection = (section) => {
-  toggleStates.value[section].isVisible =
-    !toggleStates.value[section].isVisible;
-  toggleStates.value[section].awesome = !toggleStates.value[section].awesome;
+  // 모든 섹션의 상태를 초기화
+  Object.keys(toggleStates.value).forEach((key) => {
+    toggleStates.value[key].isVisible = false;
+    toggleStates.value[key].awesome = true;
+  });
+
+  // 클릭한 섹션만 열기
+  toggleStates.value[section].isVisible = true;
+  toggleStates.value[section].awesome = false;
 };
 // 수하물별 금액 책정
 const products = ref([
@@ -206,7 +212,7 @@ const handleTimeSelect = (time) => {
   } else if (timePickerType.value === "arrival") {
     arrivalTime.value = time;
   }
-  isTimePickerOpen.value = false;
+  // isTimePickerOpen.value = false;
 };
 
 // 시간 팝업 닫기
@@ -256,6 +262,34 @@ const selectedLuggage = computed(() => {
     .map((product) => `${product.name} ${product.quantity}개`)
     .join(", ");
 });
+
+const isArrivalDateModalOpen = ref(false);
+
+// 찾을 날짜 모달 열기
+const openArrivalDateModal = (event) => {
+  if (!selectedDepartureDate.value) {
+    alert("먼저 맡기는 날짜를 선택해주세요.");
+    return;
+  }
+  isArrivalDateModalOpen.value = true;
+};
+
+// 찾을 날짜 모달 확인
+const confirmArrivalDate = () => {
+  // 맡기는 날짜의 다음 날 계산
+  const nextDay = new Date(selectedDepartureDate.value);
+  nextDay.setDate(nextDay.getDate() + 1);
+
+  // 날짜 포맷팅
+  const year = nextDay.getFullYear();
+  const month = String(nextDay.getMonth() + 1).padStart(2, "0");
+  const day = String(nextDay.getDate()).padStart(2, "0");
+  const formattedNextDay = `${year}-${month}-${day}`;
+
+  // 찾을 날짜를 다음 날로 설정
+  selectedArrivalDate.value = formattedNextDay;
+  isArrivalDateModalOpen.value = false;
+};
 </script>
 
 <template>
@@ -410,13 +444,14 @@ const selectedLuggage = computed(() => {
                   <div class="res_input">
                     <img src="/public/images/icon/data_icon.png" alt="달력" />
                     <input
+                      id="arrival_date"
                       class="date_input"
                       type="text"
                       :value="selectedArrivalDate"
                       readonly
                       autocomplete="off"
                       placeholder="찾을 날짜"
-                      @click="openDatePicker('arrival', $event)" />
+                      @click="openArrivalDateModal" />
                   </div>
                 </div>
                 <!-- 찾을 시간 선택 -->
@@ -517,7 +552,11 @@ const selectedLuggage = computed(() => {
         <!-- 입력 결과창 -->
         <div id="res_result_box">
           <!-- 모바일 -->
-          <div class="rrb_mb"></div>
+          <div class="rrb_mb">
+            <div class="mb_toggle_btn">
+              <img src="/public/images/icon/toggleUp_icon.png" alt="모바일토글아이콘">
+            </div>
+          </div>
           <!-- 웹 -->
           <ul class="rrb_detail">
             <li class="rrb_fr">
@@ -526,11 +565,13 @@ const selectedLuggage = computed(() => {
             </li>
             <li class="rrb_fr_data">
               <label>짐 맡길 일정</label>
-              <div>{{
+              <div>
+                {{
                   selectedDepartureDate && departureTime
                     ? `${selectedDepartureDate} / ${departureTime}`
                     : "-"
-                }}</div>
+                }}
+              </div>
             </li>
             <li class="rrb_to">
               <label>도착지</label>
@@ -538,11 +579,13 @@ const selectedLuggage = computed(() => {
             </li>
             <li class="rrb_to_data">
               <label>짐 찾을 일정</label>
-              <div>{{
+              <div>
+                {{
                   selectedArrivalDate && arrivalTime
                     ? `${selectedArrivalDate} / ${arrivalTime}`
                     : "-"
-                }}</div>
+                }}
+              </div>
             </li>
             <li class="rrb_cr">
               <label>수하물</label>
@@ -568,6 +611,7 @@ const selectedLuggage = computed(() => {
   <DatePicker
     v-if="isDatePickerOpen"
     :type="datePickerType"
+    :departureDate="selectedDepartureDate"
     @select="handleDateSelect"
     @close="isDatePickerOpen = false"
     :style="{
@@ -589,6 +633,18 @@ const selectedLuggage = computed(() => {
       left: `${timePickerPosition.left}px`,
       zIndex: 1000,
     }" />
+
+  <!-- 찾을 날짜 모달 -->
+  <div v-if="isArrivalDateModalOpen" class="modal-overlay">
+    <div class="modal-content">
+     
+      <p>짐은 <strong>맡긴 다음 날</strong>  찾을 수 있어요.</p>
+      <div class="modal-buttons">
+        <button @click="confirmArrivalDate" class="confirm-btn">확인</button>
+       
+      </div>
+    </div>
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -628,7 +684,7 @@ const selectedLuggage = computed(() => {
   padding: 18px 25px;
   margin: 0 1vh 3vh 0;
   border-radius: 10px;
-  transition: all 0.3s;
+  transition: all 0.5s ease-in-out;
   &.active {
     border: none;
     box-shadow: $reservation-boxShadow;
@@ -705,7 +761,7 @@ const selectedLuggage = computed(() => {
   padding: 18px 25px;
   margin: 0 1vh 3vh 0;
   border-radius: 10px;
-  transition: all 0.7s;
+  transition: all 0.7s ease-in-out;
   &.active {
     border: none;
     box-shadow: $reservation-boxShadow;
@@ -853,4 +909,73 @@ const selectedLuggage = computed(() => {
   }
 }
 
+/* 모달창 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  padding-top: 20px;
+  border-radius: 10px;
+  width: 250px;
+  height: 150px;
+  // width: 100%;
+  // height: 100%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  p {
+    
+    color: #111;
+   margin-top: 20px;
+    strong {
+      color: $primary-color;
+      font-weight: bold;
+      font-size: 16px;
+    }
+  }
+}
+
+.modal-buttons {
+  margin: 40px auto 0;
+width: 88%;
+height: 30%;
+  button {
+    width: 100%;
+    height: 100%;
+    // padding: 6px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  .confirm-btn {
+    background-color: $primary-color;
+    color: white;
+    border: none;
+
+    &:hover {
+      background-color: $primary-hover;
+    }
+  }
+
+  .cancel-btn {
+    background-color: $input-select;
+    color: $font-gray;
+    border: none;
+
+    &:hover {
+      background-color: darken($input-select, 10%);
+    }
+  }
+}
 </style>
