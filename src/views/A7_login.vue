@@ -1,5 +1,35 @@
 <script setup>
+import { useAuthStore } from '../stores/auth';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+const authStore = useAuthStore();
+const router = useRouter();
+
+const formData = ref({
+  userId: '',
+  password: '',
+});
+
+const handleLogin = () => {
+  const savedData = JSON.parse(localStorage.getItem('userDatas') || '[]');
+
+  const userData = Array.isArray(savedData)
+    ? savedData.find((u) => u.userId === formData.value.userId && u.password === formData.value.password)
+    : null;
+
+  if (userData) {
+    authStore.login({
+      email: userData.email,
+      name: userData.name,
+      phone: userData.phone,
+      userId: userData.userId,
+      password: userData.password,
+    });
+    router.push('/');
+  } else {
+    alert('아이디 또는 비밀번호가 일치하지 않습니다.');
+  }
+};
 </script>
 
 <template>
@@ -8,24 +38,28 @@ import { ref } from 'vue';
       <img src="../../public/images/jimggun_logo.png" alt="로고" class="logo" />
     </div>
     <div class="loginInputContainer">
-      <input type="text" placeholder="아이디" class="loginInput" />
-      <input type="text" placeholder="비밀번호" class="loginInput" />
+      <input type="text" placeholder="아이디" class="loginInput" v-model="formData.userId" />
+      <input type="password" placeholder="비밀번호" class="loginInput" v-model="formData.password" />
     </div>
-    <button class="loginBtn">로그인</button>
-    <div class="routerContainer">
-      <router-link to="/signUp" class="goSignUp">회원가입</router-link>
+    <button class="loginBtn" @click="handleLogin">로그인</button>
+    <div class="textContainer">
+      <p>아이디 찾기</p>
+      <p>비밀번호 찾기</p>
+      <div class="routerContainer">
+        <router-link to="/signUp" class="goSignUp">회원가입</router-link>
+      </div>
     </div>
+
     <div class="snsLoginContainer">
-      <p>자주 사용하는 계정으로 간편하게 로그인</p>
       <div class="snsIconBox">
         <div class="snsIcon naver">
-          <img src="../../public/images/kang/naver.png" alt="네이버" />
+          <img src="/images/kang/naver.png" alt="네이버" />
         </div>
         <div class="snsIcon kakao">
-          <img src="../../public/images/kang/kakao.png" alt="카카오" />
+          <img src="/images/kang/kakao.png" alt="카카오" />
         </div>
         <div class="snsIcon google">
-          <img src="../../public/images/kang/google.png" alt="구글" />
+          <img src="/images/kang/google.png" alt="구글" />
         </div>
       </div>
     </div>
@@ -81,12 +115,21 @@ a {
   border-radius: 10px;
   cursor: pointer;
 }
+.loginBtn:hover {
+  background-color: $primary-hover;
+}
 //회원가입
-.routerContainer {
-  margin-top: 20px;
+.textContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  gap: 10px;
+  margin-top: 30px;
+  color: $font-light-gray;
 }
 .goSignUp {
-  font-size: 14px;
+  color: $font-light-gray;
 }
 //간편 로그인
 .snsLoginContainer {
@@ -96,13 +139,10 @@ a {
   flex-direction: column;
   align-items: center;
 }
-.snsLoginContainer > p {
-  font-size: 18px;
-  color: $font-primary;
-}
+
 .snsIconBox {
   display: flex;
-  margin-top: 20px;
+
   gap: 50px;
 }
 .snsIcon {
@@ -111,7 +151,7 @@ a {
   align-items: center;
   width: 60px;
   height: 60px;
-  border-radius: 10px;
+  border-radius: 50px;
   cursor: pointer;
 }
 

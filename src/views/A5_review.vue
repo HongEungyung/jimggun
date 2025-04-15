@@ -1,30 +1,34 @@
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, ref, watchEffect } from 'vue';
 // 더미 데이터 (변경되지 않는 초기 데이터)
 const dummyReviews = [
   {
-    name: 'adsf1234@naver.com',
+    name: '홍길동',
     images: ['/images/kang/1-1.jpg', '/images/kang/1-2.jpg', '/images/kang/1-3.jpg'],
+    title: '뚜벅이 여행객들에게 강추!',
     content:
       '처음 이용해봤는데 너무 좋았습니다.\n매번 짐 때문에 고생했는데, 짐 걱정이 없으니까 여행의 질이 너무 좋아졌어요.\n안내도 너무 친절하게 잘해주셔서 좋았어요.\n처음부터 끝까지 친절하고 자세하게 알려주십니다.\n뚜벅이 여행객들에게 강추합니다!',
   },
   {
-    name: '1q2w3e4r@naver.com',
+    name: '김길동',
     images: ['/images/kang/2-1.jpg', '/images/kang/2-2.jpg', '/images/kang/2-3.jpg'],
+    title: '공항부터 호텔까지 가벼운 마음으로 여행 시작!',
     content:
-      '처음 이용해봤는데 너무 좋았습니다.\n매번 짐 때문에 고생했는데, 짐 걱정이 없으니까 여행의 질이 너무 좋아졌어요.\n안내도 너무 친절하게 잘해주셔서 좋았어요.\n처음부터 끝까지 친절하고 자세하게 알려주십니다.\n뚜벅이 여행객들에게 강추합니다!',
+      '유모차에 아이들 짐까지 들고 이동하는 게 늘 힘들었는데,\n이번에 짐 운반 서비스를 이용하면서 여행의 질이 확 달라졌어요.\n아이 손 잡고 여유롭게 이동하니 정말 좋았습니다.\n다음 여행도 무조건 이용할 거예요.',
   },
   {
-    name: 'qwer1234@naver.com',
+    name: '이길동',
     images: ['/images/kang/3-1.png', '/images/kang/3-2.png', '/images/kang/3-3.png'],
+    title: '아이들과 함께한 가족 여행의 필수템',
     content:
-      '처음 이용해봤는데 너무 좋았습니다.\n매번 짐 때문에 고생했는데, 짐 걱정이 없으니까 여행의 질이 너무 좋아졌어요.\n안내도 너무 친절하게 잘해주셔서 좋았어요.\n처음부터 끝까지 친절하고 자세하게 알려주십니다.\n뚜벅이 여행객들에게 강추합니다!',
+      '호텔 체크아웃 후 밤 비행기까지 시간이 남았는데,\n짐 때문에 카페도 마음 놓고 못 갔던 경험이 있어서 이번엔 운반 서비스를 신청했어요.\n덕분에 하루 종일 가볍게 돌아다닐 수 있었고,\n공항에서 짐을 바로 받아 너무 만족스러웠습니다.',
   },
   {
-    name: 'kang1234@naver.com',
+    name: '박길동',
     images: ['/images/kang/4-1.jpg', '/images/kang/4-2.jpg'],
+    title: '시간과 체력을 아껴주는 최고의 선택',
     content:
-      '처음 이용해봤는데 너무 좋았습니다.\n매번 짐 때문에 고생했는데, 짐 걱정이 없으니까 여행의 질이 너무 좋아졌어요.\n안내도 너무 친절하게 잘해주셔서 좋았어요.\n처음부터 끝까지 친절하고 자세하게 알려주십니다.\n뚜벅이 여행객들에게 강추합니다!',
+      '비행기에서 내린 뒤 무거운 캐리어를 들고 다닐 생각에 걱정이 많았는데,\n짐 운반 서비스를 이용하니 정말 편했어요.\n바로 관광지로 직행할 수 있어서 하루를 알차게 썼습니다.\n서비스도 친절했고, 호텔 도착하니 짐이 먼저 와 있어서 감동!',
   },
 ];
 // 사진이 무조건 3개가 나오도록 하는 함수
@@ -47,19 +51,27 @@ const allReviews = computed(() => [...dummyReviews, ...reviews.value]);
 function maskedName(name) {
   const [user, domain] = name.split('@');
   if (user.length <= 4) {
-    return user[0] + '*'.repeat(user.length - 1) + '@' + domain;
+    return user[0] + '*'.repeat(user.length - 1);
   } else {
     const visible = user.slice(0, 4);
     const masked = '*'.repeat(user.length - 4);
-    return visible + masked + '@' + domain;
+    return visible + masked;
   }
 }
-const showFull = ref(Array(dummyReviews.length).fill(false)); // 각 리뷰의 더보기 상태 저장
 
-// 더보기 상태 토글
-const toggleShowFull = (index) => {
-  showFull.value[index] = !showFull.value[index];
+// 리뷰 펼침 상태 배열 추가
+const expandedStates = ref([]);
+
+// 모든 리뷰 데이터가 준비된 후, 초기 펼침 상태 설정
+watchEffect(() => {
+  expandedStates.value = allReviews.value.map(() => false);
+});
+
+// 특정 인덱스의 토글 상태 변경 함수
+const toggleContent = (index) => {
+  expandedStates.value[index] = !expandedStates.value[index];
 };
+
 //줄바꿈
 function formatContent(content) {
   return content.replace(/\n/g, '<br>');
@@ -71,7 +83,7 @@ const showAllReviews = ref(false);
 const visibleReviews = computed(() =>
   showAllReviews.value ? allReviews.value : allReviews.value.slice(0, defaultVisible)
 );
-
+// 리뷰 더보기
 const toggleReviews = () => {
   showAllReviews.value = !showAllReviews.value;
 };
@@ -85,9 +97,17 @@ const toggleReviews = () => {
       </div>
 
       <div class="review-box" v-for="(review, index) in visibleReviews" :key="index">
-        <h2 class="review-title">{{ maskedName(review.name) }} 님 감사합니다!</h2>
-        <div class="review-content" @click="toggleShowFull(index)">
-          <p :class="{ 'clamp-text': !showFull[index] }" v-html="formatContent(review.content)"></p>
+        <h2 class="review-writer">{{ maskedName(review.name) }} 님 감사합니다!</h2>
+        <h3 class="review-title">{{ review.title }}</h3>
+
+        <!-- ▼ 토글 버튼 -->
+        <button class="toggle-content-btn" @click="toggleContent(index)">
+          {{ expandedStates[index] ? '▲' : '▼' }}
+        </button>
+
+        <!-- 내용이 펼쳐질 때만 보여주기 -->
+        <div v-if="expandedStates[index]" class="review-content">
+          <p v-html="formatContent(review.content)"></p>
         </div>
 
         <div class="review-images">
@@ -125,21 +145,20 @@ const toggleReviews = () => {
 // 이용후기
 .A5-h1-box {
   width: 100%;
-  max-width: 560px;
+  max-width: 400px;
   height: 50px;
 
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 3px solid #f1f1f5;
+  // border: 3px solid #f1f1f5;
   margin: auto;
-  background-color: #fff;
+  background-color: $primary-color;
+  color: #fff;
 }
 .A5-h1 {
-  color: $font-light-gray;
-  font-size: $title-font-XS;
-  font-weight: bold;
-  font-size: 22px;
+  // font-size: $title-font-XS;
+  font-size: $text-font-L;
 }
 
 // 리뷰 박스
@@ -153,7 +172,8 @@ const toggleReviews = () => {
   border-radius: 25px;
   box-shadow: $reservation-boxShadow;
 }
-.review-title {
+//작성자
+.review-writer {
   text-align: left;
   padding-left: 90px;
   font-size: 18px;
@@ -162,6 +182,18 @@ const toggleReviews = () => {
 
   color: $font-primary;
 }
+//제목
+.review-title {
+  display: flex;
+  text-align: left;
+  padding-left: 90px;
+  font-size: $text-font-M;
+  color: $font-primary;
+  line-height: 20px;
+  position: relative;
+  // min-height: 48px;
+}
+//내용
 .review-content {
   display: flex;
   text-align: left;
@@ -170,32 +202,22 @@ const toggleReviews = () => {
   color: $font-primary;
   line-height: 16px;
   position: relative;
-  min-height: 48px;
-  cursor: pointer;
+  // min-height: 48px;
 }
 .review-content p {
   flex: 1;
 }
-.clamp-text {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: normal;
-  max-height: calc(16px * 2);
+//내용 보기 버튼
+.toggle-content-btn {
+  background: none;
+  border: none;
+
+  font-weight: bold;
+  font-size: 14px;
+  margin-top: 10px;
+  cursor: pointer;
 }
 
-// .toggle-btn {
-//   position: absolute;
-//   top: 15px;
-//   left: 60%;
-//   background: none;
-//   border: none;
-//   color: $font-primary;
-//   cursor: pointer;
-//   font-weight: bold;
-// }
 .review-images {
   display: flex;
   justify-content: center;
@@ -216,17 +238,17 @@ const toggleReviews = () => {
   padding-bottom: 100px;
 
   .review-toggle-btn {
-    font-size: 16px;
+    font-size: $text-font-S;
     line-height: 20px;
-    font-weight: bold;
-    padding: 10px 14px;
+    // font-weight: bold;
+    padding: 12px 16px;
     color: #fff;
     background-color: $primary-color;
     border: none;
     border-radius: 6px;
     margin: 12px auto;
     cursor: pointer;
-    box-shadow: $info-boxShadow;
+    // box-shadow: $info-boxShadow;
   }
 }
 //반응형
