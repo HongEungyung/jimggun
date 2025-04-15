@@ -11,7 +11,7 @@
         <div class="intro-name">
           <h1>서강준</h1>
           <h2>님</h2>
-          <h3>의 여행을 가볍게!</h3>
+          <!-- <h3>의 여행을 가볍게!</h3> -->
           <h4>정보수정</h4>
         </div>
         <!-- 첫번째 영역 박스들 -->
@@ -81,42 +81,56 @@
         <!-- 두번째 영역 박스들 -->
         <div class="second-boxes">
           <!-- 박스 1 -->
-          <div class="sec-box">
+          <div class="sec-box sec-box1">
             <div class="sec-box1-texts">
               <div class="sec-box1-texts-p">
                 <p>집 앞</p>
                 <p class="sec-arrow">→</p>
                 <p>숙소</p>
               </div>
-                <span>2025.01.08</span>
+              <span>2025.01.08 - 2025.01.09</span>
+            </div>
+            <div class="sec-box1-status status1">
+              <p>배송 중</p>
+            </div>
+          </div>
+          <!-- 박스 1-1 -->
+          <div class="sec-box sec-box1">
+            <div class="sec-box1-texts">
+              <div class="sec-box1-texts-p">
+                <p>집 앞</p>
+                <p class="sec-arrow">→</p>
+                <p>숙소</p>
+              </div>
+              <span>2025.01.09 - 2025.01.10</span>
             </div>
             <div class="sec-box1-status status1">
               <p>배송 중</p>
             </div>
           </div>
           <!-- 박스 2 -->
-          <div class="sec-box">
+          <div class="sec-box sec-box2">
             <div class="sec-box1-texts">
               <div class="sec-box1-texts-p">
                 <p>숙소</p>
                 <p class="sec-arrow">→</p>
                 <p>집 앞</p>
               </div>
-                <span>2025.01.22</span>
+              <span>2025.01.22 - 2025.01.23</span>
             </div>
             <div class="sec-box1-status status2">
               <p>인수 대기</p>
             </div>
           </div>
           <!-- 박스 3 -->
-          <div class="sec-box">
+          <div class="sec-box sec-box3">
             <div class="sec-box1-texts">
               <div class="sec-box1-texts-p">
                 <p>서울역</p>
                 <p class="sec-arrow">→</p>
                 <p>대구 공항</p>
               </div>
-                <span>2025.01.25</span>
+              <span>2025.01.25 - 2025.01.26</span>
             </div>
             <div class="sec-box1-status status3">
               <p>배송 완료</p>
@@ -134,9 +148,8 @@
             <h3>내가 작성한 후기</h3>
             <p>전체보기</p>
           </div>
-          
-            <img src="/public/images/hong/mypage-review-empty-icon.png" alt="내가 작성한 후기" />
-          
+
+          <img src="/public/images/hong/mypage-review-empty-icon.png" alt="내가 작성한 후기" />
         </div>
 
         <!-- 네번째 영역 -->
@@ -224,15 +237,15 @@
           font-weight: 500;
           margin-right: 9px;
         }
-        h3 {
-          font-size: $text-font-XL;
-          color: $white;
-          background-color: $primary-color;
-          border-radius: 50px;
-          text-align: center;
-          line-height: 30px;
-          padding: 3px 9px;
-        }
+        // h3 {
+        //   font-size: $text-font-XL;
+        //   color: $white;
+        //   background-color: $primary-color;
+        //   border-radius: 50px;
+        //   text-align: center;
+        //   line-height: 30px;
+        //   padding: 3px 9px;
+        // }
         h4 {
           margin-left: auto;
           text-decoration: underline;
@@ -242,18 +255,21 @@
       }
       // 첫번째 영역 박스들
       .intro-current {
-        display: flex;
-        justify-content: space-between;
+        // display: flex;
+        // justify-content: space-between;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
         gap: 20px;
         // 첫번째 영역 박스
         .current-ing {
           display: flex;
+          justify-content: space-between;
           align-items: flex-end;
           border: 1px solid $bg-primary;
           border-radius: 10px;
           box-shadow: 2px 4px 10px rgba(17, 17, 17, 0.02);
           padding: 25px 30px;
-          gap: 25px;
+          gap: 20px;
           cursor: pointer;
           .ing-text {
             display: flex;
@@ -341,8 +357,8 @@
         gap: 20px;
         // 박스 1
         .sec-box {
-          border: 1px solid $input-select;
-          border-radius: 10px;
+          // border: 1px solid $input-select;
+          // border-radius: 10px;
           padding: 20px 25px;
           display: flex;
           justify-content: space-between;
@@ -352,7 +368,7 @@
             display: flex;
             flex-direction: column;
             gap: 9px;
-            .sec-box1-texts-p{
+            .sec-box1-texts-p {
               display: flex;
               gap: 10px;
               p {
@@ -372,13 +388,15 @@
           }
           .status1 {
             padding: 5px 12px;
-            color: #78e976;
+            // color: #7be879;
+            color: #5fc95e;
             background-color: #f5fee8;
             border-radius: 50px;
           }
           .status2 {
             padding: 5px 12px;
-            color: #ffa945;
+            // color: #ffa945;
+            color: #ff8800;
             background-color: #fef8e8;
             border-radius: 50px;
           }
@@ -388,6 +406,18 @@
             background-color: #e8f9fe;
             border-radius: 50px;
           }
+        }
+        .sec-box1 {
+          border: 1px solid #78e976;
+          border-radius: 10px;
+        }
+        .sec-box2 {
+          border: 1px solid #ffa945;
+          border-radius: 10px;
+        }
+        .sec-box3 {
+          border: 1px solid #45a6ff;
+          border-radius: 10px;
         }
       }
     }
@@ -400,11 +430,11 @@
       .my-third {
         background-color: $white;
         width: 100%;
-        max-width: 480px;
+        // max-width: 480px;
         border-radius: 10px;
         box-shadow: $reservation-boxShadow;
         padding: 40px;
-position: relative;
+        position: relative;
         // 세번째 영역 타이틀
         .third-title {
           display: flex;
@@ -421,23 +451,22 @@ position: relative;
             cursor: pointer;
           }
         }
-        
-          img {
-            display: block;
-            position: absolute;
-            top: 55%;
-            left: 50%;
-            transform: translate(-50% , -50%);
-            height: 38.26px;
-            width: 50px;
-          }
-        
+
+        img {
+          display: block;
+          position: absolute;
+          top: 55%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          height: 38.26px;
+          width: 50px;
+        }
       }
       // 네번째 영역
       .my-forth {
         background-color: $white;
         width: 100%;
-        max-width: 480px;
+        // max-width: 480px;
         border-radius: 10px;
         box-shadow: $reservation-boxShadow;
         padding: 40px;
@@ -510,6 +539,27 @@ position: relative;
         }
       }
     }
+  }
+}
+@media screen and (max-width: 1024px) {
+  .intro-current {
+    // width: 100%;
+    // display: flex;
+    // flex-wrap: wrap;
+    // grid-template-columns: repeat(2, 1fr);
+    // grid-template-rows: repeat(2, 200px);
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+  .current-ing {
+    // width: calc(100% / 2);
+    // max-width: 200px;
+  }
+  .my-third-forth {
+    display: flex;
+    flex-direction: column;
+  }
+  .my-third {
+    height: 302px;
   }
 }
 </style>
