@@ -1,8 +1,8 @@
 <script setup>
-import Step1Info from './reservation/Step1Info.vue';
-import Step2Login from './reservation/Step2Login.vue';
-import Step3Payment from './reservation/Step3Payment.vue';
-import Step4Confirmation from './reservation/Step4Confirmation.vue';
+import Step1Info from './Step1Info.vue';
+import Step2Login from './Step2Login.vue';
+import Step3Payment from './Step3Payment.vue';
+import Step4Confirmation from './Step4Confirmation.vue';
 import { computed, ref } from 'vue';
 // 현재 단계
 const currentStep = ref(1);
