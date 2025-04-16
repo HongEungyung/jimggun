@@ -23,7 +23,10 @@
         <!-- 오른쪽 -->
         <div class="footerRightText">
           <p class="footerPhonNumber">1234-5678</p>
-          <p>오전 9시 ~ 오후 6시 (토요일, 공휴일 휴무)</p>
+          <div class="footerTime">
+            <p>오전 9시 ~ 오후 6시</p>
+            <p>(토요일, 공휴일 휴무)</p>
+          </div>
           <div class="footerRightButtons">
             <a>제휴문의</a>
             <router-link to="/cs">고객센터</router-link>
@@ -95,6 +98,9 @@
     color: $font-primary;
     font-weight: 600;
   }
+  .footerTime{
+    display: flex;
+  }
   p {
     margin-bottom: 12px;
   }
@@ -131,6 +137,25 @@
   span {
     margin: 0 20px;
     color: $bg-primary;
+  }
+}
+@media screen and (max-width: 390px) {
+  .footerLeftText p {
+    font-size: $text-font-XS;
+  }
+  .footerRightText p {
+    font-size: $text-font-XS;
+  }
+  .footerRightServices {
+    display: flex;
+    flex-direction: column;
+  }
+  .footerRightServices p {
+    font-size: 11px;
+    margin-bottom: 5px;
+  }
+  .footerRightServices span {
+    display: none;
   }
 }
 </style>

@@ -29,7 +29,7 @@ const mainBannerData = ref([
     title4Span: "",
     title4: "예약할 수 있습니다.",
     image: "/public/images/hong/slideImg2.png",
-    imageWidth: "500px",
+    imageWidth: "400px",
   },
   {
     id: 3,
@@ -53,6 +53,7 @@ const mainBannerData = ref([
     title4Span: "안전하게 보관",
     title4: " 해드립니다.",
     image: "/public/images/hong/slideImg4.png",
+    image1: "/public/images/hong/slideImg4-1.png",
     imageWidth: "280px",
   },
 ]);
@@ -79,7 +80,7 @@ const mainBannerData = ref([
             </h4>
           </div>
           <div class="mainbannerImage">
-            <img :src="slide.image" :alt="'슬라이드이미지' + slide.id" :style="{ width: slide.imageWidth }" />
+            <img :src="slide.image" :alt="'슬라이드이미지' + slide.id" :style="{ width: slide.imageWidth }" :class="[slide.id === 3 ? 'mobile-img-3' : '', slide.id === 4 ? 'mobile-img-4' : '']" />
           </div>
         </SwiperSlide>
       </Swiper>
@@ -294,20 +295,6 @@ const mainBannerData = ref([
 }
 .main-wrap {
   width: 100%;
-  /* 슬라이드 */
-  // .visual {
-  //   width: 100%;
-  //   position: relative;
-  // }
-  // .slide {
-  //   width: 100%;
-  //   height: 32vw;
-  //   background-size: cover;
-  //   background-position: center;
-  //   img {
-  //     width: 400px;
-  //   }
-  // }
 
   // 메인베너
   .visual {
@@ -318,27 +305,82 @@ const mainBannerData = ref([
       .slide {
         width: 100%;
         height: 32vw;
+        min-height: 450px;
         display: flex;
         justify-content: center;
         align-items: center;
         gap: 100px;
         background-color: $bg-light;
+        @media screen and (max-width: 1192px) {
+          gap: 50px !important;
+        }
+        @media screen and (max-width: 768px) {
+          height: auto !important;
+          padding: 40px 20px 0 20px !important;
+          flex-direction: column !important;
+          gap: 1px !important;
+        }
+
         .mainbannerText {
-          display: flex;
-          flex-direction: column;
+          display: flex !important;
+          flex-direction: column !important;
           gap: 8px;
+          @media screen and (max-width: 768px) {
+            text-align: left !important;
+            gap: 4px !important;
+            width: 100% !important;
+            align-items: flex-start !important;
+            max-width: 500px !important;
+          }
+
           h1 {
             font-size: 35px;
             font-weight: 600;
             color: $primary-color;
+            @media screen and (max-width: 1192px) {
+              font-size: $title-font-M !important;
+            }
+            @media screen and (max-width: 968px) {
+              font-size: $title-font-XS !important;
+            }
+            @media screen and (max-width: 768px) {
+              font-size: 22px !important;
+            }
+            @media screen and (max-width: 390px) {
+              font-size: 20px !important;
+            }
           }
           h2 {
             font-size: 65px;
             font-weight: 800;
             margin-bottom: 12px;
+            @media screen and (max-width: 1192px) {
+              font-size: 50px !important;
+            }
+            @media screen and (max-width: 968px) {
+              font-size: 36px !important;
+            }
+            @media screen and (max-width: 768px) {
+              margin-bottom: 6px !important;
+              line-height: 1.2 !important;
+            }
+            @media screen and (max-width: 390px) {
+              font-size: 28px !important;
+            }
           }
           h3 {
             font-size: $title-font-S;
+            @media screen and (max-width: 1192px) {
+              font-size: $text-font-M !important;
+            }
+            @media screen and (max-width: 768px) {
+              font-size: 15px !important;
+              line-height: 1.4 !important;
+            }
+            @media screen and (max-width: 390px) {
+              font-size: 13px !important;
+            }
+
             span {
               color: $primary-color;
               font-weight: 700;
@@ -346,6 +388,17 @@ const mainBannerData = ref([
           }
           h4 {
             font-size: $title-font-S;
+            @media screen and (max-width: 1192px) {
+              font-size: $text-font-M !important;
+            }
+            @media screen and (max-width: 768px) {
+              font-size: 15px !important;
+              line-height: 1.4 !important;
+            }
+            @media screen and (max-width: 390px) {
+              font-size: 13px !important;
+            }
+
             span {
               color: $primary-color;
               font-weight: 700;
@@ -353,24 +406,49 @@ const mainBannerData = ref([
           }
         }
         .mainbannerImage {
-          // width: 400px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          @media screen and (max-width: 768px) {
+            width: 100% !important;
+            height: auto !important;
+            height: 100% !important;
+            .mobile-img-3 {
+              height: 80% !important;
+            }
+            .mobile-img-4 {
+              width: 80% !important; // 또는 원하는 비율
+              max-width: 300px !important;
+            }
+          }
+          @media screen and (max-width: 480px) {
+            height: 300px !important;
+          }
+
           img {
-            // width: 100%;
+            height: auto;
+            object-fit: contain;
+            @media screen and (max-width: 768px) {
+              width: 80% !important;
+              max-width: 480px !important;
+            }
+            @media screen and (max-width: 390px) {
+              height: 250px !important;
+              object-fit: contain !important;
+            }
           }
         }
-      }
-      .slide1 {
       }
     }
     // 바로 예약하기
     .reservationMini {
       width: 100%;
-      max-width: 900px;
+      max-width: 1000px;
       margin: 0 10px;
-      padding-left: 5px;
+      padding-left: 15px;
       background-color: $white;
       border: 1px solid $bg-primary;
-      border-radius: 20px;
+      border-radius: 50px;
       overflow: hidden;
       box-shadow: $reservation-boxShadow;
       display: flex;
@@ -381,8 +459,9 @@ const mainBannerData = ref([
       z-index: 10;
       form {
         width: 100%;
-        max-width: 770px;
+        // max-width: 850px;
         display: flex;
+        padding: 5px;
       }
       .mini-text1 {
         position: relative;
@@ -425,7 +504,7 @@ const mainBannerData = ref([
           width: 85%;
           border: none;
           outline: none;
-          padding: 4px 6px;
+          padding: 6px;
           margin-left: 15px;
           margin-right: 15px;
           border-radius: 6px;
@@ -442,13 +521,12 @@ const mainBannerData = ref([
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 100%;
-        max-width: 130px;
+        width: 16%;
         cursor: pointer;
-        // min-width: 70px;
-        // border-top-right-radius: 20px;
-        // border-bottom-right-radius: 20px;
+        // border-radius: 50px;
+        // margin: 10px;
         p {
+          font-size: $text-font-L;
           color: $white;
           font-weight: 700;
         }
@@ -462,7 +540,7 @@ const mainBannerData = ref([
   .a1-part1 {
     display: flex;
     justify-content: space-between;
-    margin-top: 130px;
+    padding: 100px 0;
     /* 타이틀 */
     .a1-part1-title {
       width: 25%;
@@ -489,6 +567,7 @@ const mainBannerData = ref([
         display: flex;
         flex-direction: column;
         width: calc(100% / 3);
+        min-width: 180px;
         max-width: 300px;
         overflow: hidden;
         border: 1px solid $input-select;
@@ -502,7 +581,7 @@ const mainBannerData = ref([
           }
         }
         .box-text {
-          padding: 18px;
+          padding: 18px 18px 22px 18px;
           h3 {
             font-size: $text-font-XL;
             font-weight: bold;
@@ -523,7 +602,6 @@ const mainBannerData = ref([
   .a1-part2 {
     background-color: $sub-color;
     padding: 100px 0;
-    margin-top: 100px;
     display: flex;
     flex-direction: column;
     gap: 50px;
@@ -845,7 +923,7 @@ const mainBannerData = ref([
     font-size: $text-font-XS !important;
   }
 }
-@media screen and (max-width: 1108px) {
+@media screen and (max-width: 1068px) {
   .box1-text p {
     margin-bottom: 12px !important;
   }
@@ -861,18 +939,6 @@ const mainBannerData = ref([
     font-size: $text-font-XS !important;
   }
 }
-// 파트 3
-// @media screen and (max-width: 960px) {
-//   .part3-box1 {
-//     display: flex;
-//     flex-direction: column;
-//     justify-content: center;
-//     align-items: center;
-//   }
-//   .phoneImg img {
-//     display: none !important;
-//   }
-// }
 @media screen and (max-width: 937px) {
   .playstoreKOR {
     display: none !important;
@@ -883,52 +949,38 @@ const mainBannerData = ref([
     display: block !important;
   }
 }
-@media screen and (max-width: 899px) {
-  .box1-text h3 {
-    margin-bottom: 21px !important;
-  }
-  .box2-text h3 {
-    margin-bottom: 21px !important;
-  }
-}
 @media screen and (max-width: 881px) {
   .box2-text h3 {
     margin-bottom: 8px !important;
   }
 }
 @media screen and (max-width: 871px) {
-  .box1-text h3 {
-    margin-bottom: 21px !important;
-  }
   .box2-text h3 {
     margin-bottom: 8px !important;
   }
   .box3-text h3 {
-    margin-bottom: 12px !important;
+    margin-bottom: 8px !important;
   }
-  .a1-part3{
+  .a1-part3 {
     display: flex !important;
     flex-direction: column !important;
   }
-  .part3-box1{
+  .part3-box1 {
     width: 100% !important;
   }
-  .part3-box2{
+  .part3-box2 {
     width: 100% !important;
   }
 }
 @media screen and (max-width: 867px) {
-  .box1-text h3 {
-    margin-bottom: 21px !important;
+  .box2-text h3 {
+    margin-bottom: 8px !important;
   }
   .box1-text p {
-    margin-bottom: 0 !important;
+    margin-bottom: 20 !important;
   }
 }
-@media screen and (max-width: 857px) {
-  .box1-text h3 {
-    margin-bottom: 21px !important;
-  }
+@media screen and (max-width: 859px) {
   .a1-part1-title h3 {
     font-size: 24px !important;
   }
@@ -936,24 +988,100 @@ const mainBannerData = ref([
     font-size: 14px !important;
     line-height: 18px !important;
   }
+  .a1-part1-boxes .box1-text h3 {
+    margin-bottom: 21px !important;
+  }
+  .box2-text h3 {
+    margin-bottom: 21px !important;
+  }
+}
+@media screen and (max-width: 841px) {
+  .box2-text h3 {
+    margin-bottom: 8px !important;
+  }
 }
 @media screen and (max-width: 768px) {
-  .box-text h3 {
-    font-size: 12px !important;
+  // 파트1 영역
+  .a1-part1 {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 15px;
+    margin: 0 !important;
+    padding: 100px 20px !important;
   }
-  .box-text p {
+  .a1-part1-title h3 {
+    text-align: center !important;
+  }
+  .a1-part1-title p {
+    text-align: center !important;
+  }
+  .a1-part1-boxes {
+    width: 100% !important;
+  }
+  // 예약미니 바
+  .reservationMini {
     display: none !important;
   }
+  .a1-part1-boxes .box1-text h3 {
+    margin-bottom: 8px !important;
+  }
 }
-@media screen and (max-width: 550px) {
+@media screen and (max-width: 644px) {
+  .a1-part1-boxes .box1-text h3 {
+    margin-bottom: 21px !important;
+  }
+  .box2-text h3 {
+    margin-bottom: 21px !important;
+  }
+}
+@media screen and (max-width: 634px) {
+  .a1-part1-boxes .box1-text h3 {
+    margin-bottom: 8px !important;
+  }
+  .box2-text h3 {
+    margin-bottom: 8px !important;
+  }
+  .a1-part1-boxes {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
   .a1-part1-title h3 {
-    font-size: 18px !important;
+    margin-bottom: 5px !important;
   }
   .a1-part1-title p {
     display: none !important;
   }
+  .part1-box {
+    min-width: 165px !important;
+  }
+  .box-text {
+    padding: 10px !important;
+  }
 }
-@media screen and (max-width: 510px) {
-  
+@media screen and (max-width: 550px) {
+  .a1-part1-title h3 {
+    font-size: 20px !important;
+  }
+  .a1-part1-title p {
+    display: none !important;
+  }
+  // 파트 3 영역
+  .part3-box1 {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    gap: 0 !important;
+  }
+  .phoneImg img {
+    display: none !important;
+  }
+  .part3-box2 {
+    width: 100%;
+  }
 }
 </style>
