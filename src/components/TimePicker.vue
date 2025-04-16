@@ -10,68 +10,145 @@ const emit = defineEmits(["select", "close"]);
 
 const hours = Array.from({ length: 24 }, (_, i) => i);
 const minutes = Array.from({ length: 6 }, (_, i) => i * 10); // 10분 간격으로 변경
-const selectedHour = ref(0);
-const selectedMinute = ref(0);
+const selectedHour = ref(null);
+const selectedMinute = ref(null);
+
+const hourScrollRef = ref(null);
+const minuteScrollRef = ref(null);
+
+// 스크롤 이벤트 핸들러
+const handleScroll = (element, type) => {
+  if (!element) return;
+
+  const elementRect = element.getBoundingClientRect();
+  const centerY = elementRect.top + elementRect.height / 2;
+  const options = element.querySelectorAll(".time-option");
+
+  let closestOption = null;
+  let minDistance = Infinity;
+
+  options.forEach((option) => {
+    const rect = option.getBoundingClientRect();
+    const optionCenter = rect.top + rect.height / 2;
+    const distance = Math.abs(optionCenter - centerY);
+
+    if (distance < minDistance) {
+      minDistance = distance;
+      closestOption = option;
+    }
+  });
+
+  if (closestOption) {
+    const value = parseInt(closestOption.getAttribute("data-value"));
+    if (type === "hour") {
+      selectedHour.value = value;
+    } else {
+      selectedMinute.value = value;
+    }
+  }
+};
 
 // 시간이 변경될 때마다 즉시 반영
 watch([selectedHour, selectedMinute], () => {
-  const time = `${selectedHour.value
-    .toString()
-    .padStart(2, "0")}:${selectedMinute.value.toString().padStart(2, "0")}`;
-  emit("select", time);
-  // emit("close");
+  if (selectedHour.value !== null && selectedMinute.value !== null) {
+    const time = `${selectedHour.value
+      .toString()
+      .padStart(2, "0")}:${selectedMinute.value.toString().padStart(2, "0")}`;
+    emit("select", time);
+  }
 });
+
+const handleSet = () => {
+  emit("close");
+};
 </script>
 
 <template>
-  <div class="date-picker-overlay" @click="emit('close')">
-    <div class="time-picker"  @click.stop>
-      <div class="time-picker-content">
-        <div class="time-selector">
-          <div class="time-column">
-            <div class="time-scroll">
-              <div
-                v-for="hour in hours"
-                :key="hour"
-                class="time-option"
-                :class="{ selected: selectedHour === hour }"
-                @click="selectedHour = hour">
-                {{ hour.toString().padStart(2, "0") }}
+  <div class="time-picker" @click.stop>
+    <div class="time-picker-content">
+      <div class="line"></div>
+      <div class="time-selector">
+        <div class="time-column">
+          <div class="time-scroll">
+            <div class="time-scroll-wheel">
+              <div class="time-scroll-wheel-cont">
+                <div
+                  class="time-scroll-wheel-items"
+                  ref="hourScrollRef"
+                  @scroll="handleScroll($event.target, 'hour')">
+                  <div
+                    v-for="hour in hours"
+                    :key="hour"
+                    class="time-option"
+                    :class="{ selected: selectedHour === hour }"
+                    :data-value="hour">
+                    {{ hour.toString().padStart(2, "0") }}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
+        </div>
 
-          <div class="time-column">
-            <div class="time-scroll">
-              <div
-                v-for="minute in minutes"
-                :key="minute"
-                class="time-option"
-                :class="{ selected: selectedMinute === minute }"
-                @click="selectedMinute = minute">
-                {{ minute.toString().padStart(2, "0") }}
+        <div class="time-column">
+          <div class="time-scroll">
+            <div class="time-scroll-wheel">
+              <div class="time-scroll-wheel-cont">
+                <div
+                  class="time-scroll-wheel-items"
+                  ref="minuteScrollRef"
+                  @scroll="handleScroll($event.target, 'minute')">
+                  <div
+                    v-for="minute in minutes"
+                    :key="minute"
+                    class="time-option"
+                    :class="{ selected: selectedMinute === minute }"
+                    :data-value="minute">
+                    {{ minute.toString().padStart(2, "0") }}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <div class="time-picker-buttons">
+      <button class="set-button" @click="handleSet">SET</button>
+    </div>
   </div>
 </template>
 
 <style scoped>
 .time-picker {
-  /* position: absolute; */
-  z-index: 1000;
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  width: 200px;
-  /* overflow: hidden; */
+  width: 192px;
+  overflow: hidden;
+  z-index: 1000;
 }
 
 .time-picker-content {
   padding: 16px;
+  position: relative;
+}
+
+.time-picker-content::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 34px;
+  background: #ff6f00;
+  opacity: 0.1;
+  transform: translateY(-50%);
+  pointer-events: none;
+  z-index: 1;
+  border-radius: 10px;
+  width: 90%;
+  margin: auto;
 }
 
 .time-selector {
@@ -79,6 +156,8 @@ watch([selectedHour, selectedMinute], () => {
   align-items: center;
   justify-content: center;
   gap: 8px;
+  position: relative;
+  height: 200px;
 }
 
 .time-column {
@@ -86,41 +165,110 @@ watch([selectedHour, selectedMinute], () => {
   flex-direction: column;
   align-items: center;
 }
+
 .time-scroll {
   height: 200px;
+  overflow: hidden;
+  position: relative;
+}
+
+.time-scroll::before {
+  display: none;
+}
+
+.time-scroll::after {
+  display: none;
+}
+
+.time-scroll-wheel {
+  height: 100%;
+  position: relative;
+  perspective: 1000px;
+}
+
+.time-scroll-wheel-cont {
+  height: 100%;
+  transform-style: preserve-3d;
+  position: relative;
+}
+
+.time-scroll-wheel-items {
+  position: relative;
+  height: 100%;
   overflow-y: auto;
-  border-radius: 8px;
-  padding: 8px;
   scrollbar-width: none;
-  &:hover {
-    scrollbar-width: thin;
-  }
+  -ms-overflow-style: none;
+  padding: 83px 0;
+  touch-action: none;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: y mandatory;
 }
 
-.time-scroll::-webkit-scrollbar {
-  width: 4px;
+.time-scroll-wheel-items::-webkit-scrollbar {
+  display: none;
 }
-
-/* .time-scroll::-webkit-scrollbar-thumb {
-  background: #ddd;
-  border-radius: 2px;
-  
-} */
 
 .time-option {
-  padding: 8px 16px;
-  cursor: pointer;
-  border-radius: 4px;
+  height: 34px;
+  line-height: 34px;
   text-align: center;
+  cursor: pointer;
   transition: all 0.2s;
+  padding: 0 16px;
+  color: #111;
+  scroll-snap-align: center;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-height: 34px;
+  max-height: 34px;
+  border-radius: 4px;
 }
 
 .time-option:hover {
-  background: #fdf3e7;
+  /* background: #f5f5f5; */
 }
 
-/* .time-option.selected {
-  background: #ff6f00;
-  color: white;
-} */
+.time-option.selected {
+  /* background: #FF6F00; */
+  color: #ff6f00;
+  font-weight: 500;
+}
+
+.time-picker-buttons {
+  display: none;
+  /* display: flex; */
+  justify-content: center;
+  padding: 8px;
+  border-top: 1px solid #eee;
+}
+
+.set-button {
+  background: none;
+  border: none;
+  color: #ff6f00;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.set-button:hover {
+  background: #f5f5f5;
+  border-radius: 4px;
+}
+@media screen and (max-width: 768px) {
+  .time-picker-buttons {
+    display: flex;
+  }
+  .time-picker-buttons {
+    padding: 4px;
+  }
+}
 </style>

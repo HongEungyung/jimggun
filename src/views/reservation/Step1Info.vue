@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, watch, onUnmounted } from "vue";
+import { computed, ref, watch, onUnmounted, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import ModalInquire from "@/components/ModalInquire.vue"; // 모달 컴포넌트 임포트
 import DatePicker from "@/components/DatePicker.vue"; // 날짜 선택 컴포넌트 임포트
@@ -290,6 +290,38 @@ const confirmArrivalDate = () => {
   selectedArrivalDate.value = formattedNextDay;
   isArrivalDateModalOpen.value = false;
 };
+
+// 모바일 토글 상태 관리
+const isDetailVisible = ref(true);
+
+// 모바일 토글 함수
+const toggleDetail = () => {
+  if (window.innerWidth <= 768) {
+    isDetailVisible.value = !isDetailVisible.value;
+  } else {
+    isDetailVisible.value = true;
+  }
+};
+
+// 화면 크기 변경 감지
+const handleResize = () => {
+  if (window.innerWidth > 768) {
+    isDetailVisible.value = true;
+  } else {
+    isDetailVisible.value = false;
+  }
+};
+
+// 컴포넌트 마운트 시 초기 체크
+onMounted(() => {
+  handleResize();
+  window.addEventListener("resize", handleResize);
+});
+
+// 컴포넌트 언마운트 시 이벤트 리스너 제거
+onUnmounted(() => {
+  window.removeEventListener("resize", handleResize);
+});
 </script>
 
 <template>
@@ -551,14 +583,20 @@ const confirmArrivalDate = () => {
         </div>
         <!-- 입력 결과창 -->
         <div id="res_result_box">
-          <!-- 모바일 -->
-          <div class="rrb_mb">
+          <!-- 모바일 버튼 -->
+          <div class="rrb_mb" @click="toggleDetail">
             <div class="mb_toggle_btn">
-              <img src="/public/images/icon/toggleUp_icon.png" alt="모바일토글아이콘">
+              <img
+                :src="
+                  isDetailVisible
+                    ? '/public/images/icon/toggleDown_icon.png'
+                    : '/public/images/icon/toggleUp_icon.png'
+                "
+                alt="모바일토글아이콘" />
             </div>
           </div>
           <!-- 웹 -->
-          <ul class="rrb_detail">
+          <ul class="rrb_detail" v-show="isDetailVisible">
             <li class="rrb_fr">
               <label>출발지</label>
               <div>{{ departurePlace || "-" }}</div>
@@ -596,7 +634,7 @@ const confirmArrivalDate = () => {
           <div class="rrb_default">
             <div class="rrb_price">
               <label>배송 예상 금액</label>
-              <div>{{ formatPrice(totalPrice) }}원</div>
+              <div>{{ formatPrice(totalPrice) }} 원</div>
             </div>
             <div @click="nextStep" class="rrb_sumbit_btn">
               <input type="button" value="배송 예약하기" />
@@ -637,11 +675,9 @@ const confirmArrivalDate = () => {
   <!-- 찾을 날짜 모달 -->
   <div v-if="isArrivalDateModalOpen" class="modal-overlay">
     <div class="modal-content">
-     
-      <p>짐은 <strong>맡긴 다음 날</strong>  찾을 수 있어요.</p>
+      <p>짐은 <strong>맡긴 다음 날</strong> 찾을 수 있어요.</p>
       <div class="modal-buttons">
         <button @click="confirmArrivalDate" class="confirm-btn">확인</button>
-       
       </div>
     </div>
   </div>
@@ -868,10 +904,16 @@ const confirmArrivalDate = () => {
     font-size: 14px;
     color: $font-gray;
   }
+  &:last-child {
+    border-bottom: 1px solid $input-select;
+
+    margin: 0;
+    padding-bottom: 14px;
+  }
 }
 // 금액 값
 .rrb_default {
-  border-top: 1px solid $input-select;
+  // border-top: 1px solid $input-select;
   .rrb_price {
     display: flex;
     justify-content: space-between;
@@ -934,9 +976,8 @@ const confirmArrivalDate = () => {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
   p {
-    
     color: #111;
-   margin-top: 20px;
+    margin-top: 20px;
     strong {
       color: $primary-color;
       font-weight: bold;
@@ -947,8 +988,8 @@ const confirmArrivalDate = () => {
 
 .modal-buttons {
   margin: 40px auto 0;
-width: 88%;
-height: 30%;
+  width: 88%;
+  height: 30%;
   button {
     width: 100%;
     height: 100%;
@@ -978,4 +1019,62 @@ height: 30%;
     }
   }
 }
+.rrb_mb {
+  display: none;
+}
+@media screen and (max-width: 768px) {
+  .res_inner{
+    max-width: none;
+    padding: 0 20px;
+  }
+  // 본문
+    #res_content {
+        width: 100%;
+        display: block;
+        min-height: unset;
+        .row label{
+          display: none;
+        }
+    }
+
+// 입력 결과값
+  #res_result_box {
+    width: 100%;
+    float: none;
+    border: none;
+    position: fixed;
+    z-index: 997;
+    left: 0px;
+    bottom: 0px;
+    border-radius: 10px 10px 0 0;
+    background-color: $bg-light;
+    padding: 0 15px 15px;
+    .rrb_price div{
+font-size: 18px;
+    }
+    
+    .rrb_mb {
+      display: block;
+      background-color: $bg-light;
+      padding: 5px 15px 0;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      text-align: center;
+      margin: auto;
+      width: 3rem;
+      margin-top: -20px;
+      transition: all 0.3s ease;
+
+      .mb_toggle_btn {
+        width: 16px;
+        img {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+// @media screen and (max-width: 768px){
+
+// }
 </style>
