@@ -16,7 +16,7 @@ const mainBannerData = ref([
     title3After: "까지",
     title4Span: "",
     title4: "대신 들어드리는 여행 도우미 입니다.",
-    image: "/public/images/hong/slideImg1.png",
+    image: "/images/hong/slideImg1.png",
     imageWidth: "400px",
   },
   {
@@ -28,7 +28,7 @@ const mainBannerData = ref([
     title3After: "",
     title4Span: "",
     title4: "예약할 수 있습니다.",
-    image: "/public/images/hong/slideImg2.png",
+    image: "/images/hong/slideImg2.png",
     imageWidth: "400px",
   },
   {
@@ -40,7 +40,7 @@ const mainBannerData = ref([
     title3After: "",
     title4Span: "직접 찾아가서",
     title4: " 수거해갑니다.",
-    image: "/public/images/hong/slideImg3.png",
+    image: "/images/hong/slideImg3.png",
     imageWidth: "350px",
   },
   {
@@ -52,8 +52,8 @@ const mainBannerData = ref([
     title3After: "",
     title4Span: "안전하게 보관",
     title4: " 해드립니다.",
-    image: "/public/images/hong/slideImg4.png",
-    image1: "/public/images/hong/slideImg4-1.png",
+    image: "/images/hong/slideImg4.png",
+    image1: "/images/hong/slideImg4-1.png",
     imageWidth: "280px",
   },
 ]);
