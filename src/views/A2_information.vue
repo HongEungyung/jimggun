@@ -359,7 +359,7 @@ watch(activeTap, (newValue) => {
                     <img src="/public/images/lee/fire.png" alt="성냥" />
                   </div>
                   <div class="dc-text">
-                    <p class="dc-textp dc-textp1"><span>폭발의</span> 위험이 있는 품목</p>
+                    <p class="dc-textp dc-textp1"><span>폭발</span>의 위험이 있는 품목</p>
                     <p class="dc-textp dc-textp2">(ex) 라이터, 부탄가스 등)</p>
                   </div>
                 </li>
@@ -416,7 +416,10 @@ watch(activeTap, (newValue) => {
               <div class="safe-text">
                 <h4>위치확인</h4>
                 <p>
-                  <span>희망하는 지역의 지점 <strong>미리 확인</strong>하기</span>
+                  <span
+                    >희망하는 지역의<br />
+                    지점 <strong>미리 확인</strong>하기</span
+                  >
                 </p>
               </div>
               <div class="safe-line"></div>
@@ -431,7 +434,10 @@ watch(activeTap, (newValue) => {
               <div class="safe-text">
                 <h4>위치확인</h4>
                 <p>
-                  <span>보관할 짐과 함께 <strong>지점 방문</strong>하기</span>
+                  <span
+                    >보관할 짐과 함께 <br />
+                    <strong>지점 방문</strong>하기</span
+                  >
                 </p>
               </div>
               <div class="safe-line"></div>
@@ -446,7 +452,7 @@ watch(activeTap, (newValue) => {
               <div class="safe-text">
                 <h4>위치확인</h4>
                 <p>
-                  <span>보관함 선택 및 암호 설정 후 <strong>결제</strong>하기</span>
+                  <span>보관함 선택 및 <br />암호 설정 후 <strong>결제</strong></span>
                 </p>
               </div>
               <div class="safe-line"></div>
@@ -461,7 +467,7 @@ watch(activeTap, (newValue) => {
               <div class="safe-text">
                 <h4>위치확인</h4>
                 <p>
-                  <span>짐을 안전하게<strong>보관</strong>시작</span>
+                  <span>짐을 안전하게 <br /><strong>보관</strong> 시작</span>
                 </p>
               </div>
               <div class="safe-line"></div>
@@ -491,28 +497,28 @@ watch(activeTap, (newValue) => {
             <h3><span>A형</span> 타입</h3>
             <div class="cabinet-container">
               <div class="cabinet-img">
-                <div class="cabinetA">
+                <div class="cabinetPicA">
                   <img src="/public/images/lee/cabinetPicA.png" alt="캐비넷실사A" />
+                  <p>가로 : 100cm, 세로 : 100cm, 높이 : 100cm / 우체국 5호 박스 8개 정도 들어갑니다.</p>
                 </div>
                 <div class="cabinetA">
                   <img src="/public/images/lee/cabinetA.png" alt="캐비넷A" />
                 </div>
               </div>
-              <p>가로 : 100cm, 세로 : 100cm, 높이 : 100cm / 우체국 5호 박스 8개 정도 들어갑니다.</p>
             </div>
           </li>
           <li>
             <h3><span>B형</span> 타입</h3>
             <div class="cabinet-container">
               <div class="cabinet-img">
-                <div class="cabinetB">
+                <div class="cabinetPicB">
                   <img src="/public/images/lee/cabinetPicB.png" alt="캐비넷실사B" />
+                  <p>가로 : 100cm, 세로 : 100cm, 높이 : 200cm / 우체국 5호 박스 20개 정도 들어갑니다.</p>
                 </div>
                 <div class="cabinetB">
                   <img src="/public/images/lee/cabinetB.png" alt="캐비넷B" />
                 </div>
               </div>
-              <p>가로 : 100cm, 세로 : 100cm, 높이 : 200cm / 우체국 5호 박스 8개 정도 들어갑니다.</p>
             </div>
           </li>
         </ul>
@@ -522,50 +528,66 @@ watch(activeTap, (newValue) => {
       <div class="hard-wrap">
         <div class="hard inner">
           <h3 class="hard-title">이런 품목은 <span>어려워요!</span></h3>
-          <ul class="hard-menu">
-            <li class="hard-list12 hard-list">
-              <div class="hard-list1">
-                <div class="hard-img hard-img1">
-                  <img src="/public/images/lee/hard1.png" alt="귀중품" />
+          <div class="hard-menu-wrap">
+            <ul class="hard-menu1">
+              <li class="hard1-list">
+                <div class="hard1-img">
+                  <img src="/public/images/lee/jewel.png" alt="귀중품" />
                 </div>
-                <span class="hard-text">귀중품</span>
-              </div>
-              <div class="hard-list2">
-                <div class="hard-img hard-img2">
-                  <img src="/public/images/lee/hard2.png" alt="생물" />
+                <div class="hard1-text">
+                  <p class="hard1-textp"><span>도난</span> 우려가 있는 품목</p>
+                  <p class="hard1-textp hard1-textp2">(ex) 현금, 귀중품 등)</p>
                 </div>
-                <span class="hard-text">동 · 식물</span>
-              </div>
-            </li>
-            <li class="hard-list34 hard-list">
-              <div class="hard-list3">
-                <div class="hard-img hard-img1">
-                  <img src="/public/images/lee/hard3.png" alt="식품" />
+              </li>
+              <li class="hard1-list">
+                <div class="hard1-img">
+                  <img src="/public/images/lee/cake.png" alt="케이크" />
                 </div>
-                <span class="hard-text">음식물</span>
-              </div>
-              <div class="hard-list4">
-                <div class="hard-img hard-img2">
-                  <img src="/public/images/lee/hard4.png" alt="자전거" />
+                <div class="hard1-text">
+                  <p class="hard1-textp"><span>변질</span> 우려가 있는 품목</p>
+                  <p class="hard1-textp hard1-textp2">(ex) 신선식품, 유제품 등)</p>
                 </div>
-                <span class="hard-text">부피가 큰 물건</span>
-              </div>
-            </li>
-            <li class="hard-list56 hard-list">
-              <div class="hard-list5">
-                <div class="hard-img hard-img1">
-                  <img src="/public/images/lee/hard5.png" alt="성냥" />
+              </li>
+              <li class="hard1-list">
+                <div class="hard1-img">
+                  <img src="/public/images/lee/fire.png" alt="성냥" />
                 </div>
-                <span class="hard-text">발·인화성 물질</span>
-              </div>
-              <div class="hard-list6">
-                <div class="hard-img hard-img2">
-                  <img src="/public/images/lee/hard6.png" alt="주의" />
+                <div class="hard1-text">
+                  <p class="hard1-textp"><span>폭발</span> 위험이 있는 품목</p>
+                  <p class="hard1-textp hard1-textp2">(ex) 라이터, 부탄가스 등)</p>
                 </div>
-                <span class="hard-text">기타 위험물</span>
-              </div>
-            </li>
-          </ul>
+              </li>
+            </ul>
+            <ul class="hard-menu2">
+              <li class="hard2-list">
+                <div class="hard2-img">
+                  <img src="/public/images/lee/plant.png" alt="식물" />
+                </div>
+                <div class="hard2-text">
+                  <p class="hard2-textp"><span>호흡</span>을 하는 모든 생명체</p>
+                  <p class="hard2-textp hard2-textp2">(ex) 동물, 식물 등)</p>
+                </div>
+              </li>
+              <li class="hard2-list">
+                <div class="hard2-img hard2-bike">
+                  <img src="/public/images/lee/bike.png" class="hard2-bike" alt="자전거아이콘" />
+                </div>
+                <div class="hard2-text">
+                  <p class="hard2-textp"><span>부피가 큰</span> 품목</p>
+                  <p class="hard2-textp hard2-textp2">(ex) 자전거, 악기 등)</p>
+                </div>
+              </li>
+              <li class="hard2-list">
+                <div class="hard2-img">
+                  <img src="/public/images/lee/hard6.png" alt="위험아이콘" />
+                </div>
+                <div class="hard2-text">
+                  <p class="hard2-textp"><span>법</span>에 위배되는 품목</p>
+                  <p class="hard2-textp hard2-textp2">(ex) 마약, 총기류 등)</p>
+                </div>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
       <!--  -->
@@ -657,6 +679,12 @@ watch(activeTap, (newValue) => {
     span {
       color: $primary-color;
     }
+    @media screen and (max-width : 768px){
+          font-size: $title-font-S;
+        }
+        @media screen and (max-width : 390px){
+          font-size: $title-font-XS;
+        }
   }
   .fast-index {
     width: 100%;
@@ -859,8 +887,15 @@ watch(activeTap, (newValue) => {
         font-size: $title-font-M;
         font-weight: bold;
         min-width: 240px;
+        
         span {
           color: $primary-color;
+        }
+        @media screen and (max-width : 768px){
+          font-size: $title-font-S;
+        }
+        @media screen and (max-width : 390px){
+          font-size: $title-font-XS;
         }
       }
       .inquire-menu {
@@ -907,6 +942,7 @@ watch(activeTap, (newValue) => {
               }
             }
             .iq-textp2 {
+              font-size: $text-font-M;
               color: rgba(118, 118, 118, 0.8);
             }
           }
@@ -929,6 +965,12 @@ watch(activeTap, (newValue) => {
           span {
             color: $primary-color;
           }
+          @media screen and (max-width : 768px){
+          font-size: $title-font-S;
+        }
+        @media screen and (max-width : 390px){
+          font-size: $title-font-XS;
+        }
         }
         .diffcult-menu {
           display: flex;
@@ -975,6 +1017,7 @@ watch(activeTap, (newValue) => {
               }
               .dc-textp2 {
                 color: rgba(118, 118, 118, 0.8);
+                font-size: $text-font-M;
               }
             }
           }
@@ -999,6 +1042,12 @@ watch(activeTap, (newValue) => {
   .careful-title {
     font-size: $title-font-XL;
     font-weight: bold;
+    @media screen and (max-width : 768px){
+          font-size: $title-font-L;
+        }
+        @media screen and (max-width : 390px){
+          font-size: $title-font-M;
+        }
   }
   .careful-box {
     display: flex;
@@ -1013,269 +1062,7 @@ watch(activeTap, (newValue) => {
   }
 }
 
-//
-// 짐 보관 영역
-// 1. 안전 보관 서비스
-.safe-storage {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  .safe-title {
-    font-weight: 600;
-    font-size: $title-font-M;
-    margin: 0 auto;
-    margin-bottom: 70px;
-    span {
-      color: $primary-color;
-    }
-  }
-  .safe-index {
-    width: 100%;
-    display: flex;
-    margin-bottom: 100px;
-    align-items: center;
-    justify-content: center;
-    li {
-      position: relative;
-      width: calc(100% / 4);
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-      .safe-list {
-        width: 90%;
-        max-width: 240px;
-        min-width: 175px;
-        max-height: 326px;
-        border: 1px solid rgba(229, 229, 236, 1);
-        border-radius: 10px;
-        box-shadow: $info-boxShadow;
-        padding: 0 25px;
-        .safe-text {
-          h4 {
-            font-size: $text-font-XL;
-            font-weight: bold;
-            margin-top: 40px;
-          }
-          p {
-            margin: 18px 0;
-            font-size: $text-font-M;
-            color: $font-gray;
-            line-height: 1.4;
-            min-height: 45px;
-            display: flex;
-            align-items: center;
-            span {
-              strong {
-                color: $font-primary;
-                font-weight: 600;
-              }
-            }
-          }
-        }
-        .safe-line {
-          width: 100%;
-          padding: 0 25px;
-          height: 2px;
-          background-color: $bg-light;
-          margin: 0;
-        }
-        .safe-icon {
-          display: flex;
-          align-items: flex-start;
-          justify-content: space-between;
-          margin: 0;
-          margin-top: 25px;
-          padding: 0;
-          span {
-            font-weight: bold;
-            font-size: $text-font-XL;
-            color: $primary-color;
-          }
-          img {
-            margin-top: 25px;
-            margin-bottom: 30px;
-          }
-        }
-      }
-      .safe-list1,
-      .safe-list2,
-      .safe-list3 {
-        &::after {
-          content: "";
-          position: absolute;
-          top: 50%;
-          right: 0;
-          transform: translate(50%, -50%);
-          display: block;
-          width: 16px;
-          height: 24px;
-          background: url("/public/images/lee/nextstep.png");
-        }
-      }
-    }
-  }
-}
-
-// 2. 보관함 위치 맵
-.stroage-wrap {
-  width: 100%;
-  position: relative;
-  padding-top: 100px;
-  .storage-position {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    h4 {
-      font-weight: 600;
-      font-size: $title-font-M;
-      color: $font-primary;
-      margin-bottom: 50px;
-      span {
-        color: $primary-color;
-      }
-    }
-    #map {
-      width: 700px;
-      height: 432.5px;
-    }
-  }
-  .sp-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: $sub-color;
-    z-index: -1;
-  }
-}
-
-// 3. 보관함 사이즈 안내
-.cabinet-wrap {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 100px;
-  .cabinet-title {
-    font-weight: 600;
-    font-size: $title-font-M;
-    color: $font-primary;
-    margin-bottom: 50px;
-    margin-top: 100px;
-    span {
-      color: $primary-color;
-    }
-  }
-  .cabinet-list {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    gap: 100px;
-    li {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 50px;
-      h3 {
-        font-size: $title-font-S;
-        font-weight: 600;
-        color: $font-light-gray;
-        span {
-          color: $font-primary;
-          font-size: 26px;
-        }
-      }
-      .cabinet-container {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        // align-items: center;
-        gap: 30px;
-        .cabinet-img {
-          position: relative;
-          width: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          // gap: 200px;
-          // flex-direction: column;
-          p {
-          }
-        }
-      }
-    }
-  }
-}
-
-// 4. 보관이 어려운 품목
-.hard-wrap {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: $sub-color;
-  .hard {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 100px 0;
-    background-color: $sub-color;
-    .hard-title {
-      font-size: $title-font-M;
-      font-weight: bold;
-      min-width: 240px;
-      margin-bottom: 100px;
-      span {
-        color: $primary-color;
-      }
-    }
-    .hard-menu {
-      width: 100%;
-      max-width: 1000px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      .hard-list {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        gap: 20px;
-
-        > div {
-          width: 100%;
-          max-width: 501px;
-          display: flex;
-          align-items: center;
-          gap: 30px;
-          background-color: $white;
-          border-radius: 10px;
-          .hard-img {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 150px;
-            height: 120px;
-            img {
-              height: 65px;
-            }
-          }
-          span {
-            font-weight: bold;
-            font-size: $text-font-XL;
-            color: $font-light-gray;
-          }
-        }
-      }
-    }
-  }
-}
-// 반응형 레이아웃
+// 짐배송 영역 반응형 레이아웃
 @media screen and (max-width: 1000px) {
   // 짐배송 영역
   .fast-list::after {
@@ -1493,6 +1280,539 @@ watch(activeTap, (newValue) => {
     padding: 50px 5px;
   }
 }
+
+//
+// 짐 보관 영역
+// 1. 안전 보관 서비스
+.safe-storage {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .safe-title {
+    font-weight: 600;
+    font-size: $title-font-M;
+    margin: 0 auto;
+    margin-bottom: 70px;
+    span {
+      color: $primary-color;
+    }
+    @media screen and (max-width : 768px){
+          font-size: $title-font-S;
+        }
+        @media screen and (max-width : 390px){
+          font-size: $title-font-XS;
+        }
+  }
+  .safe-index {
+    width: 100%;
+    display: flex;
+    margin-bottom: 100px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    li {
+      position: relative;
+      width: calc(100% / 4);
+      display: flex;
+
+      align-items: center;
+      justify-content: space-around;
+      @media screen and (max-width: 768px) {
+        width: calc(100% / 2) !important;
+        max-width: 240px !important;
+        margin-top: 20px;
+      }
+      .safe-list {
+        width: 90%;
+        max-width: 240px;
+        min-width: 175px;
+        max-height: 326px;
+        border: 1px solid rgba(229, 229, 236, 1);
+        border-radius: 10px;
+        box-shadow: $info-boxShadow;
+        padding: 0 25px;
+        @media screen and (max-width: 430px){
+                min-width: 160px;
+              }
+        .safe-text {
+          h4 {
+            font-size: $text-font-XL;
+            font-weight: bold;
+            margin-top: 40px;
+          }
+          p {
+            margin: 18px 0;
+            font-size: $text-font-M;
+            color: $font-gray;
+            line-height: 1.4;
+            min-height: 45px;
+            display: flex;
+            align-items: center;
+            @media screen and (max-width: 430px){
+              font-size: $text-font-S;
+            }
+            span {
+              strong {
+                color: $font-primary;
+                font-weight: 600;
+              }
+            }
+          }
+        }
+        .safe-line {
+          width: 100%;
+          padding: 0 25px;
+          height: 2px;
+          background-color: $bg-light;
+          margin: 0;
+        }
+        .safe-icon {
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+          margin: 0;
+          margin-top: 25px;
+          padding: 0;
+          span {
+            font-weight: bold;
+            font-size: $text-font-XL;
+            color: $primary-color;
+            @media screen and (max-width: 430px){
+              font-size: $text-font-L;
+            }
+          }
+          img {
+            margin-top: 25px;
+            margin-bottom: 30px;
+            @media screen and (max-width: 430px){
+              width: 70%;
+            }
+          }
+        }
+      }
+      .safe-list1,
+      .safe-list2,
+      .safe-list3 {
+        &::after {
+          content: "";
+          position: absolute;
+          top: 50%;
+          right: 0;
+          transform: translate(50%, -50%);
+          display: block;
+          width: 16px;
+          height: 24px;
+          background: url("/public/images/lee/nextstep.png");
+        }
+      }
+    }
+  }
+}
+
+// 2. 보관함 위치 맵
+.stroage-wrap {
+  width: 100%;
+  position: relative;
+  padding: 100px 0;
+  .storage-position {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    h4 {
+      font-weight: 600;
+      font-size: $title-font-M;
+      color: $font-primary;
+      margin-bottom: 50px;
+      @media screen and (max-width : 768px){
+          font-size: $title-font-S;
+        }
+        @media screen and (max-width : 390px){
+          font-size: $title-font-XS;
+        }
+      span {
+        color: $primary-color;
+      }
+    }
+    #map {
+      max-width: 700px;
+      width: 100%;
+      height: 432.5px;
+      // background-color: white;
+    }
+  }
+  .sp-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: $sub-color;
+    z-index: -1;
+  }
+}
+
+// 3. 보관함 사이즈 안내
+.cabinet-wrap {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 100px;
+  .cabinet-title {
+    font-weight: 600;
+    font-size: $title-font-M;
+    color: $font-primary;
+    margin-bottom: 100px;
+    margin-top: 100px;
+    span {
+      color: $primary-color;
+    }
+    @media screen and (max-width : 768px){
+          font-size: $title-font-S;
+        }
+        @media screen and (max-width : 390px){
+          font-size: $title-font-XS;
+        }
+  }
+  .cabinet-list {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 100px;
+    li {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      h3 {
+        font-size: $title-font-S;
+        font-weight: 600;
+        color: $font-light-gray;
+        span {
+          color: $font-primary;
+          font-size: 26px;
+          @media screen and (max-width : 768px){
+          font-size: $title-font-S;
+        }
+        @media screen and (max-width : 390px){
+          font-size: $title-font-XS;
+        }
+        }
+        @media screen and (max-width : 768px){
+          font-size: $title-font-XS;
+        }
+        @media screen and (max-width : 390px){
+          font-size: $text-font-XL;
+        }
+      }
+      .cabinet-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        // align-items: center;
+        gap: 30px;
+        .cabinet-img {
+          position: relative;
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: space-around;
+          // gap: 200px;
+          // flex-direction: column;
+          .cabinetPicA,
+          .cabinetPicB {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            p{
+              font-size: $text-font-M;
+              color: $font-light-gray;
+              font-weight: 600;
+              @media screen and (max-width: 768px){
+                font-size: $text-font-S;
+              }
+              @media screen and (max-width: 390px){
+                font-size: $text-font-XS;
+              }
+            }
+            @media screen and (max-width: 768px){
+                max-width: 450px;
+              }
+            img{
+              @media screen and (max-width: 768px){
+                max-width: 100%;
+              }
+            }
+          }
+          .cabinetA,
+          .cabinetB {
+            @media screen and (max-width: 768px) {
+              display: none !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// 4. 보관이 어려운 품목
+.hard-wrap {
+  width: 100%;
+  display: flex;
+  // align-items: center;
+  background-color: $sub-color;
+
+  .hard {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 50px;
+
+    // justify-content: center;
+    padding: 100px 0;
+    background-color: $sub-color;
+    .hard-title {
+      font-size: $title-font-M;
+      font-weight: bold;
+      min-width: 240px;
+      text-align: center;
+      // margin-bottom: 100px;
+      span {
+        color: $primary-color;
+      }
+      @media screen and (max-width : 768px){
+          font-size: $title-font-S;
+        }
+        @media screen and (max-width : 390px){
+          font-size: $title-font-XS;
+        }
+    }
+    .hard-menu-wrap {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 50px 20px;
+      @media screen and (max-width: 768px) {
+        // flex-direction: column;
+        // justify-content: center;
+      }
+      .hard-menu1 {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 45px;
+        width: 48%;
+        max-width: 800px;
+        margin-top: 50px;
+        @media screen and (max-width: 768px) {
+          // width: 100%;
+        }
+        .hard1-list {
+          display: flex;
+          align-items: center;
+          width: 100%;
+          gap: 20px;
+          background-color: $white;
+          border-radius: 10px;
+          box-shadow: $info-boxShadow;
+          padding: 0 10px;
+          @media screen and (max-width: 768px) {
+            gap: 10px;
+          }
+          @media screen and (max-width: 560px) {
+            flex-direction: column !important;
+            justify-content: center;
+            gap: 30px;
+            height: 200px;
+            max-width: 200px;
+          }
+          .hard1-img {
+            width: 110px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 25px 0;
+            @media screen and (max-width: 768px) {
+              margin: 0;
+              width: 60px;
+              height: 130px;
+            }
+            @media screen and (max-width: 560px) {
+              width: 100%;
+              height: 70px;
+            }
+            img {
+              max-width: 102px;
+              @media screen and (max-width: 768px) {
+                width: 40%;
+                min-width: 44px;
+              }
+              @media screen and (max-width: 560px) {
+                width: 70px;
+                // height: 50px;
+              }
+            }
+          }
+          .hard1-text {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            .hard1-textp {
+              font-size: $text-font-L;
+              color: $font-gray;
+              font-weight: 500;
+              padding: 0 10px;
+              @media screen and (max-width: 768px) {
+                font-size: $text-font-S;
+              }
+              @media screen and (max-width: 430px){
+                font-size: $text-font-XS;
+              }
+              span {
+                font-size: $text-font-XL;
+                color: $font-primary;
+                font-weight: bold;
+                @media screen and (max-width: 768px) {
+                  font-size: $text-font-M;
+                }
+                @media screen and (max-width: 430px){
+                font-size: $text-font-S;
+              }
+              }
+            }
+            .hard1-textp2 {
+              color: rgba(118, 118, 118, 0.8);
+              font-size: $text-font-M;
+              @media screen and (max-width: 768px) {
+                  font-size: $text-font-XS !important;
+                }
+                @media screen and (max-width: 430px){
+                font-size: $text-font-XS;
+              }
+            }
+          }
+        }
+      }
+      .hard-menu2 {
+        display: flex;
+        flex-direction: column;
+        gap: 45px;
+        width: 48%;
+        max-width: 800px;
+        margin-top: 50px;
+        @media screen and (max-width: 768px) {
+          // width: 100%;
+        }
+        .hard2-list {
+          display: flex;
+          align-items: center;
+          width: 100%;
+          gap: 20px;
+          background-color: $white;
+          border-radius: 10px;
+          box-shadow: $info-boxShadow;
+          padding: 0 10px;
+          @media screen and (max-width: 768px) {
+            gap: 10px;
+          }
+          @media screen and (max-width: 560px) {
+            flex-direction: column !important;
+            justify-content: center;
+            gap: 30px;
+            height: 200px;
+            max-width: 200px;
+          }
+          .hard2-img {
+            width: 110px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 25px 0;
+            @media screen and (max-width: 768px) {
+              margin: 0;
+              width: 60px;
+              height: 130px;
+            }
+            @media screen and (max-width: 560px) {
+              width: 100%;
+              height: 70px;
+            }
+            img {
+              max-width: 102px;
+              @media screen and (max-width: 768px) {
+                width: 40%;
+                min-width: 44px;
+              }
+              @media screen and (max-width: 560px) {
+                width: 70px;
+                // height: 50px;
+              }
+            }
+            .hard2-bike {
+              @media screen and (max-width: 768px) {
+                width: 60px ;
+              }
+              @media screen and (max-width: 560px) {
+                width: 102px;
+                // height: 70px;
+              }
+              
+            }
+          }
+        }
+        .hard2-text {
+          display: flex;
+          flex-direction: column;
+          gap: 7px;
+          .hard2-textp {
+            font-size: $text-font-L;
+            color: $font-gray;
+            font-weight: 500;
+            padding: 0 10px;
+            @media screen and (max-width: 768px) {
+              font-size: $text-font-S;
+            }
+            @media screen and (max-width: 430px){
+                font-size: $text-font-XS;
+              }
+            span {
+              font-size: $text-font-XL;
+              color: $font-primary;
+              font-weight: bold;
+              @media screen and (max-width: 768px) {
+                font-size: $text-font-M;
+              }
+              @media screen and (max-width: 430px){
+                font-size: $text-font-S;
+              }
+            }
+          }
+          .hard2-textp2 {
+            color: rgba(118, 118, 118, 0.8);
+            font-size: $text-font-M;
+            @media screen and (max-width: 768px) {
+                  font-size: $text-font-XS !important;
+                }
+          }
+        }
+      }
+    }
+  }
+}
+
+// 짐보관 영역 반응형 레이아웃
+
 // 절대 건들지 말 것
 .img-url {
   display: none;

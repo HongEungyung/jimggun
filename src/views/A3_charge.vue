@@ -11,11 +11,13 @@
           <div class="icon-box">
             <img src="/public/images/lee/chargeIcon1.png" alt="케리어아이콘" />
           </div>
-          <p class="list-text">
-            <span class="lt1">캐리어</span>
-            <span class="lt2">기내용, 화물용 등</span>
-          </p>
-          <h4 class="price">￦ 11,000 ~</h4>
+          <div class="text-wrap">
+            <p class="list-text">
+              <span class="lt1">캐리어</span>
+              <span class="lt2">기내용, 화물용 등</span>
+            </p>
+            <h4 class="price">￦ 11,000 ~</h4>
+          </div>
         </div>
       </li>
       <li class="charge-list charge-list2">
@@ -23,11 +25,13 @@
           <div class="icon-box">
             <img src="/public/images/lee/chargeIcon2.png" alt="가방아이콘" />
           </div>
-          <p class="list-text">
-            <span class="lt1">백팩</span>
-            <span class="lt2">소형 및 대형 배낭 등</span>
-          </p>
-          <h4 class="price">￦ 11,000 ~</h4>
+          <div class="text-wrap">
+            <p class="list-text">
+              <span class="lt1">백팩</span>
+              <span class="lt2">소형 및 대형 배낭 등</span>
+            </p>
+            <h4 class="price">￦ 11,000 ~</h4>
+          </div>
         </div>
       </li>
       <li class="charge-list charge-list3">
@@ -35,11 +39,13 @@
           <div class="icon-box">
             <img src="/public/images/lee/chargeIcon3.png" alt="골프가방아이콘" />
           </div>
-          <p class="list-text">
-            <span class="lt1">기타</span>
-            <span class="lt2">레디백, 골프백 등</span>
-          </p>
-          <h4 class="price">￦ 6,000 ~</h4>
+          <div class="text-wrap">
+            <p class="list-text">
+              <span class="lt1">기타</span>
+              <span class="lt2">레디백, 골프백 등</span>
+            </p>
+            <h4 class="price">￦ 6,000 ~</h4>
+          </div>
         </div>
       </li>
     </ul>
@@ -51,21 +57,21 @@
             <ul class="sub-info">
               <li class="size"><span>S 사이즈</span></li>
               <li class="size-length"><span>~54cm / ~10kg</span></li>
-              <li class="size-price"><span>￦ 11,000</span></li>
+              <li class="size-price"><span>11,000원</span></li>
             </ul>
           </li>
           <li class="m-size size">
             <ul class="sub-info">
               <li class="size"><span>M 사이즈</span></li>
               <li class="size-length"><span>~65cm / ~20kg</span></li>
-              <li class="size-price"><span>￦ 16,000</span></li>
+              <li class="size-price"><span>16,000원</span></li>
             </ul>
           </li>
           <li class="l-size size">
             <ul class="sub-info">
               <li class="size"><span>L 사이즈</span></li>
               <li class="size-length"><span> 66cm~ / ~30kg</span></li>
-              <li class="size-price"><span>￦ 21,000</span></li>
+              <li class="size-price"><span>21,000원</span></li>
             </ul>
           </li>
           <li class="ex-size size">
@@ -79,10 +85,12 @@
         <div class="size-img">
           <img src="/public/images/lee/sizeinfo.png" alt="사이즈예시" />
         </div>
+        <div class="size-bg"></div>
       </div>
+
       <p class="size-text-info">
-        <span>최고 길이</span> 또는 <span>최고 무게</span>에 따라 사이즈가 산정됩니다. ex) 무게가 <span>18kg</span> &
-        최고길이가 <span>60cm</span>인 캐리어 = <span>M</span>사이즈
+        <span>※최고 길이 또는 최고 무게에 따라 사이즈가 산정됩니다.</span>
+        <span>ex) 무게가 18kg & 최고길이가 60cm인 캐리어 = M사이즈</span>
       </p>
     </div>
     <!-- 3. 거리에 따른 추가요금 -->
@@ -119,17 +127,22 @@
         </li>
       </ul>
       <p class="distance-info">
-        <span>※ 권역소개</span>
-        <span>타권역 : 동일권역 외 모든 지역</span>
-        <span>동일권역 : 출발지로부터 150km 내에 위치</span>
+        <span>※ 타권역 - 동일권역 외 모든 지역 &nbsp</span>
+        <span>※ 동일권역 - 출발지로부터 150km 내에 위치</span>
+        <!-- <span>타권역 : 동일권역 외 모든 지역</span> -->
+        <!-- <span>동일권역 : 출발지로부터 150km 내에 위치</span> -->
       </p>
     </div>
     <!-- 4. 유의 사항 -->
     <div class="charge-careful inner">
       <h2 class="charge-careful-title">유의사항</h2>
       <ul class="charge-careful-box">
-        <li class="charge-careful-list">서비스 이용 하루 전날 18:00시까지 취소 및 변경이 가능합니다.(취소시 100% 환불)</li>
-        <li class="charge-careful-list">서비스 이용 1일전 18시이후부터는 취소 및 환불이 불가하오니 유의하시기 바랍니다.</li>
+        <li class="charge-careful-list">
+          서비스 이용 하루 전날 18:00시까지 취소 및 변경이 가능합니다.(취소시 100% 환불)
+        </li>
+        <li class="charge-careful-list">
+          서비스 이용 1일전 18시이후부터는 취소 및 환불이 불가하오니 유의하시기 바랍니다.
+        </li>
         <li class="charge-careful-list">짐꾼의 픽업방식으로 인해 당일 예약은 불가능합니다.</li>
         <li class="charge-careful-list">배송 짐에 아이스박스 포함 시 꼭 문의하시기 바랍니다.</li>
       </ul>
@@ -169,7 +182,7 @@
     // 타이틀 글자조절
     span {
       // color: $font-light-gray;
-      color: $white ;
+      color: $white;
       font-size: $text-font-L;
       // font-weight: bold;
     }
@@ -177,19 +190,29 @@
   //   1. 요금 안내 품목
   .charge-menu {
     display: flex;
+    gap: 10px;
     align-items: center;
     justify-content: space-around;
     width: 100%;
     margin-top: 30px;
     margin-bottom: 75px;
+    @media screen and (max-width: 768px) {
+      flex-direction: column;
+    }
     // li
     .charge-list {
       display: flex;
+      // gap: 50px;
       align-items: center;
       justify-content: center;
       width: calc(100% / 3);
       max-width: 270px;
       box-shadow: $info-boxShadow;
+      border-radius: 10px;
+      @media screen and (max-width: 768px) {
+        width: 100% !important;
+        max-width: 450px;
+      }
       .list-box {
         width: 100%;
         display: flex;
@@ -197,7 +220,12 @@
         align-items: center;
         gap: 30px;
         margin: 50px 0;
-
+        @media screen and (max-width: 768px) {
+          flex-direction: row;
+          justify-content: center;
+          gap: 50px;
+          margin: 20px 0;
+        }
         .icon-box {
           width: 70px;
           height: 120px;
@@ -209,25 +237,41 @@
             max-height: 120px;
           }
         }
-        .list-text {
+        .text-wrap {
           display: flex;
           flex-direction: column;
           align-items: center;
-          gap: 10px;
-          .lt1 {
-            font-size: $title-font-XS;
-            font-weight: bold;
-            color: $font-primary;
-          }
-          .lt2 {
-            font-size: $text-font-M;
-            color: $font-light-gray;
+          gap: 20px;
+
+          .list-text {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            .lt1 {
+              font-size: $title-font-XS;
+              font-weight: bold;
+              color: $font-primary;
+              @media screen and (max-width: 768px) {
+                font-size: $text-font-XL;
+              }
+            }
+            .lt2 {
+              font-size: $text-font-M;
+              color: $font-light-gray;
+              @media screen and (max-width: 768px) {
+                font-size: $text-font-S;
+              }
+            }
           }
         }
         .price {
           font-size: $title-font-XS;
           color: $primary-color;
           font-weight: bold;
+          @media screen and (max-width: 768px) {
+            font-size: $text-font-XL;
+          }
         }
       }
     }
@@ -239,18 +283,38 @@
     flex-direction: column;
     gap: 10px;
     margin-bottom: 100px;
+
+    // background-color: $sub-color;
     .size-info {
       width: 100%;
       display: flex;
-      justify-content: space-around;
+      justify-content: space-between;
       align-items: center;
       background-color: $sub-color;
-      padding: 80px 20px;
+      padding: 80px 20px 60px 20px;
+      position: relative;
+      @media screen and (max-width: 768px) {
+        flex-direction: column;
+        gap: 50px;
+      }
+      .size-bg {
+        position: absolute;
+        top: 0;
+        left: -10000px;
+        width: 192000px;
+        height: 100%;
+        background-color: $sub-color;
+        z-index: -1;
+        max-width: unset;
+      }
       .size-text {
         width: 50%;
         display: flex;
         flex-direction: column;
         gap: 40px;
+        @media screen and (max-width: 768px) {
+          width: 100%;
+        }
         .size {
           .sub-info {
             width: 100%;
@@ -267,6 +331,12 @@
                 font-size: $title-font-S;
                 font-weight: 600;
                 color: $font-gray;
+                @media screen and (max-width: 768px) {
+                  font-size: $text-font-XL !important;
+                }
+                @media screen and (max-width: 430px) {
+                  font-size: $text-font-L !important;
+                }
               }
             }
             .size-length {
@@ -274,6 +344,12 @@
                 font-size: $text-font-M;
                 font-weight: 500;
                 color: $font-light-gray;
+                @media screen and (max-width: 768px) {
+                  font-size: $text-font-S !important;
+                }
+                @media screen and (max-width: 430px) {
+                  font-size: $text-font-XS !important;
+                }
               }
             }
             .size-price {
@@ -281,6 +357,12 @@
                 font-size: $title-font-S;
                 font-weight: bold;
                 color: $primary-color;
+                @media screen and (max-width: 768px) {
+                  font-size: $text-font-XL !important;
+                }
+                @media screen and (max-width: 430px) {
+                  font-size: $text-font-L !important;
+                }
               }
             }
           }
@@ -290,16 +372,31 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        @media screen and (max-width: 768px) {
+          display: none;
+        }
       }
     }
     // 2-1. size info text
     .size-text-info {
+      display: flex;
       width: 100%;
-      font-size: $text-font-S;
-      color: $font-light-gray;
-      text-align: right;
+      max-width: 960px;
+      padding: 0 20px;
+      gap: 10px;
+      @media screen and (max-width: 768px) {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
       span {
-        color: $font-primary;
+        font-size: $text-font-S;
+        color: $font-gray;
+        text-align: left;
+        font-weight: 500;
+        @media screen and (max-width: 768px) {
+          font-size: $text-font-XS;
+        }
       }
     }
   }
@@ -316,6 +413,9 @@
       min-width: 240px;
       margin-bottom: 80px;
       text-align: center;
+      @media screen and (max-width: 768px) {
+        font-size: $title-font-S;
+      }
     }
     .distance-text {
       width: 100%;
@@ -347,10 +447,22 @@
               color: $font-primary;
               font-size: $title-font-XS;
               font-weight: bold;
+              @media screen and (max-width: 768px) {
+                font-size: $text-font-XL;
+              }
+              @media screen and (max-width: 390px) {
+                font-size: $text-font-L;
+              }
             }
             .divide-text {
               color: $font-gray;
               font-size: $text-font-L;
+              @media screen and (max-width: 768px) {
+                font-size: $text-font-M;
+              }
+              @media screen and (max-width: 390px) {
+                font-size: $text-font-S;
+              }
             }
           }
         }
@@ -360,19 +472,27 @@
       width: 100%;
       max-width: 1000px;
       display: flex;
-      flex-direction: column;
-      gap: 5px;
+
       margin-top: 20px;
+      @media screen and (max-width: 768px) {
+        flex-direction: column;
+        gap: 5px;
+      }
       span {
         font-size: $text-font-S;
-        font-weight: bold;
-        color: $font-light-gray;
+        color: $font-gray;
+        text-align: left;
+        font-weight: 500;
+        @media screen and (max-width: 768px) {
+          font-size: $text-font-XS;
+        }
       }
     }
   }
   // 4. 유의사항
   .charge-careful {
     width: 100%;
+    max-width: 960px;
     margin-top: 10px;
     margin-bottom: 80px;
     display: flex;
@@ -382,16 +502,34 @@
     .charge-careful-title {
       font-size: $title-font-XL;
       font-weight: bold;
+      @media screen and (max-width : 768px){
+        font-size: $title-font-L;
+      }
+      @media screen and (max-width : 390px){
+        font-size: $title-font-M !important;
+      }
     }
     .charge-careful-box {
+      width: 100%;
       display: flex;
       flex-direction: column;
       gap: 20px;
       .charge-careful-list {
+        width: 100%;
         list-style: disc;
         font-size: $text-font-L;
         font-weight: 300;
         color: $font-primary;
+        text-align: left;
+        @media screen and (max-width: 768px) {
+          font-size: $text-font-M;
+        }
+        @media screen and (max-width: 500px) {
+          font-size: $text-font-S;
+        }
+        @media screen and (max-width: 390px) {
+          font-size: $text-font-XS;
+        }
       }
     }
   }

@@ -293,47 +293,49 @@ const nextPage = () => {
 
 <template>
   <!-- cs 전체 레이아웃 -->
-  <section class="cs-wrap inner">
-    <!-- 1. cs 제목 -->
-    <h2 class="cs-title"><span>고객님들이 자주묻는 질문</span></h2>
-    <!-- 2. 검색창 -->
-    <div class="cs-search">
-      <input type="text" v-model="searchQuery" placeholder="궁금하신 것이 무엇인가요?" />
-    </div>
-    <!-- 3. 카테고리 탭 영역 -->
-    <div class="cs-category">
-      <button
-        v-for="category in categories"
-        :key="category.id"
-        :class="['category-btn', { active: selectedCategory === category.id }]"
-        @click="selectedCategory1(category.id)">
-        {{ category.name }}
-      </button>
-    </div>
-    <!-- 4. 자주묻는 질문들 -->
-    <div class="cs-faqs">
-      <div class="faq-list" v-for="faq in paginatedFAQs" :key="faq.id">
-        <!--  4-1. 질문 -->
-        <div class="faq-question" @click="toggleFAQ(faq.id)">
-          <p class="question-text">{{ faq.question }}</p>
-          <span class="arrow">{{ activeIndex === faq.id ? "▲" : "▼" }} </span>
+  <section class="cs-container">
+    <div class="cs-wrap inner">
+      <!-- 1. cs 제목 -->
+      <h2 class="cs-title"><span>고객님들이 자주묻는 질문</span></h2>
+      <!-- 2. 검색창 -->
+      <div class="cs-search">
+        <input type="text" v-model="searchQuery" placeholder="궁금하신 것이 무엇인가요?" />
+      </div>
+      <!-- 3. 카테고리 탭 영역 -->
+      <div class="cs-category">
+        <button
+          v-for="category in categories"
+          :key="category.id"
+          :class="['category-btn', { active: selectedCategory === category.id }]"
+          @click="selectedCategory1(category.id)">
+          {{ category.name }}
+        </button>
+      </div>
+      <!-- 4. 자주묻는 질문들 -->
+      <div class="cs-faqs">
+        <div class="faq-list" v-for="faq in paginatedFAQs" :key="faq.id">
+          <!--  4-1. 질문 -->
+          <div class="faq-question" @click="toggleFAQ(faq.id)">
+            <p class="question-text">{{ faq.question }}</p>
+            <span class="arrow">{{ activeIndex === faq.id ? "▲" : "▼" }} </span>
+          </div>
+          <!-- 4-2. 답변 -->
+          <div class="faq-answer" v-show="activeIndex === faq.id">
+            <p class="answer-text">{{ faq.answer }}</p>
+          </div>
         </div>
-        <!-- 4-2. 답변 -->
-        <div class="faq-answer" v-show="activeIndex === faq.id">
-          <p class="answer-text">{{ faq.answer }}</p>
+        <!-- 4-3. 페이지 네이션 -->
+        <div class="pagination">
+          <button @click="prevPage" :disabled="currentPage === 1">이전</button>
+          <span>{{ currentPage }} / {{ totalPages }}</span>
+          <button @click="nextPage" :disabled="currentPage === totalPages">다음</button>
         </div>
       </div>
-      <!-- 4-3. 페이지 네이션 -->
-      <div class="pagination">
-        <button @click="prevPage" :disabled="currentPage === 1">이전</button>
-        <span>{{ currentPage }} / {{ totalPages }}</span>
-        <button @click="nextPage" :disabled="currentPage === totalPages">다음</button>
+      <!-- 5. 문의하기 -->
+      <div class="contact-section">
+        <p>원하는 답변을 찾지 못하셨나요?</p>
+        <router-link to="/inquiry">문의하기</router-link>
       </div>
-    </div>
-    <!-- 5. 문의하기 -->
-    <div class="contact-section">
-      <p>원하는 답변을 찾지 못하셨나요?</p>
-      <router-link to="/inquiry">문의하기</router-link>
     </div>
   </section>
 </template>
@@ -346,180 +348,192 @@ const nextPage = () => {
   margin: 0 auto;
   padding: 0 20px;
 }
-.cs-wrap {
+.cs-container {
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  // 1. cs 제목
-  .cs-title {
+  // height: 98%;
+  // background-color: $sub-color;
+  // margin-top: 100px;
+  position: relative;
+  .cs-wrap {
+    // position: absolute;
+    // top: 100px;
     width: 100%;
-    max-width: 560px;
-    // height: 60px;
-    padding: 11px 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 3px solid #f1f1f5;
-    margin: 70px 0;
-    // 타이틀 글자조절
-    span {
-      color: $font-light-gray;
-      font-size: $title-font-XS;
-      font-weight: bold;
-    }
-  }
-  // 2. 검색창
-  .cs-search {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    input {
-      max-width: 650px;
-      width: 100%;
-      padding: 10px;
-      border: 1px solid $input-select;
-      border-radius: 10px;
-      //   font-size: 1rem;
-      outline: none;
-      &:focus {
-        border: 1px solid $primary-hover;
-      }
-    }
-  }
-  // 3. 카테고리 탭 영역
-  .cs-category {
-    width: 100%;
-    max-width: 650px;
-    display: flex;
-    gap: 20px;
-    margin-top: 20px;
-    .category-btn {
-      width: calc(100% / 6);
-      padding: 10px 0;
-      color: $font-light-gray;
-      border: 1px solid rgba(118, 118, 118, 1);
-      border-radius: 10px;
-      background-color: $white;
-      font-weight: bold;
-      cursor: pointer;
-      &:hover,
-      &.active {
-        background-color: $primary-hover;
-        color: $white;
-        border: 1px solid $white;
-      }
-    }
-  }
-  // 4. 자주묻는 질문들
-  .cs-faqs {
-    margin-top: 50px;
-    width: 100%;
+    // height: 98%;
+    // padding-top: 100px;
+    // margin-top: 100px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    .faq-list {
-      display: flex;
-      flex-direction: column;
-      // align-items: center;
-      max-width: 800px;
+    // background-color: $white;
+    // 1. cs 제목
+    .cs-title {
       width: 100%;
-
-      // 4-1. 질문
-      .faq-question {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 1px solid $input-select;
-        cursor: pointer;
-        .question-text {
-          color: $font-gray;
-          font-weight: 500;
-          padding: 10px 20px;
-          margin: 13px 0;
-          
-        }
-        .arrow {
-          color: $input-select;
-          font-weight: 500;
-          padding: 10px 20px;
-        }
-      }
-      // 4-2. 답변
-      .faq-answer {
-        .answer-text {
-          background-color: $sub-color;
-          padding: 30px 0;
-          padding-left: 60px;
-          font-weight: 400;
-        }
-      }
-    }
-    // 4-3. 페이지네이션 버튼
-    .pagination {
-      width: 100%;
-      // margin-top: 20px;
+      max-width: 560px;
+      // height: 60px;
+      padding: 11px 0;
       display: flex;
       align-items: center;
       justify-content: center;
+      border: 3px solid #f1f1f5;
+      margin: 70px 0;
+      // 타이틀 글자조절
+      span {
+        color: $font-light-gray;
+        font-size: $title-font-XS;
+        font-weight: bold;
+      }
+    }
+    // 2. 검색창
+    .cs-search {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      input {
+        max-width: 650px;
+        width: 100%;
+        padding: 10px;
+        border: 1px solid $input-select;
+        border-radius: 10px;
+        //   font-size: 1rem;
+        outline: none;
+        &:focus {
+          border: 1px solid $primary-hover;
+        }
+      }
+    }
+    // 3. 카테고리 탭 영역
+    .cs-category {
+      width: 100%;
+      max-width: 650px;
+      display: flex;
       gap: 20px;
       margin-top: 20px;
-      margin-bottom: 50px;
-      button {
-        padding: 7px 18px;
-        background-color: $white;
-        border: 1px solid rgba(229, 229, 236, 1);
-        cursor: pointer;
-        border-radius: 10px;
-        font-size: $text-font-S;
+      .category-btn {
+        width: calc(100% / 6);
+        padding: 10px 0;
         color: $font-light-gray;
-        &:disabled {
-          background-color: rgba(229, 229, 236, .7);
-          border: 1px solid rgba(229, 229, 236, .7);
-          cursor: not-allowed;
+        border: 1px solid rgba(118, 118, 118, 1);
+        border-radius: 10px;
+        background-color: $white;
+        font-weight: bold;
+        cursor: pointer;
+        &:hover,
+        &.active {
+          background-color: $primary-hover;
+          color: $white;
+          border: 1px solid $white;
+        }
+      }
+    }
+    // 4. 자주묻는 질문들
+    .cs-faqs {
+      margin-top: 50px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .faq-list {
+        display: flex;
+        flex-direction: column;
+        // align-items: center;
+        max-width: 800px;
+        width: 100%;
+
+        // 4-1. 질문
+        .faq-question {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          border-bottom: 1px solid $input-select;
+          cursor: pointer;
+          .question-text {
+            color: $font-gray;
+            font-weight: 500;
+            padding: 10px 20px;
+            margin: 13px 0;
+          }
+          .arrow {
+            color: $input-select;
+            font-weight: 500;
+            padding: 10px 20px;
+          }
+        }
+        // 4-2. 답변
+        .faq-answer {
+          .answer-text {
+            background-color: $sub-color;
+            padding: 30px 0;
+            padding-left: 60px;
+            font-weight: 400;
+          }
+        }
+      }
+      // 4-3. 페이지네이션 버튼
+      .pagination {
+        width: 100%;
+        // margin-top: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 20px;
+        margin-bottom: 50px;
+        button {
+          padding: 7px 18px;
+          background-color: $white;
+          border: 1px solid rgba(229, 229, 236, 1);
+          cursor: pointer;
+          border-radius: 10px;
+          font-size: $text-font-S;
+          color: $font-light-gray;
+          &:disabled {
+            background-color: rgba(229, 229, 236, 0.7);
+            border: 1px solid rgba(229, 229, 236, 0.7);
+            cursor: not-allowed;
+          }
+        }
+      }
+    }
+    // 5. 문의하기
+    .contact-section {
+      width: 100%;
+      max-width: 560px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+      margin-top: 40px;
+      margin-bottom: 100px;
+      p {
+        color: rgba(118, 118, 118, 0.5);
+      }
+      a {
+        display: block;
+        width: 90px;
+        height: 40px;
+        background-color: $sub-color;
+        color: $font-light-gray;
+        border: 1px solid rgba(118, 118, 118, 0.5);
+        border-radius: 10px;
+        font-size: $text-font-M;
+        font-weight: bold;
+        text-align: center;
+        text-decoration: none;
+        line-height: 40px;
+        &:hover {
+          background-color: $primary-hover;
+          color: $white;
+          border: 1px solid $white;
         }
       }
     }
   }
-  // 5. 문의하기
-  .contact-section {
-    width: 100%;
-    max-width: 560px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 30px;
-    margin-top: 40px;
-    margin-bottom: 100px;
-    p {
-      color: rgba(118, 118, 118, 0.5);
-    }
-    a {
-      display: block;
-      width: 90px;
-      height: 40px;
-      background-color: $sub-color;
-      color: $font-light-gray;
-      border: 1px solid rgba(118, 118, 118, .5);
-      border-radius: 10px;
-      font-size: $text-font-M;
-      font-weight: bold;
-      text-align: center;
-      text-decoration: none;
-      line-height: 40px;
-      &:hover{
-        background-color: $primary-hover;
-        color: $white;
-        border: 1px solid $white;
-      }
-    }
-  }
-}
 
-.category-btn.active {
-  background: #4caf50;
-  color: white;
-  border-color: #4caf50;
+  .category-btn.active {
+    background: #4caf50;
+    color: white;
+    border-color: #4caf50;
+  }
 }
 </style>
