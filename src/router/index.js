@@ -9,7 +9,7 @@ import A7_login from "@/views/A7_login.vue";
 import A7_signUp from "@/views/A7_signUp.vue";
 import A7_signUpFinish from "@/views/A7_signUpFinish.vue";
 import A8_mypage from "@/views/A8_mypage.vue";
-import A9_Inquiry from "@/views/A9_ inquiry.vue";
+import A9_Inquiry from "@/views/A9_inquiry.vue";
 
 const routes = [
     {path : "/" , component : A1_home},
