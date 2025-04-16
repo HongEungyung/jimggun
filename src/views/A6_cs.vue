@@ -30,28 +30,32 @@ const faqs = reactive([
     id: 3,
     category: "deliver",
     question: "수화물의 위치를 실시간으로 추적할 수 있나요?",
-    answer: "수화물의 위치는 자세한 실시간 위치는 기사님의 안전 및 짐꾼의 정책상 제공되지 않습니다.",
+    answer:
+      "수화물의 위치는 자세한 실시간 위치는 기사님의 안전 및 짐꾼의 정책상 제공되지 않습니다.",
     isOpen: false,
   },
   {
     id: 4,
     category: "deliver",
     question: "도착예정시간보다 늦게 도착하면 어떻게 해야 하나요?",
-    answer: "예약일 24시간 전까지는 예약 변경이 가능합니다. 마이페이지에서 예약 내역을 확인하고 변경할 수 있습니다.",
+    answer:
+      "예약일 24시간 전까지는 예약 변경이 가능합니다. 마이페이지에서 예약 내역을 확인하고 변경할 수 있습니다.",
     isOpen: false,
   },
   {
     id: 5,
     category: "payment",
     question: "추가 요금이 발생할 수 있는 경우는 언제인가요?",
-    answer: "추가요금은 거리에 따른 추가요금이 발생할 수 있습니다. 자세한 참고사항은 요금안내를 참고해주세요.",
+    answer:
+      "추가요금은 거리에 따른 추가요금이 발생할 수 있습니다. 자세한 참고사항은 요금안내를 참고해주세요.",
     isOpen: false,
   },
   {
     id: 6,
     category: "service",
     question: "운송이 불가능한 물품은 무엇인가요?",
-    answer: "위험성 품목, 분실 및 도난의 우려가 있는 귀중품, 동·식물 등이 있습니다.",
+    answer:
+      "위험성 품목, 분실 및 도난의 우려가 있는 귀중품, 동·식물 등이 있습니다.",
     isOpen: false,
   },
   {
@@ -87,7 +91,8 @@ const faqs = reactive([
     id: 11,
     category: "deliver",
     question: "운송 취소 시 환불이 가능한가요?",
-    answer: "운송 중에 취소는 불가하며, 나의 짐 픽업 1일 전 취소 시 50%를 환불해주며 그 전에는 100% 환불해드립니다.",
+    answer:
+      "운송 중에 취소는 불가하며, 나의 짐 픽업 1일 전 취소 시 50%를 환불해주며 그 전에는 100% 환불해드립니다.",
     isOpen: false,
   },
   {
@@ -123,7 +128,8 @@ const faqs = reactive([
     id: 16,
     category: "deliver",
     question: "역이나 공항같은 경우에도 비대면으로 이루어지나요?",
-    answer: "짐꾼의 무인보관함이 있는 경우 비대면이 가능하며, 없는 경우에는 대면으로 이루어집니다.",
+    answer:
+      "짐꾼의 무인보관함이 있는 경우 비대면이 가능하며, 없는 경우에는 대면으로 이루어집니다.",
     isOpen: false,
   },
   {
@@ -199,7 +205,8 @@ const faqs = reactive([
     id: 26,
     category: "cancellation",
     question: "환불 요청시 처리기간은 어떻게 되나요?",
-    answer: "환불 요청시 검토 후 환불 승인이 난 이후로 3영업일 이내에 결제하신 계좌로 환불됩니다.",
+    answer:
+      "환불 요청시 검토 후 환불 승인이 난 이후로 3영업일 이내에 결제하신 계좌로 환불됩니다.",
     isOpen: false,
   },
   {
@@ -232,18 +239,21 @@ const selectedCategory = ref("all");
 function toggleFAQ(id) {
   activeIndex.value = activeIndex.value === id ? null : id;
 }
-
+function handleInput(event) {
+  searchQuery.value = event.target.value;
+}
 // 필터링 된 FAQs 목록 계산
+
 const filteredFAQs = computed(() => {
   return faqs.filter((faq) => {
     return (
-      (selectedCategory.value === "all" || faq.category === selectedCategory.value) &&
+      (selectedCategory.value === "all" ||
+        faq.category === selectedCategory.value) &&
       (faq.question.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
         faq.answer.toLowerCase().includes(searchQuery.value.toLowerCase()))
     );
   });
 });
-
 // 페이지네이션 적용
 // 페이지네이션 상태(현재페이지 저장)
 const currentPage = ref(1);
@@ -299,14 +309,21 @@ const nextPage = () => {
       <h2 class="cs-title"><span>고객님들이 자주묻는 질문</span></h2>
       <!-- 2. 검색창 -->
       <div class="cs-search">
-        <input type="text" v-model="searchQuery" placeholder="궁금하신 것이 무엇인가요?" />
+        <input
+          type="text"
+          v-model="searchQuery"
+          @input="handleInput"
+          placeholder="궁금하신 것이 무엇인가요?" />
       </div>
       <!-- 3. 카테고리 탭 영역 -->
       <div class="cs-category">
         <button
           v-for="category in categories"
           :key="category.id"
-          :class="['category-btn', { active: selectedCategory === category.id }]"
+          :class="[
+            'category-btn',
+            { active: selectedCategory === category.id },
+          ]"
           @click="selectedCategory1(category.id)">
           {{ category.name }}
         </button>
@@ -328,7 +345,9 @@ const nextPage = () => {
         <div class="pagination">
           <button @click="prevPage" :disabled="currentPage === 1">이전</button>
           <span>{{ currentPage }} / {{ totalPages }}</span>
-          <button @click="nextPage" :disabled="currentPage === totalPages">다음</button>
+          <button @click="nextPage" :disabled="currentPage === totalPages">
+            다음
+          </button>
         </div>
       </div>
       <!-- 5. 문의하기 -->
