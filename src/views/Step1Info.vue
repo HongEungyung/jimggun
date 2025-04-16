@@ -694,7 +694,8 @@ onUnmounted(() => {
 }
 // 배송정보 타이틀
 .a4_title {
-  font-size: 24px;
+  // font-size: 24px;
+  font-size: clamp(1rem, 1.25rem + 0.3vw, 1.5rem);
   font-weight: bold;
   margin-bottom: 20px;
   span {
@@ -753,13 +754,16 @@ onUnmounted(() => {
   justify-content: space-between;
   label {
     font-weight: 600;
+    
   }
   input {
     position: relative;
     width: 466px;
+    
+    
     height: 45px;
     font-size: $text-font-M;
-    font-weight: bold;
+    font-weight: 500;
     border: 1px solid $input-select;
     border-radius: 10px;
     padding-left: 45px;
@@ -774,6 +778,8 @@ onUnmounted(() => {
   // 아이콘
   .res_input {
     position: relative;
+    
+    
     img {
       position: absolute;
       top: 25%;
@@ -825,6 +831,8 @@ onUnmounted(() => {
     font-size: 14px;
     white-space: nowrap;
     margin-left: 20px;
+    color: $font-gray;
+   
   }
   // 수하물 버튼
   .cr_btn_area {
@@ -1022,19 +1030,42 @@ onUnmounted(() => {
 .rrb_mb {
   display: none;
 }
-@media screen and (max-width: 768px) {
-  .res_inner{
-    max-width: none;
-    padding: 0 20px;
+@media screen and (max-width: 1050px){
+  
+.row{
+  input{
+    width: 430px;
   }
+}
+}
+@media screen and (max-width: 900px){
+  
+.row{
+  input{
+    width: 380px;
+  }
+}
+}
+// 테블릿
+@media screen and (max-width: 768px) {
+  
   // 본문
     #res_content {
         width: 100%;
         display: block;
         min-height: unset;
-        .row label{
+        .row {
+          label{
           display: none;
         }
+        .res_input{
+          width: 100%;
+          
+        }
+        input{
+          width: 100%;
+        }
+      }
     }
 
 // 입력 결과값
@@ -1074,7 +1105,42 @@ font-size: 18px;
     }
   }
 }
-// @media screen and (max-width: 768px){
+@media screen and (max-width: 480px){
+.row{
+  input{
+    border-radius: 8px;
+        font-size: 14px;
+  }
+}
+.row_box h3{
+  font-size: 16px;
+}
+// 수하물
+.luggage_box h3{
+  font-size: 16px;
+}
+.cr_name_area p{
+    display: flex;
+    flex-direction: column;
+    
+  }
 
-// }
+.carrier_list {
+  padding: 30px 0 15px;
+.cr_name{
+  font-size: 16px;
+}
+.cr_txt{
+  font-size: 13px;
+  margin-left: 0;
+  margin-top: 5px;
+}
+}
+.cr_help_text{
+font-size: 12px;
+}
+.cr_warning strong{
+font-size: 15px;
+}
+}
 </style>
