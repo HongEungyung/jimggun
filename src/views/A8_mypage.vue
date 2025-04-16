@@ -256,6 +256,7 @@ onMounted(() => {
         //   padding: 3px 9px;
         // }
         h4 {
+          font-size: $text-font-S;
           margin-left: auto;
           text-decoration: underline;
           color: $font-light-gray;
@@ -569,6 +570,11 @@ onMounted(() => {
   }
   .my-third {
     height: 302px;
+  }
+}
+@media screen and (max-width: 413px) {
+  .intro-current {
+    grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
   }
 }
 </style>
