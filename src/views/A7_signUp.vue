@@ -164,6 +164,7 @@ const handleSignup = () => {
   existingUsers.push(userInfo);
   // 5.업데이트된 사용자 데이터를 localStorage에 저장
   localStorage.setItem('userDatas', JSON.stringify(existingUsers));
+  localStorage.setItem('user', JSON.stringify(userInfo));
   // 6.회원가빕 성공 메시지 표시
   alert('회원가입이 완료 되었습니다.');
   // 7.로그인페이지 이동
@@ -246,7 +247,11 @@ const handleEmailVerification = () => {
           @input="validatePasswordMatch"
         />
         <button type="button" @click="togglePassword" class="toggle-password">
-          {{ showPassword ? '👁️' : '👁️‍🗨️' }}
+          <img
+            :src="showPassword ? '/images/kang/view.png' : '/images/kang/hide.png'"
+            alt="비밀번호 표시 토글"
+            class="view-icon"
+          />
         </button>
       </div>
       <div class="infoWrap">
@@ -259,7 +264,11 @@ const handleEmailVerification = () => {
           @input="validatePasswordMatch"
         />
         <button type="button" @click="togglePassword2" class="toggle-password">
-          {{ showPassword2 ? '👁️' : '👁️‍🗨️' }}
+          <img
+            :src="showPassword2 ? '/images/kang/view.png' : '/images/kang/hide.png'"
+            alt="비밀번호 표시 토글"
+            class="view-icon"
+          />
         </button>
         <p class="errorText" v-if="errors.passwordCheck">{{ errors.passwordCheck }}</p>
       </div>
@@ -376,7 +385,7 @@ h1 {
     font-size: 16px;
   }
 }
-
+// 약관 자세히 보기
 .moreView {
   width: 20px;
   height: 20px;
@@ -385,6 +394,7 @@ h1 {
   margin-right: 21px;
   cursor: pointer;
 }
+// 모두 동의
 .allAgree {
   display: flex;
   align-items: center;
@@ -433,6 +443,7 @@ h2 {
   margin-bottom: 10px;
   position: relative;
 }
+//별 표시
 .star {
   font-size: 16px;
   font-weight: bold;
@@ -454,12 +465,7 @@ h2 {
 
   line-height: 18px;
 }
-.infoIcon {
-  width: 20px;
-  height: 20px;
-  margin-left: auto;
-  margin-right: 36px;
-}
+// 휴대전화는 수하물 운성 서비스 이용시 필수
 .btText {
   font-size: 12px;
   color: $font-gray;
@@ -478,6 +484,21 @@ h2 {
 .password {
   padding-left: 27px;
 }
+//비밀번호 표시 아이콘
+.view-icon {
+  width: 20px;
+}
+.toggle-password {
+  background-color: #fff;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  right: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0;
+}
+//입력란
 .name {
   padding-left: 55px;
 }
@@ -487,7 +508,19 @@ h2 {
 .mail {
   padding-left: 35px;
 }
-
+//인증하기 버튼
+.verify-btn {
+  background-color: $disabled-color;
+  border: 1px solid $input-select;
+  border-radius: 6px;
+  cursor: pointer;
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 3px 5px;
+}
+// 회원가입 버튼
 .signUpBtn {
   width: 480px;
   height: 56px;

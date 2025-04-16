@@ -118,7 +118,7 @@ a {
 .loginBtn:hover {
   background-color: $primary-hover;
 }
-//회원가입
+//아이디 찾기 비밀번호 찾기 회원가입
 .textContainer {
   display: flex;
   justify-content: center;
@@ -127,6 +127,10 @@ a {
   gap: 10px;
   margin-top: 30px;
   color: $font-light-gray;
+}
+.textContainer p {
+  border-right: 1px solid $font-light-gray;
+  padding-right: 10px;
 }
 .goSignUp {
   color: $font-light-gray;

@@ -1,4 +1,13 @@
-<script setup></script>
+<script setup>
+import { ref, onMounted } from 'vue';
+
+const userName = ref('');
+
+onMounted(() => {
+  const savedUser = JSON.parse(localStorage.getItem('user') || '{}');
+  userName.value = savedUser.name || '사용자';
+});
+</script>
 
 <template>
   <!-- 페이지 전체 -->
@@ -9,7 +18,7 @@
       <div class="my-intro">
         <!-- 첫번째 영역 타이틀 -->
         <div class="intro-name">
-          <h1>서강준</h1>
+          <h1>{{ userName }}</h1>
           <h2>님</h2>
           <!-- <h3>의 여행을 가볍게!</h3> -->
           <h4>정보수정</h4>

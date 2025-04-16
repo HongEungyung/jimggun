@@ -302,9 +302,6 @@ h2 {
   align-items: flex-start;
 }
 .areaSelectBox-title {
-  // margin-top: 24px;
-  // margin-bottom: 12px;
-  // margin-left: 12px;
   margin: 24px 12px;
   font-size: 18px;
   font-weight: bold;
@@ -341,9 +338,10 @@ h2 {
   border-top: solid 1px $bg-primary;
 }
 .next-btn {
-  background: #505050;
+  background: $primary-color;
   color: #fff;
   font-size: 16px;
+
   padding: 6px 12px;
   margin-left: 95.4%;
   margin-top: 12px;
@@ -429,9 +427,9 @@ strong {
   border-top: solid 1px $bg-primary;
 }
 .complete-btn {
-  font-size: 14px;
+  font-size: 16px;
   line-height: 20px;
-  font-weight: bold;
+
   padding: 6px 12px;
   color: #fff;
   background-color: $primary-color;
@@ -439,5 +437,53 @@ strong {
   border-radius: 6px;
   margin: 12px auto;
   cursor: pointer;
+}
+//반응형
+@media screen and (max-width: 1580px) {
+  .next-btn {
+    margin-left: 85%;
+  }
+}
+@media screen and (max-width: 768px) {
+  .modal-content {
+    width: 85%;
+  }
+  .areaSelectBox-btn-box {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .next-btn {
+    margin-left: 80%;
+  }
+}
+@media screen and (max-width: 425px) {
+  .modal-content {
+    width: 90%;
+  }
+  .areaSelectBox-btn-box {
+    grid-template-columns: repeat(1, 1fr);
+    padding: 0px 15px;
+  }
+  .areaSelectBox-btn > p {
+    font-size: 14px;
+  }
+  .areaSelectBox-title {
+    margin: 18px 20px;
+  }
+  .notice-text {
+    font-size: 14px;
+
+    line-height: 28px;
+  }
+  .next-btn-box {
+    margin-top: 40px;
+  }
+  .next-btn {
+    margin-left: 75%;
+    font-size: 14px;
+  }
+  .complete-btn {
+    font-size: 14px;
+  }
 }
 </style>
