@@ -11,6 +11,8 @@ const terms = ref(false);
 const privacy = ref(false);
 const showPassword = ref(false);
 const showPassword2 = ref(false);
+const showErrorModal = ref(false);
+const errorMessage = ref('');
 
 // 회원가입 폼 데이터 초기화
 const signUpData = ref({
@@ -139,35 +141,48 @@ const validateAllFields = () => {
 
 // 회원가입 가입 처리
 const handleSignup = () => {
-  if (!validateAllFields()) {
+  // 약관 미동의 먼저 체크
+  if (!terms.value || !privacy.value) {
+    errorMessage.value = '약관에 동의해주세요.';
+    showErrorModal.value = true;
     return;
   }
 
-  // 1.회원가입 정보 준비
+  // 이메일 / 전화 인증 미완료
+  if (!isEmailVerfied.value || !isPhoneVerified.value) {
+    errorMessage.value = '이메일과 휴대폰 인증을 완료해주세요.';
+    showErrorModal.value = true;
+    return;
+  }
+
+  // 필수 항목 미입력
+  if (!validateAllFields()) {
+    errorMessage.value = '필수 항목을 모두 입력해주세요.';
+    showErrorModal.value = true;
+    return;
+  }
+
+  // 이메일 중복 검사
   const userInfo = {
     userId: signUpData.value.userId,
-    name: signUpData.value.name, // 사용자 이름
-    email: signUpData.value.email, // 이메일
-    password: signUpData.value.password, // 비밀번호
-    phone: signUpData.value.phone, // 휴대폰 번호
+    name: signUpData.value.name,
+    email: signUpData.value.email,
+    password: signUpData.value.password,
+    phone: signUpData.value.phone,
   };
-  // 2.localStorage에서 기존 사용자 데이터 가져오기
-  // 유저 배열 가져오기 (없으면 빈배열)
-  // 문자열 => 객체
   const existingUsers = JSON.parse(localStorage.getItem('userDatas') || '[]');
-  // 3.이메일 중복 체크
   if (existingUsers.some((userData) => userData.email === userInfo.email)) {
-    alert('이미 등록된 이메일입니다.');
-    return; //중복된 이메일이면 회원가입 중단
+    errorMessage.value = '이미 등록된 이메일입니다.';
+    showErrorModal.value = true;
+    return;
   }
-  // 4.새 사용자 추가
+
+  // 회원 정보 저장
   existingUsers.push(userInfo);
-  // 5.업데이트된 사용자 데이터를 localStorage에 저장
   localStorage.setItem('userDatas', JSON.stringify(existingUsers));
   localStorage.setItem('user', JSON.stringify(userInfo));
-  // 6.회원가빕 성공 메시지 표시
-  alert('회원가입이 완료 되었습니다.');
-  // 7.로그인페이지 이동
+
+  alert('회원가입이 완료되었습니다.');
   router.push('/login');
 };
 
@@ -320,6 +335,12 @@ const handleEmailVerification = () => {
       </div>
       <button type="submit" class="signUpBtn" :disabled="!isFormValid">회원가입</button>
     </form>
+    <div v-if="showErrorModal" class="modal-backdrop" @click="showErrorModal = false">
+      <div class="error-modal" @click.stop>
+        <p>{{ errorMessage }}</p>
+        <button @click="showErrorModal = false">확인</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -545,6 +566,44 @@ h2 {
   position: absolute;
   left: 165px;
   top: 48px;
+}
+// 에러모달창
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.error-modal {
+  background: #fff;
+  border-radius: 10px;
+  padding: 30px 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  max-width: 300px;
+  width: 80%;
+}
+
+.error-modal p {
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+.error-modal button {
+  padding: 6px 14px;
+  background-color: $primary-color;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
 }
 //반응형
 @media screen and (max-width: 540px) {

@@ -146,7 +146,7 @@ const toggleReviews = () => {
   padding-top: 70px;
 }
 .A5-inner {
-  max-width: 1280px;
+  max-width: 1240px;
   margin: auto;
   text-align: center;
 }
