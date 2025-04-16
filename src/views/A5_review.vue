@@ -1,9 +1,11 @@
 <script setup>
 import { computed, ref, watchEffect } from 'vue';
+import StarRating from '@/components/StarRating.vue';
 // 더미 데이터 (변경되지 않는 초기 데이터)
 const dummyReviews = [
   {
     name: '홍길동',
+    rating: 5,
     images: ['/images/kang/1-1.jpg', '/images/kang/1-2.jpg', '/images/kang/1-3.jpg'],
     title: '뚜벅이 여행객들에게 강추!',
     content:
@@ -11,6 +13,7 @@ const dummyReviews = [
   },
   {
     name: '김길동',
+    rating: 4,
     images: ['/images/kang/2-1.jpg', '/images/kang/2-2.jpg', '/images/kang/2-3.jpg'],
     title: '공항부터 호텔까지 가벼운 마음으로 여행 시작!',
     content:
@@ -18,6 +21,7 @@ const dummyReviews = [
   },
   {
     name: '이길동',
+    rating: 5,
     images: ['/images/kang/3-1.png', '/images/kang/3-2.png', '/images/kang/3-3.png'],
     title: '아이들과 함께한 가족 여행의 필수템',
     content:
@@ -25,6 +29,7 @@ const dummyReviews = [
   },
   {
     name: '박길동',
+    rating: 4,
     images: ['/images/kang/4-1.jpg', '/images/kang/4-2.jpg'],
     title: '시간과 체력을 아껴주는 최고의 선택',
     content:
@@ -97,15 +102,18 @@ const toggleReviews = () => {
       </div>
 
       <div class="review-box" v-for="(review, index) in visibleReviews" :key="index">
-        <h2 class="review-writer">{{ maskedName(review.name) }} 님 감사합니다!</h2>
-        <h3 class="review-title">{{ review.title }}</h3>
+        <div class="writerRating">
+          <h2 class="review-writer">{{ maskedName(review.name) }} 님 감사합니다!</h2>
+          <StarRating :rating="review.rating" class="review-rating" />
+        </div>
 
-        <!-- ▼ 토글 버튼 -->
-        <button class="toggle-content-btn" @click="toggleContent(index)">
-          {{ expandedStates[index] ? '▲' : '▼' }}
-        </button>
+        <div class="review-header">
+          <h3 class="review-title">{{ review.title }}</h3>
+          <button class="toggle-content-btn" @click="toggleContent(index)">
+            {{ expandedStates[index] ? '▲' : '▼' }}
+          </button>
+        </div>
 
-        <!-- 내용이 펼쳐질 때만 보여주기 -->
         <div v-if="expandedStates[index]" class="review-content">
           <p v-html="formatContent(review.content)"></p>
         </div>
@@ -183,41 +191,55 @@ const toggleReviews = () => {
   color: $font-primary;
 }
 //제목
-.review-title {
+.writerRating {
   display: flex;
-  text-align: left;
-  padding-left: 90px;
+}
+.review-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 90px; // 좌우 정렬 위치 조정 (기존 .review-title padding과 맞춤)
+  margin-top: 10px;
+
+  @media screen and (max-width: 440px) {
+    padding: 0 40px;
+  }
+}
+.review-title {
   font-size: $text-font-M;
   color: $font-primary;
   line-height: 20px;
-  position: relative;
-  // min-height: 48px;
+}
+//별점
+.review-rating {
+  margin: 0 30px;
 }
 //내용
 .review-content {
+  width: 85%;
   display: flex;
   text-align: left;
-  padding-left: 90px;
-  font-size: 13px;
+  padding: 15px 30px;
+  font-size: 14px;
   color: $font-primary;
-  line-height: 16px;
+  line-height: 22px;
   position: relative;
-  // min-height: 48px;
+  margin: auto;
+  margin-top: 10px;
+  background-color: $sub-color;
+  border-radius: 6px;
 }
-.review-content p {
-  flex: 1;
-}
+
 //내용 보기 버튼
+
 .toggle-content-btn {
   background: none;
   border: none;
-
-  font-weight: bold;
+  color: $input-select;
   font-size: 14px;
-  margin-top: 10px;
   cursor: pointer;
 }
-
+//이미지
 .review-images {
   display: flex;
   justify-content: center;
@@ -240,7 +262,6 @@ const toggleReviews = () => {
   .review-toggle-btn {
     font-size: $text-font-S;
     line-height: 20px;
-    // font-weight: bold;
     padding: 12px 16px;
     color: #fff;
     background-color: $primary-color;
@@ -248,7 +269,6 @@ const toggleReviews = () => {
     border-radius: 6px;
     margin: 12px auto;
     cursor: pointer;
-    // box-shadow: $info-boxShadow;
   }
 }
 //반응형
@@ -263,37 +283,56 @@ const toggleReviews = () => {
     justify-content: center;
     padding-left: 0px;
   }
+  .review-content {
+    width: 80%;
+  }
 }
 @media screen and (max-width: 900px) {
   .review-images {
-    gap: 30px;
+    gap: 60px;
     margin-top: 10px;
   }
   .user-image {
     width: 220px;
     height: 220px;
   }
+  .review-rating {
+  margin: 0 20px;
+}
 }
 @media screen and (max-width: 730px) {
   .review-images img:nth-child(n + 2) {
     display: none;
   }
+ 
 }
 @media screen and (max-width: 440px) {
-  .A5-h1 {
-    padding-top: 50px;
+  .A5-h1-box {
+    max-width: 250px;
   }
   .review-box {
     padding-top: 40px;
     padding-bottom: 55px;
   }
+  .writerRating {
+    display: block;
+
+  }
+  .review-writer{
+   
+    padding-left: 100px;
+  }
+  .review-rating {
+    // padding-left: 60px;
+    margin: 10px 110px;
+  }
   .review-title {
-    padding-left: 40px;
+    margin: auto;
     font-size: 14px;
   }
   .review-content {
-    padding-left: 40px;
-    width: 80%;
+    padding-left: 30px;
+    width: 75%;
   }
 }
 </style>
