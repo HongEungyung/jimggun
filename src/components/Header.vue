@@ -1,5 +1,19 @@
 <script setup>
+import { computed } from "vue";
+import { useRouter } from "vue-router";
+import { useAuthStore } from "@/stores/auth"; // auth.js 경로에 맞게 수정
 
+const authStore = useAuthStore();
+const router = useRouter();
+
+// 로그인 상태 계산
+const isLoggedIn = computed(() => authStore.getIsLoggedIn);
+
+// 로그아웃 후 리다이렉트
+const handleLogout = () => {
+  authStore.logout();
+  router.push("/"); // 원하면 '/login'으로 변경 가능
+};
 </script>
 
 <template>
@@ -20,8 +34,18 @@
         <li><router-link to="/cs">고객센터</router-link></li>
       </ul>
       <div class="headerSubnav">
-        <router-link to="/mypage">마이</router-link>
-        <router-link to="/login">로그인</router-link>
+        <!-- 로그인 상태일 때 -->
+        <template v-if="isLoggedIn">
+          <router-link to="/mypage">마이페이지</router-link>
+          <router-link to="/" @click.prevent="handleLogout">로그아웃</router-link>
+        </template>
+
+        <!-- 로그아웃 상태일 때 -->
+        <template v-else>
+          <router-link to="/login">로그인</router-link>
+        </template>
+
+        <!-- 언어 선택 -->
         <div class="headerSubLangs">
           <a href="#">KOR</a>
           <span>|</span>
@@ -33,7 +57,7 @@
 </template>
 
 <style lang="scss" scoped>
-@import '/src/assets/variables';
+@import "/src/assets/variables";
 // 전체 레이아웃
 .headerWrap {
   width: 100%;
