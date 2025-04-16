@@ -139,23 +139,43 @@
     color: $bg-primary;
   }
 }
-@media screen and (max-width: 390px) {
+@media screen and (max-width: 589px) {
   .footerLeftText p {
-    font-size: $text-font-XS;
+    font-size: $text-font-XS !important;
+  }
+  .footerRightText .footerPhonNumber{
+    font-size: 18px !important;
+    margin-bottom: 8px !important;
   }
   .footerRightText p {
-    font-size: $text-font-XS;
+    font-size: $text-font-XS !important;
+    margin-bottom: 8px !important;
+  }
+  .footerTime {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  .footerRightButtons {
+    gap: 4px !important;
+    margin-bottom: 8px !important;
+  }
+  .footerRightButtons a {
+    width: 57px !important;
+    font-size: 11px !important;
   }
   .footerRightServices {
-    display: flex;
-    flex-direction: column;
+    display: flex !important;
+    flex-direction: column !important;
   }
   .footerRightServices p {
-    font-size: 11px;
-    margin-bottom: 5px;
+    font-size: 11px !important;
+    margin-bottom: 5px !important;
   }
   .footerRightServices span {
-    display: none;
+    display: none !important;
   }
+}
+@media screen and (max-width: 390px) {
+  
 }
 </style>
