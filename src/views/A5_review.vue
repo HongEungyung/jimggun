@@ -98,7 +98,7 @@ const toggleReviews = () => {
   <div class="A5-wrap">
     <div class="A5-inner">
       <div class="A5-h1-box">
-        <h1 class="A5-h1">이용후기</h1>
+        <h1 class="A5-h1">고객후기</h1>
       </div>
 
       <div class="review-box" v-for="(review, index) in visibleReviews" :key="index">
@@ -108,7 +108,9 @@ const toggleReviews = () => {
         </div>
 
         <div class="review-header">
-          <h3 class="review-title">{{ review.title }}</h3>
+          <h3 class="review-title" @click="toggleContent(index)">
+            {{ review.title }}
+          </h3>
           <button class="toggle-content-btn" @click="toggleContent(index)">
             {{ expandedStates[index] ? '▲' : '▼' }}
           </button>
@@ -297,14 +299,13 @@ const toggleReviews = () => {
     height: 220px;
   }
   .review-rating {
-  margin: 0 20px;
-}
+    margin: 0 20px;
+  }
 }
 @media screen and (max-width: 730px) {
   .review-images img:nth-child(n + 2) {
     display: none;
   }
- 
 }
 @media screen and (max-width: 440px) {
   .A5-h1-box {
@@ -316,15 +317,35 @@ const toggleReviews = () => {
   }
   .writerRating {
     display: block;
-
   }
-  .review-writer{
-   
+  .review-writer {
     padding-left: 100px;
   }
   .review-rating {
     // padding-left: 60px;
     margin: 10px 110px;
+  }
+  .review-title {
+    margin: auto;
+    font-size: 14px;
+  }
+  .review-content {
+    padding-left: 30px;
+    width: 75%;
+  }
+}
+@media screen and (max-width: 390px) {
+  .review-box {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .review-writer {
+    padding-left: 90px;
+  }
+  .review-rating {
+    // padding-left: 60px;
+    margin: 10px 100px;
   }
   .review-title {
     margin: auto;

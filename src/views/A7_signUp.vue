@@ -2,17 +2,18 @@
 import { ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { computed } from 'vue';
-// const showTermsContent = ref(false);
-// const showPrivacyContent = ref(false);
+import ErrorModal from '@/components/ErrorModal.vue';
+
 const router = useRouter();
+
+const showErrorModal = ref(false);
+const errorMessage = ref('');
 
 const allAgree = ref(false);
 const terms = ref(false);
 const privacy = ref(false);
 const showPassword = ref(false);
 const showPassword2 = ref(false);
-const showErrorModal = ref(false);
-const errorMessage = ref('');
 
 // 회원가입 폼 데이터 초기화
 const signUpData = ref({
@@ -24,39 +25,26 @@ const signUpData = ref({
   phone: '', // 휴대폰 번호
 });
 
-const isFormValid = computed(() => {
-  return (
-    signUpData.value.userId.trim() &&
-    signUpData.value.name.trim() &&
-    signUpData.value.phone.trim() &&
-    signUpData.value.email.trim() &&
-    signUpData.value.password &&
-    signUpData.value.passwordCheck &&
-    isEmailVerfied.value &&
-    isPhoneVerified.value &&
-    !errors.value.name &&
-    !errors.value.phone &&
-    !errors.value.email &&
-    !errors.value.passwordCheck &&
-    terms.value &&
-    privacy.value
-  );
-});
-
 const errors = ref({
   userId: '',
   name: '',
   phone: '',
   email: '',
+  password: '',
   passwordCheck: '',
 });
 
-const isEmailVerfied = ref(false); //이메일 인증 완료 여부
+const isEmailVerified = ref(false); //이메일 인증 완료 여부
 const isPhoneVerified = ref(false); //휴대폰 인증 완료 여부
 // 유효성 검사 정의
 const validateField = (field) => {
   if (field === 'userId') {
     errors.value.userId = !signUpData.value.userId.trim() ? '아이디를 입력해주세요.' : '';
+  }
+  if (!signUpData.value.password) {
+    errors.value.password = '비밀번호를 입력해주세요.';
+  } else {
+    errors.value.password = '';
   }
   if (field === 'name') {
     errors.value.name = !signUpData.value.name.trim() ? '이름을 입력해주세요.' : '';
@@ -141,23 +129,16 @@ const validateAllFields = () => {
 
 // 회원가입 가입 처리
 const handleSignup = () => {
-  // 약관 미동의 먼저 체크
+  // 약관 동의 여부 체크
   if (!terms.value || !privacy.value) {
-    errorMessage.value = '약관에 동의해주세요.';
+    errorMessage.value = '약관 및 개인정보처리방침에 동의해 주세요.';
     showErrorModal.value = true;
     return;
   }
 
-  // 이메일 / 전화 인증 미완료
-  if (!isEmailVerfied.value || !isPhoneVerified.value) {
-    errorMessage.value = '이메일과 휴대폰 인증을 완료해주세요.';
-    showErrorModal.value = true;
-    return;
-  }
-
-  // 필수 항목 미입력
-  if (!validateAllFields()) {
-    errorMessage.value = '필수 항목을 모두 입력해주세요.';
+  // 이메일 및 전화번호 인증 여부 체크
+  if (!isPhoneVerified.value || !isEmailVerified.value) {
+    errorMessage.value = '이메일과 전화번호 인증을 완료해 주세요.';
     showErrorModal.value = true;
     return;
   }
@@ -182,8 +163,7 @@ const handleSignup = () => {
   localStorage.setItem('userDatas', JSON.stringify(existingUsers));
   localStorage.setItem('user', JSON.stringify(userInfo));
 
-  alert('회원가입이 완료되었습니다.');
-  router.push('/login');
+  router.push('/signUpFinish');
 };
 
 // 하이픈 자동 입력
@@ -201,19 +181,23 @@ const formatPhone = (e) => {
   validateField('phone');
 };
 // 휴대폰인증 처리
-const handlePhoneVerificaion = () => {
-  alert('인증완료');
-  isPhoneVerified.value = true; // 임시로 인증완료처리
+const handlePhoneVerification = () => {
+  isPhoneVerified.value = true;
+  errorMessage.value = '전화번호 인증이 완료되었습니다.';
+  showErrorModal.value = true;
 };
 // 이메일 인증 처리
 const handleEmailVerification = () => {
-  alert('인증완료');
-  isEmailVerfied.value = true; //임시로 인증 완료 처리
+  isEmailVerified.value = true;
+  errorMessage.value = '이메일 인증이 완료되었습니다.';
+  showErrorModal.value = true;
 };
 </script>
 
 <template>
   <div class="wrap">
+    <!-- 에러 모달 -->
+    <ErrorModal v-if="showErrorModal" :message="errorMessage" @close="showErrorModal = false" />
     <h1>짐꾼 회원가입</h1>
     <!--약관 동의-->
     <div class="checkboxWrap">
@@ -310,7 +294,7 @@ const handleEmailVerification = () => {
           class="infoInput phone"
         />
         <p class="errorText" v-if="errors.phone">{{ errors.phone }}</p>
-        <button type="button" @click="handlePhoneVerificaion" :disabled="isPhoneVerified" class="verify-btn">
+        <button type="button" @click="handlePhoneVerification" :disabled="isPhoneVerified" class="verify-btn">
           {{ isPhoneVerified ? '인증완료' : '인증하기' }}
         </button>
       </div>
@@ -325,22 +309,16 @@ const handleEmailVerification = () => {
           @input="validateField('email')"
         />
         <p class="errorText" v-if="errors.email">{{ errors.email }}</p>
-        <button type="button" @click="handleEmailVerification" :disabled="isEmailVerfied" class="verify-btn">
-          {{ isEmailVerfied ? '인증완료' : '인증하기' }}
+        <button type="button" @click="handleEmailVerification" :disabled="isEmailVerified" class="verify-btn">
+          {{ isEmailVerified ? '인증완료' : '인증하기' }}
         </button>
       </div>
 
       <div class="btTextParent">
         <p class="btText"><strong>*휴대전화</strong>는 수하물 운송 서비스 이용시 필수</p>
       </div>
-      <button type="submit" class="signUpBtn" :disabled="!isFormValid">회원가입</button>
+      <button type="submit" class="signUpBtn" @click="handleSignup">회원가입</button>
     </form>
-    <div v-if="showErrorModal" class="modal-backdrop" @click="showErrorModal = false">
-      <div class="error-modal" @click.stop>
-        <p>{{ errorMessage }}</p>
-        <button @click="showErrorModal = false">확인</button>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -567,44 +545,7 @@ h2 {
   left: 165px;
   top: 48px;
 }
-// 에러모달창
-.modal-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.3);
-  z-index: 9999;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
-.error-modal {
-  background: #fff;
-  border-radius: 10px;
-  padding: 30px 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  text-align: center;
-  max-width: 300px;
-  width: 80%;
-}
-
-.error-modal p {
-  color: #333;
-  margin-bottom: 20px;
-  font-size: 16px;
-}
-
-.error-modal button {
-  padding: 6px 14px;
-  background-color: $primary-color;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
 //반응형
 @media screen and (max-width: 540px) {
   .checkboxWrap {
