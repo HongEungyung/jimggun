@@ -291,7 +291,7 @@
       justify-content: space-between;
       align-items: center;
       background-color: $sub-color;
-      padding: 80px 20px 60px 20px;
+      padding: 80px 40px 60px 40px;
       position: relative;
       @media screen and (max-width: 768px) {
         flex-direction: column;
@@ -372,6 +372,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        padding-right: 50px;
         @media screen and (max-width: 768px) {
           display: none;
         }
@@ -382,7 +383,7 @@
       display: flex;
       width: 100%;
       max-width: 960px;
-      padding: 0 20px;
+      padding-left: 50px;
       gap: 10px;
       @media screen and (max-width: 768px) {
         display: flex;
@@ -391,9 +392,9 @@
       }
       span {
         font-size: $text-font-S;
-        color: $font-gray;
+        color: $font-light-gray;
         text-align: left;
-        font-weight: 500;
+        font-weight: 300;
         @media screen and (max-width: 768px) {
           font-size: $text-font-XS;
         }
@@ -407,6 +408,7 @@
     flex-direction: column;
     align-items: center;
     margin-bottom: 100px;
+    padding: 0 50px;
     .distance-title {
       font-size: $title-font-M;
       font-weight: bold;
@@ -419,7 +421,7 @@
     }
     .distance-text {
       width: 100%;
-      max-width: 1000px;
+      // max-width: 1000px;
       display: flex;
       flex-direction: column;
       gap: 40px;
@@ -470,9 +472,7 @@
     }
     .distance-info {
       width: 100%;
-      max-width: 1000px;
       display: flex;
-
       margin-top: 20px;
       @media screen and (max-width: 768px) {
         flex-direction: column;
@@ -480,9 +480,9 @@
       }
       span {
         font-size: $text-font-S;
-        color: $font-gray;
+        color: $font-light-gray;
         text-align: left;
-        font-weight: 500;
+        font-weight: 300;
         @media screen and (max-width: 768px) {
           font-size: $text-font-XS;
         }
